@@ -1,1 +1,1 @@
-var data = [{"name":"Apple","other":"green\/red"},{"name":"Banana","other":"yellow"},{"name":"Citrus","other":"orange"}];
+var data = {"factions":[{"name":"Faction One","characters":[{"name":"Dave","rice":2,"cards":["1.jpg","2.jpg"]}]}]};
