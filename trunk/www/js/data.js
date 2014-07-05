@@ -1,1 +1,1 @@
-var data = {"factions":[{"name":"Faction One","characters":[{"name":"Dave","rice":2,"cards":["1.jpg","2.jpg"]}]}]};
+var data = {"factions":[{"name":"Silvermoon Syndicate","characters":[{"name":"Dave","rice":"Su","cards":["1.jpg","2.jpg"]}]},{"name":"Ito Clan","characters":[]},{"name":"Temple of Ro-Kan","characters":[]},{"name":"Prefecture of Ryu","characters":[]},{"name":"Cult of Yurei","characters":[]},{"name":"Savage Wave","characters":[]}]};
