@@ -4,6 +4,5 @@
     <description>An (unofficial) card viewing application for Bushido</description>
     <author email="bushidoapp@tomholland.uk" href="http://tomholland.uk/bushidoapp">Bushido App Support</author>
     <content src="app.html" />
-    <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
 </widget>
