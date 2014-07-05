@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="uk.tomholland.bushido" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bushido</name>
+    <description>An (unofficial) card viewing application for Bushido</description>
+    <author email="bushidoapp@tomholland.uk" href="http://tomholland.uk/bushidoapp">Bushido App Support</author>
+    <content src="app.html" />
+    <access origin="*" />
+    <preference name="DisallowOverscroll" value="true" />
+</widget>
