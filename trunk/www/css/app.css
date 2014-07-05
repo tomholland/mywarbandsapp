@@ -1,0 +1,16 @@
+#back,
+.card.hidden,
+.slider.hidden {
+	display: none;
+}
+
+.slider,
+.slider .slide-group {
+	height: 100%; /* not set in ratchet CSS for some reasons... */
+}
+
+.slider .slide {
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}

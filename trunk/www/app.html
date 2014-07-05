@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="format-detection" content="telephone=no">
+		<title>HelloWorld</title>
+		<link href="css/libs/ratchet.min.css" rel="stylesheet">
+		<link href="css/libs/ratchet-theme-ios.min.css" rel="stylesheet">
+		<link href="css/app.css" rel="stylesheet">
+	</head>
+	<body>
+	
+		<header class="bar bar-nav" id="headerbar">
+			<a class="icon icon-left-nav pull-left" id="back"></a>
+			<h1 class="title" id="title">Bushido factions</h1>
+		</header>
+		
+		<div class="content">
+		
+			<div class="card" id="factions" data-title="Bushido factions">
+				<ul class="table-view">
+					<li class="table-view-cell">
+						<a class="navigate-right change-card" data-card-id="faction1">Faction 1</a>
+					</li>
+				</ul>
+			</div><!-- end .card #factions -->
+			
+			<div class="card hidden" id="faction1" data-title="Fa&ction 1" data-back-card-id="factions">
+				<ul class="table-view">
+					<li class="table-view-cell">
+						<a class="navigate-right change-card" data-card-id="character1cards"><span class="badge">-</span>Character name 1</a>
+					</li>
+				</ul>
+			</div><!-- end .card.hidden #faction1 -->
+			
+			<div class="slider hidden" id="character1cards" data-title="Character name 1" data-back-card-id="faction1">
+				<div class="slide-group">
+					<div class="slide" style="background-image: url('images/cards/1.jpg');"></div>
+					<div class="slide" style="background-image: url('images/cards/2.jpg');"></div>
+				</div>
+			</div><!-- end .slider.hidden #character1cards -->
+			
+		</div><!-- end .content -->
+		
+		<script src="cordova.js"></script>
+		<script src="js/libs/zepto.min.js"></script>
+		<script src="js/libs/ratchet.min.js"></script>
+		<script src="js/data.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
