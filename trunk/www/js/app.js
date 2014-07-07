@@ -57,12 +57,20 @@ document.addEventListener('deviceready', function() {
 			},
 			function() { // fail
 				appAvailability.check(
-					'twitter://',
+					'twitterrific://',
 					function() { // success
-						window.open(encodeURI('twitter://user?screen_name='+username), '_system');
+						window.open(encodeURI('twitterrific:///profile?screen_name='+username), '_system');
 					},
 					function() { // fail
-						window.open(encodeURI('https://twitter.com/'+username), '_system');
+						appAvailability.check(
+							'twitter://',
+							function() { // success
+								window.open(encodeURI('twitter://user?screen_name='+username), '_system');
+							},
+							function() { // fail
+								window.open(encodeURI('https://twitter.com/'+username), '_system');
+							}
+						);
 					}
 				);
 			}

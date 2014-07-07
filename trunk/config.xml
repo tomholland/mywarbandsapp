@@ -2,7 +2,7 @@
 <widget id="uk.tomholland.bushidocards" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Bushido Cards</name>
     <description>Unofficial Bushido cards app for iOS</description>
-    <author email="bushidocardsapp@gmail.com" href="http://twitter.com/bushidocardsapp">Bushido Cards app Support</author>
+    <author email="bushidocardsapp@gmail.com" href="https://twitter.com/bushidocardsapp">Bushido Cards app support</author>
     <content src="app.html" />
     <preference name="DisallowOverscroll" value="true" />
 </widget>
