@@ -34,9 +34,16 @@ document.addEventListener('deviceready', function() {
 	currentContentViewID = firstContentViewID;
 	$('#back').tap(function() {
 		changeContentView(currentContentViewID, backContentViewID);
-		if ($('#'+currentContentViewID).hasClass('remember-position')) $('.content')[0].scrollTop = backContentViewYScroll;
+		if ($('#'+currentContentViewID).hasClass('remember-position')) {
+			// trigger redraw to workaround a WebKit lack of redraw after setting scrollTop:
+			$('.content').css({ 'overflow': 'hidden' });
+			$('.content')[0].scrollTop = backContentViewYScroll;
+			$('.content').css({ 'overflow': 'scroll' });
+		}
 	});
 	$('.change-content-view').tap(function() {
+		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
+		if ($('#'+currentContentViewID).hasClass('remember-position')) backContentElement = $(this);
 		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'));
 		if ($(this).hasClass('tab-item')) {
 			$('nav a').each(function(index) {
@@ -46,7 +53,17 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	$('a.external').tap(function() {
-		window.open(encodeURI($(this).attr('data-url')), '_system');
+		if ($(this).attr('data-confirm-msg')) {
+			var url = $(this).attr('data-url');
+			navigator.notification.confirm(
+				$(this).attr('data-confirm-msg'),
+				function(button) {
+					if (button == 2) window.open(encodeURI(url), '_system');
+				},
+				'Open URL in Safari',
+				'Cancel,Open'
+			);
+		} else window.open(encodeURI($(this).attr('data-url')), '_system');
 	});
 	$('a.twitter').tap(function() {
 		var username = $(this).attr('data-username');
@@ -84,9 +101,9 @@ function htmlEncode(value){
 
 function changeContentView(visibleContentViewID, newContentViewID) {
 	if ($('#'+visibleContentViewID).hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
+	$('#'+newContentViewID).show();
 	$('#'+visibleContentViewID).hide();
 	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
-	$('#'+newContentViewID).show();
 	if ($('#'+newContentViewID).attr('data-back-content-view-id')) {
 		backContentViewID = $('#'+newContentViewID).attr('data-back-content-view-id');
 		$('#back').show();
