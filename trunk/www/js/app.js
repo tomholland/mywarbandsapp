@@ -1,5 +1,6 @@
 var currentContentViewID = null;
 var backContentViewID = null;
+var backContentViewYScroll = 0;
 
 document.addEventListener('deviceready', function() {
 	StatusBar.hide();
@@ -7,7 +8,7 @@ document.addEventListener('deviceready', function() {
 	$.each(data.factions, function(factionIndex, faction) {
 		$('#'+firstContentViewID).find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
 		var html = '';
-		html += '<div class="content-view" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="'+firstContentViewID+'">';
+		html += '<div class="content-view remember-position" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="'+firstContentViewID+'">';
 			html += '<ul class="table-view">';
 				$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
 					html += '<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
@@ -33,6 +34,7 @@ document.addEventListener('deviceready', function() {
 	currentContentViewID = firstContentViewID;
 	$('#back').tap(function() {
 		changeContentView(currentContentViewID, backContentViewID);
+		if ($('#'+currentContentViewID).hasClass('remember-position')) $('.content')[0].scrollTop = backContentViewYScroll;
 	});
 	$('.change-content-view').tap(function() {
 		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'));
@@ -73,6 +75,7 @@ function htmlEncode(value){
 }
 
 function changeContentView(visibleContentViewID, newContentViewID) {
+	if ($('#'+visibleContentViewID).hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
 	$('#'+visibleContentViewID).hide();
 	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
 	$('#'+newContentViewID).show();
