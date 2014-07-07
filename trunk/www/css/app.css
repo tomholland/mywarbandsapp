@@ -4,6 +4,19 @@
 	display: none;
 }
 
+.bar-nav~.content,
+.bar-tab~.content {
+	padding: 0;
+}
+
+.content {
+	margin: 44px 0 50px 0;
+}
+
+.content .table-view {
+	margin-bottom: 0;
+}
+
 .content .table-view .table-view-cell {
 	background-position: 0 100%; /* Ratchet iOS theme bug fix */
 }
