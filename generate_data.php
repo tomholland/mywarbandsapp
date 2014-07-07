@@ -1135,4 +1135,13 @@ $data = array(
 	)
 );
 
+for ($i = 0; $i < count($data['factions']); $i++) {
+	usort(
+		$data['factions'][$i]['characters'],
+		function($character_a, $character_b) {
+			return strcmp($character_a['name'], $character_b['name']);
+		}
+	);
+}
+
 file_put_contents('data.js', 'var data = '.json_encode($data).';');
