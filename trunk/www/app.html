@@ -19,23 +19,45 @@
 				<span class="icon icon-home"></span>
 				<span class="tab-label">Factions</span>
 			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="warbands">
+				<span class="icon icon-person"></span>
+				<span class="tab-label">Warbands</span>
+			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="scenarios">
+				<span class="icon icon-list"></span>
+				<span class="tab-label">Scenarios</span>
+			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="pdfs">
+				<span class="icon icon-pages"></span>
+				<span class="tab-label">Documents</span>
+			</a>			
 			<a class="tab-item change-content-view" data-target-content-view-id="about">
 				<span class="icon icon-info"></span>
 				<span class="tab-label">About</span>
-			</a>
-			<a class="tab-item external" data-url="http://www.bushido-thegame.com" data-confirm-msg="Open the GCT Studios website in Safari?">
-				<span class="icon icon-star-filled"></span>
-				<span class="tab-label">GCT Studios</span>
 			</a>
 		</nav>
 		<div class="content">
 			<div class="content-view default" id="factions" data-title="Factions of Bushido">
 				<ul class="table-view"></ul>
 			</div>
-			<div class="content-view content-padded hidden" id="about" data-title="About">
+			<div class="content-view" id="scenarios" data-title="Scenarios">
+				<ul class="table-view"></ul>
+			</div>
+			<div class="content-view" id="warbands" data-title="Warbands">
+				<ul class="table-view"></ul>
+			</div>
+			<div class="content-view" id="pdfs" data-title="Documents">
+				<ul class="table-view">
+					<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/new_dawn_rules.pdf">New Dawn Rules</a></li>
+					<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/errata_24-05-2014.pdf">Rules Update and Errata (24/05/20114)</a></li>
+					<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/tournament_pack.pdf">Tournament Pack</a></li>
+					<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/silvermoon_players_guide.pdf">Silvermoon Player's Guide</a></li>
+				</ul>
+			</div>
+			<div class="content-view content-padded" id="about" data-title="About">
 				<p>This is an <strong>unofficial</strong> app, not built by GCT Studios (but with their kind permission).</p>
 				<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
-				<p>Only freely downloadable character cards are included.</p>
+				<p>Only freely downloadable content is included.</p>
 				<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
 			</div>
 		</div>

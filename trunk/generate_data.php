@@ -1132,6 +1132,67 @@ $data = array(
 				),
 			)
 		)
+	),
+	'scenarios' => array(
+		array(
+			'name' => 'The Idols',
+			'story' => array(
+				'Hanso sat by Hiro’s side as he contemplated their search. For weeks they had trawled through the undergrowth, setting up camp in boggy conditions. The men were restless and agitated by their fruitless search. When they had first departed Ryu they had found many sacred sites and left Shugenja there to effectively channel the residual power. This had taken practise, initial attempts had reduced them to rubble. These nodes were proving incredibly useful to the Takashi clan and Hanso was happy to be serving Hiro in the field again.',
+				'Since their last find however they had continued in vain, they had followed the old maps to locations where all that was left was the crumbled ruins of the Idols. Who had defiled the Idols and why was unknown to them. It had begun to feel like they were chasing shadows.',
+				'Hiro, broke the silence to which they were so comfortably accustomed. In a quiet voice he relayed orders to Hanso who bowed low and left. The diligent gunso was pleased by the renewed vigour in his leader’s voice; the Idols could not wait.',
+				'He barked orders to the men to stop assembling camp, they were to force march through the evening and into the night. Only a Takashi force could respond with so little grumbling, he refelected. This time when they arrived, so did their recent nemesis, that had, up until now, been one step ahead of them. Hiro’s intuition or the guidance he received from his ancestors had once again proved decisive. As the demons of the Savage Wave roared their way into the clearing of the Idols the men and women of the Dragon were waiting.'
+			),
+			'type' => 'Scenario Objective',
+			'deployment' => array(
+				'Baseline Deployment',
+				'3 Scenario Objectives (Small) all Neutral'
+			),
+			'game_length' => 'Fixed (6)',
+			'objective_interaction' => array(
+				'Influence (Simple)'
+			),
+			'victory_conditions' => array(
+				'points' => array(
+					'To the player with the most Friendly Scenario Objectives at the end of Turn 2',
+					'To the player with the most Friendly Scenario Objectives at the end of Turn 4',
+					'To the player with the most Friendly Scenario Objectives at the end of Turn 6'
+				),
+				'additional_rules' => array(
+					'Decreasing (Scorer)'
+				)
+			),
+			'image' => '1.png'
+		)/*,
+		array(
+			'name' => 'xxx',
+			'story' => array(
+				'xxx',
+				'xxx',
+				'xxx',
+				'xxx'
+			),
+			'type' => 'xxx',
+			'deployment' => array(
+				'xxx',
+				'xxx',
+			),
+			'game_length' => 'xxx',
+			'senario_objective_interaction' => array(
+				'xxx',
+				'xxx'
+			),
+			'victory_conditions' => array(
+				'points' => array(
+					'xxx',
+					'xxx',
+					'xxx'
+				),
+				'additional_rules' => array(
+					
+				)
+			),
+			'image' => ''
+		)*/
 	)
 );
 
