@@ -28,9 +28,9 @@ document.addEventListener('deviceready', function() {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
 		html += '<div class="content-view content-padded remember-position scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
-			html += '<button class="btn show-backstory" data-scenario="'+scenarioIndex+'" id="scenario'+scenarioIndex+'viewbackstory"><span class="icon icon-right"></span> View backstory</button>';
+			html += '<a class="btn show-backstory" data-scenario="'+scenarioIndex+'" id="scenario'+scenarioIndex+'viewbackstory"><span class="icon icon-right"></span> View backstory</a>';
 			html += '<div id="scenario'+scenarioIndex+'backstory" class="scenario-backstory">';
-			html += '<button class="btn hide-backstory" data-scenario="'+scenarioIndex+'"><span class="icon icon-down"></span> Hide backstory</button>';
+			html += '<a class="btn hide-backstory" data-scenario="'+scenarioIndex+'"><span class="icon icon-down"></span> Hide backstory</a>';
 			$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
 				html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
 			});
