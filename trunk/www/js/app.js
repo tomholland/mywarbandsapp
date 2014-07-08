@@ -43,10 +43,12 @@ document.addEventListener('deviceready', function() {
 			});
 			html += '<h5>Game Length</h5>';
 			html += '<p>'+htmlEncode(scenario.game_length)+'</p>';
-			html += '<h5>Scenario Objective Interaction</h5>';
-			$.each(scenario.objective_interaction, function(scenarioObjectiveInteractionIndex, scenarioObjectiveInteraction) {
-				html += '<p>'+htmlEncode(scenarioObjectiveInteraction)+'</p>';
-			});
+			if (scenario.hasOwnProperty('objective_interaction')) {
+				html += '<h5>Scenario Objective Interaction</h5>';
+				$.each(scenario.objective_interaction, function(scenarioObjectiveInteractionIndex, scenarioObjectiveInteraction) {
+					html += '<p>'+htmlEncode(scenarioObjectiveInteraction)+'</p>';
+				});
+			}
 			html += '<h5>Victory Conditions</h5>';
 			html += '<table class="victory-conditions">';
 			$.each(scenario.victory_conditions.points, function(scenarioVictoryConditionsPointIndex, scenarioVictoryConditionsPoint) {
@@ -56,9 +58,7 @@ document.addEventListener('deviceready', function() {
 				html += '</tr>';
 			});
 			html += '</table>';
-			$.each(scenario.victory_conditions.additional_rules, function(scenarioVictoryConditionsAdditionalRuleIndex, scenarioVictoryConditionsAdditionalRule) {
-				html += '<p>'+htmlEncode(scenarioVictoryConditionsAdditionalRule)+'</p>';
-			});
+			if (scenario.victory_conditions.hasOwnProperty('additional_rules')) html += '<p>'+htmlEncode(scenario.victory_conditions.additional_rules)+'</p>';
 			//scenario.image
 		html += '</div>';
 		$('.content').append(html);
