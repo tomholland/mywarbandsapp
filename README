@@ -1,6 +1,6 @@
 The following Cordova plugins are used:
 
-org.apache.cordova.statusbar
 org.apache.cordova.inappbrowser
+https://github.com/katzer/cordova-plugin-hidden-statusbar-overlay.git
 https://git-wip-us.apache.org/repos/asf/cordova-plugin-dialogs.git
 https://github.com/ohh2ahh/AppAvailability.git
