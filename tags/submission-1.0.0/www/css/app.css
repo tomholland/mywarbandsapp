@@ -1,0 +1,47 @@
+#back,
+.content .content-view,
+.content .slider {
+	display: none;
+}
+
+.bar-nav~.content,
+.bar-tab~.content {
+	padding: 0;
+}
+
+.content {
+	margin: 44px 0 50px 0;
+}
+
+.content .table-view {
+	margin-bottom: 0;
+}
+
+.content .table-view .table-view-cell {
+	background-position: 0 100%; /* Ratchet iOS theme bug fix */
+}
+
+.content .table-view .media-body {
+	padding-top: 12px;
+}
+
+.content .table-view-cell>a:not(.btn):active {
+	background-color: inherit;
+	opacity: .4;
+}
+
+.content .faction-image {
+	width: 42px;
+	height: 42px;
+}
+
+.content .slider,
+.content .slider .slide-group {
+	height: 100%; /* not set in Ratchet for some reasons... */
+}
+
+.content .slider .slide {
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
