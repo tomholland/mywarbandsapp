@@ -40,11 +40,35 @@
 			<div class="content-view default" id="factions" data-title="Factions of Bushido">
 				<ul class="table-view"></ul>
 			</div>
-			<div class="content-view" id="scenarios" data-title="Scenarios">
+			<div class="content-view remember-position" id="scenarios" data-title="Scenarios">
+				<a class="btn btn-block" id="randomscenario">Random scenario</a>
 				<ul class="table-view"></ul>
 			</div>
-			<div class="content-view" id="warbands" data-title="Warbands">
+			<div class="content-view remember-position" id="warbands" data-title="Warbands">
+				<a class="btn btn-block" id="addwarband"><span class="icon icon-plus"></span> Add a Warband</a>
 				<ul class="table-view"></ul>
+			</div>
+			<div class="content-view content-padded" id="editwarband" data-back-content-view-id="warbands">
+				<form>
+					<select disabled="disabled">
+						<option value="test">Test</option>
+					</select>
+					<input type="text" placeholder="Name" disabled="disabled">
+					<input type="number" placeholder="Rice limit" disabled="disabled">
+					<a class="btn btn-block btn-negative">Delete Warband</a>
+					<a class="btn btn-block btn-positive">Save Warband</a>
+				</form>
+			</div>
+			<div class="content-view remember-position" id="warband" data-back-content-view-id="warbands">
+				<a class="btn btn-block" id="addcharactertowarband"><span class="icon icon-plus"></span> Add a character</a>
+				<ul class="table-view"></ul>
+			</div>
+			<div class="content-view content-padded" id="editwarbandcharacter" data-back-content-view-id="warband">
+				<form>
+					
+					<a class="btn btn-block btn-negative">Remove character</a>
+					<a class="btn btn-block btn-positive">Add character</a>
+				</form>
 			</div>
 			<div class="content-view" id="pdfs" data-title="Guides">
 				<ul class="table-view">
@@ -58,13 +82,15 @@
 				<p>This is an <strong>unofficial</strong> app, not built by GCT Studios (but with their kind permission).</p>
 				<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
 				<p>Only freely downloadable content is included.</p>
-				<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
+				<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a>, <a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
 			</div>
 		</div>
 		<script src="cordova.js"></script>
 		<script src="js/libs/zepto.min.js"></script>
 		<script src="js/libs/ratchet.min.js"></script>
+		<script src="js/libs/lawnchair-0.6.1.min.js"></script>
 		<script src="js/data.js"></script>
+		<script src="js/warbands.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 </html>

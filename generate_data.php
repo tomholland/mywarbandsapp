@@ -3,10 +3,12 @@
 $data = array(
 	'factions' => array(
 		array(
+			'id' => 'F7837986-F2BC-36A7-75C8-0428A245DD46',
 			'name' => 'Silvermoon Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
 				array(
+					'id' => '0E479335-79C7-551F-CB35-74DA6D6AB2A9',
 					'name' => 'Wakasu Akuma',
 					'rice' => 1,
 					'cards' => array(
@@ -15,6 +17,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '234C3FDD-8BB3-D027-1184-0716E0882ED4',
 					'name' => 'Okkete San',
 					'rice' => 2,
 					'cards' => array(
@@ -23,6 +26,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '00357613-FD63-9E8E-3AFC-CC577C0C45CA',
 					'name' => 'Kyoaku-Han',
 					'rice' => 4,
 					'cards' => array(
@@ -31,6 +35,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4F6F28D4-2D8D-5200-E63F-83507B45837E',
 					'name' => 'Oda',
 					'rice' => 5,
 					'cards' => array(
@@ -39,6 +44,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'F5489336-FC42-7F3C-218A-5FBA53366675',
 					'name' => 'Kyoaku-Han Crossbowman',
 					'rice' => 5,
 					'cards' => array(
@@ -47,6 +53,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C58329CE-13ED-86F3-C795-6A93BA427B09',
 					'name' => 'Sukuratchi',
 					'rice' => 5,
 					'cards' => array(
@@ -55,6 +62,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'F4B1B016-FB00-AD5F-4FDF-E2F920F93FA5',
 					'name' => 'Old Zo',
 					'rice' => 5,
 					'cards' => array(
@@ -63,6 +71,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'FA4940FF-978B-269D-08C5-ED45F53EAC0D',
 					'name' => 'Senpu',
 					'rice' => 6,
 					'cards' => array(
@@ -71,6 +80,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '7FD6544A-B2FB-15CE-4578-60446CE0CEBE',
 					'name' => 'Wasupu',
 					'rice' => 6,
 					'cards' => array(
@@ -79,6 +89,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '54917296-7C45-7B89-3DC8-A6CEC9FC261A',
 					'name' => 'Yukio Koshimori',
 					'rice' => 7,
 					'cards' => array(
@@ -89,6 +100,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '8DDD26FF-DEC5-9816-5E52-0C2D09B62E50',
 					'name' => 'Saki, Rose of Jima',
 					'rice' => 7,
 					'cards' => array(
@@ -97,6 +109,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'D76C3080-E02C-D4A3-F5C5-E86BA0F8DC52',
 					'name' => 'Tsubaki',
 					'rice' => 7,
 					'cards' => array(
@@ -105,6 +118,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'A682A802-423C-3F15-79DE-D42E96D38FC0',
 					'name' => 'Golden Sentinel',
 					'rice' => 8,
 					'cards' => array(
@@ -113,6 +127,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '443A5980-5F8D-7457-E931-3E2292DEEB1C',
 					'name' => 'Harukichi',
 					'rice' => 8,
 					'cards' => array(
@@ -121,6 +136,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '795A66F4-13C7-9050-9042-C8E0D8DA73DC',
 					'name' => 'Fitiaumua',
 					'rice' => 9,
 					'cards' => array(
@@ -129,6 +145,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'ED3896FA-FDF2-BF7E-7305-81377E82582E',
 					'name' => 'Manu',
 					'rice' => 9,
 					'cards' => array(
@@ -137,6 +154,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'F095DA5B-24C2-6440-ED40-3FCA39D20240',
 					'name' => 'Tautolu',
 					'rice' => 10,
 					'cards' => array(
@@ -145,6 +163,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '498C8C81-8294-F046-778F-1866837407CE',
 					'name' => 'Oda & Tautolu',
 					'rice' => 12,
 					'cards' => array(
@@ -155,10 +174,12 @@ $data = array(
 			)
 		),
 		array(
+			'id' => 'B030060E-3D3E-12B0-5211-680E4C4BFD2B',
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
 				array(
+					'id' => 'B8E0DE17-E17E-8AF7-BECC-9CA7170758F4',
 					'name' => 'Kazuhiko',
 					'rice' => 4,
 					'cards' => array(
@@ -167,6 +188,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2C03FB34-D3D0-DE20-126B-C8F5D055595E',
 					'name' => 'Hitoshi',
 					'rice' => 5,
 					'cards' => array(
@@ -175,6 +197,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '884885F1-3178-1E4F-8B11-DFF66D8AF2CB',
 					'name' => 'Temple Bushi',
 					'rice' => 5,
 					'cards' => array(
@@ -183,6 +206,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'FB8BA2BC-BFA5-B411-5147-E35C15F1177A',
 					'name' => 'Akimoto',
 					'rice' => 5,
 					'cards' => array(
@@ -191,6 +215,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '3F99797E-F515-82E6-69A5-AFC369A14E7F',
 					'name' => 'Jade Mamba Guard',
 					'rice' => 6,
 					'cards' => array(
@@ -199,6 +224,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '6855717B-D1B0-D671-FBC4-0545C855BF7C',
 					'name' => 'Chiyo, Temple Bushi',
 					'rice' => 6,
 					'cards' => array(
@@ -207,6 +233,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E3C01001-BC00-AAF3-DAA2-EE4B8AC985D5',
 					'name' => 'Yukio Koshimori',
 					'rice' => 7,
 					'cards' => array(
@@ -217,6 +244,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '0F6CDCD2-79DB-9076-12BC-B2D6D8D83AEE',
 					'name' => 'Takeji',
 					'rice' => 7,
 					'cards' => array(
@@ -225,6 +253,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '48AFA7F1-1BDD-6E06-70AD-792E3145A4CF',
 					'name' => 'Sakura',
 					'rice' => 7,
 					'cards' => array(
@@ -233,6 +262,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C3EBCAAA-2344-4043-9E39-35E8B45D7EF6',
 					'name' => 'Golden Sentinel',
 					'rice' => 8,
 					'cards' => array(
@@ -241,6 +271,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '24A1CE12-3C94-44EC-FB7A-528585753B0C',
 					'name' => 'Naoko',
 					'rice' => 8,
 					'cards' => array(
@@ -249,6 +280,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C2C4622D-75F0-8F93-9EC2-FDD272DF38E3',
 					'name' => 'Masunagi Ito',
 					'rice' => 9,
 					'cards' => array(
@@ -257,6 +289,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '760FE199-CAF8-E05E-CF3E-5EB48E65377D',
 					'name' => 'Kaihime Ito',
 					'rice' => 9,
 					'cards' => array(
@@ -265,6 +298,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B741A6EC-94D3-1955-C424-DBF7D6DC0C70',
 					'name' => 'Satoshi',
 					'rice' => 9,
 					'cards' => array(
@@ -273,6 +307,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4F978DC7-0337-A89D-E62C-588751A0A50D',
 					'name' => 'Kenzo Ito',
 					'rice' => 10,
 					'cards' => array(
@@ -281,6 +316,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E9593F58-C61D-2B2E-A20B-6CAB21B465C0',
 					'name' => 'Ayako Ito',
 					'rice' => 10,
 					'cards' => array(
@@ -289,6 +325,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '659B9DF7-D0AD-33F7-2DD6-BDD2C1769C76',
 					'name' => 'Yatsumata',
 					'rice' => 11,
 					'cards' => array(
@@ -297,6 +334,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'BAA50485-C511-5EE6-7BFB-71B34F580CE5',
 					'name' => 'Saburo',
 					'rice' => 14,
 					'cards' => array(
@@ -307,10 +345,12 @@ $data = array(
 			)
 		),
 		array(
+			'id' => '0E74A9C0-DEE5-E75F-5893-2FDABE089CBA',
 			'name' => 'Temple of Ro-Kan',
 			'image' => 'symbolmonk.jpg',
 			'characters' => array(
 				array(
+					'id' => 'C5992C23-652C-F5ED-B82E-C6A1E3C58F84',
 					'name' => 'Koji\'s Pack',
 					'rice' => 1,
 					'cards' => array(
@@ -319,6 +359,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'F333E4F3-715C-74FA-08B7-B34CB95EDB16',
 					'name' => 'Rice Farmers of the Rokan',
 					'rice' => 3,
 					'cards' => array(
@@ -327,6 +368,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'A3F0601A-8FC8-4B75-4ECB-85CE0042BC0E',
 					'name' => 'Fishermen of the Rokan',
 					'rice' => 4,
 					'cards' => array(
@@ -335,6 +377,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '604E08B7-1ADD-B53A-96E8-31A8304AF681',
 					'name' => 'Kami of the Strong West Wind',
 					'rice' => 4,
 					'cards' => array(
@@ -343,6 +386,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '6173CE8C-8509-8DA5-39E5-109834A47B4E',
 					'name' => 'Kami of the Eternal Earth',
 					'rice' => 4,
 					'cards' => array(
@@ -351,6 +395,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '5C03491C-4F91-7C1A-493E-ECF36DC6FF32',
 					'name' => 'Kami of the Evening Flame',
 					'rice' => 4,
 					'cards' => array(
@@ -359,6 +404,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B3BD6681-300E-3CAD-6615-6B389E79B3DE',
 					'name' => 'Kami of the Morning Dew',
 					'rice' => 4,
 					'cards' => array(
@@ -367,6 +413,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'FDC5B514-A64C-1B99-8828-109B42E63442',
 					'name' => 'Aiko',
 					'rice' => 4,
 					'cards' => array(
@@ -375,6 +422,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'AD06F023-6EDE-A9B1-DEA6-E47D4FE3C4A3',
 					'name' => 'Atsuko',
 					'rice' => 4,
 					'cards' => array(
@@ -383,6 +431,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2C6D1302-0E4A-3258-A602-7AC5CB8FA123',
 					'name' => 'Kintaru',
 					'rice' => 5,
 					'cards' => array(
@@ -391,6 +440,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '9DE169AA-68FC-3DA8-1D6E-8B0DFEBD0276',
 					'name' => 'Koji',
 					'rice' => 5,
 					'cards' => array(
@@ -399,6 +449,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4B862CF7-826C-C708-74E6-410EEC0770CC',
 					'name' => 'Hisao',
 					'rice' => 6,
 					'cards' => array(
@@ -407,6 +458,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C404B044-A166-E421-3E57-2ED4A2D57C87',
 					'name' => 'Hotaru',
 					'rice' => 6,
 					'cards' => array(
@@ -415,6 +467,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'DC480AF7-8F96-3A2C-1C42-27D8FC840652',
 					'name' => 'Seiji',
 					'rice' => 7,
 					'cards' => array(
@@ -423,6 +476,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '6B2DA318-B064-20A8-52D7-C04B0B93A3FD',
 					'name' => 'Tsutsumi',
 					'rice' => 7,
 					'cards' => array(
@@ -431,6 +485,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'FD93662B-44C0-278E-F1D8-388E40BAC1FC',
 					'name' => 'The Guardian',
 					'rice' => 7,
 					'cards' => array(
@@ -439,6 +494,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'DA0CA0D9-3A8F-66DE-7F3F-C7BBDB4ADD5A',
 					'name' => 'Kawa no Rojin',
 					'rice' => 8,
 					'cards' => array(
@@ -447,6 +503,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '1D285465-C34B-3902-6286-0B3CD2FBF0B3',
 					'name' => 'Riku',
 					'rice' => 8,
 					'cards' => array(
@@ -455,6 +512,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '06F6243D-C904-1C33-010F-80C3A6F8BE03',
 					'name' => 'Kitsune',
 					'rice' => 9,
 					'cards' => array(
@@ -465,6 +523,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'EFA3D73A-60B0-2857-5EDD-BFAB04DBB036',
 					'name' => 'Yumi',
 					'rice' => 9,
 					'cards' => array(
@@ -473,6 +532,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'DB86F5A6-1179-A37A-25AA-91A1B31F490F',
 					'name' => 'Kenko',
 					'rice' => 9,
 					'cards' => array(
@@ -481,6 +541,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'A3850AE3-4FF8-E493-3806-BAAF7F49FCA4',
 					'name' => 'The Grey Pilgrim',
 					'rice' => 10,
 					'cards' => array(
@@ -489,6 +550,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '091ED59C-FD7C-6461-ACBE-58EDEC9485CB',
 					'name' => 'Suchiro',
 					'rice' => 10,
 					'cards' => array(
@@ -497,6 +559,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C54908BB-D95D-1C32-484A-6BFE96432782',
 					'name' => 'Shisa',
 					'rice' => 10,
 					'cards' => array(
@@ -505,6 +568,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '75DCCC9F-440F-3D6A-4B1C-E61D02A3B0E9',
 					'name' => 'Master Ekusa',
 					'rice' => 11,
 					'cards' => array(
@@ -513,6 +577,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '3FB49695-82BC-E79B-983E-BDF444E72726',
 					'name' => 'Master Po',
 					'rice' => 12,
 					'cards' => array(
@@ -521,6 +586,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'BD991168-3AA1-FEDC-05A7-801243156EAE',
 					'name' => 'Sojobo',
 					'rice' => 13,
 					'cards' => array(
@@ -531,10 +597,12 @@ $data = array(
 			)
 		),
 		array(
+			'id' => '4666280A-949C-F4C1-DA3F-A1ECD85FF71F',
 			'name' => 'Prefecture of Ryu',
 			'image' => 'symbolsamurai.jpg',
 			'characters' => array(
 				array(
+					'id' => 'AFDB4562-CE72-42E1-C78B-30404D0885A2',
 					'name' => 'Guardsman of Ryu',
 					'rice' => 4,
 					'cards' => array(
@@ -543,6 +611,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '7753DCBC-D8BB-58B9-B7F5-2F4CA73B506C',
 					'name' => 'Madoka',
 					'rice' => 4,
 					'cards' => array(
@@ -551,6 +620,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '261EF274-9333-09A8-F5B4-8AF3F3E2ECCA',
 					'name' => 'Daisuke',
 					'rice' => 4,
 					'cards' => array(
@@ -559,6 +629,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'FCC1C3CC-2DAF-7A94-9021-522B13239BB2',
 					'name' => 'Junichi',
 					'rice' => 5,
 					'cards' => array(
@@ -567,6 +638,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '01623EBB-6E9D-CC2C-E773-5BDCC8D75375',
 					'name' => 'Minuro',
 					'rice' => 5,
 					'cards' => array(
@@ -575,6 +647,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '310E24B8-F3FE-CF40-DBC3-1C73BB18CE68',
 					'name' => 'Ryu Yarimen',
 					'rice' => 5,
 					'cards' => array(
@@ -583,6 +656,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'A68C2BF9-FF05-674E-CC23-D3F69F1DE0A9',
 					'name' => 'Fujitaka',
 					'rice' => 6,
 					'cards' => array(
@@ -591,6 +665,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '89E63A2F-B127-BCC4-D7FC-E7089EA68813',
 					'name' => 'Matsu Takashi',
 					'rice' => 6,
 					'cards' => array(
@@ -599,6 +674,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E8C422C4-BA50-D7F3-91ED-9FF0ECC04287',
 					'name' => 'Jin',
 					'rice' => 6,
 					'cards' => array(
@@ -607,6 +683,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '9BF627BB-A7B6-23A4-FC5C-30E89A588CA3',
 					'name' => 'Isamu',
 					'rice' => 7,
 					'cards' => array(
@@ -615,6 +692,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'EF150C0D-F68C-1C55-D887-91F1A36257B7',
 					'name' => 'Yukio Koshimori',
 					'rice' => 7,
 					'cards' => array(
@@ -625,6 +703,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '0F1737B4-9E94-D393-2AE1-E1E511ECCD15',
 					'name' => 'Mikio',
 					'rice' => 7,
 					'cards' => array(
@@ -633,6 +712,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '55A4A1B6-3727-C591-B4EC-905C8DC1A04B',
 					'name' => 'Golden Sentinel',
 					'rice' => 8,
 					'cards' => array(
@@ -641,6 +721,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'BFFF3390-6610-1075-874F-26A9969F6156',
 					'name' => 'Tenchi',
 					'rice' => 8,
 					'cards' => array(
@@ -649,6 +730,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '79A52AEF-17BB-A454-2369-A95F06655BB0',
 					'name' => 'Genji Takashi',
 					'rice' => 9,
 					'cards' => array(
@@ -657,6 +739,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '08A0F576-CB25-7780-B3AD-E1CBD05306CA',
 					'name' => 'Eiji Takashi',
 					'rice' => 9,
 					'cards' => array(
@@ -665,6 +748,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '45D92423-C4EC-E693-76E9-830580345EEC',
 					'name' => 'Bikou',
 					'rice' => 9,
 					'cards' => array(
@@ -673,6 +757,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '30768CB4-9B5F-2EA0-3836-E414AF7993AF',
 					'name' => 'Hanso',
 					'rice' => 9,
 					'cards' => array(
@@ -681,6 +766,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4878ABB4-45BE-2E6B-64BB-C760863464F2',
 					'name' => 'The Grey Pilgrim',
 					'rice' => 10,
 					'cards' => array(
@@ -689,6 +775,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '7FF0CE36-410A-0CD8-7FD5-A345683B9631',
 					'name' => 'Ryoko-sha',
 					'rice' => 10,
 					'cards' => array(
@@ -697,6 +784,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '27152761-70C6-F916-FE6C-D1200D731517',
 					'name' => 'Hagane Takashi',
 					'rice' => 10,
 					'cards' => array(
@@ -705,6 +793,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2F785396-4BA0-57DB-27D0-68C51E78E58D',
 					'name' => 'Airo Takashi',
 					'rice' => 11,
 					'cards' => array(
@@ -713,6 +802,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'CFC977E2-DFA2-C92F-727C-187BDFB3F189',
 					'name' => 'Karsumoto Takashi',
 					'rice' => 12,
 					'cards' => array(
@@ -721,6 +811,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '9E81C23F-BABA-5B61-F62A-431D3594C2B9',
 					'name' => 'Mizuchi',
 					'rice' => 14,
 					'cards' => array(
@@ -731,10 +822,12 @@ $data = array(
 			)
 		),
 		array(
+			'id' => 'E4499C96-E6A1-A7A0-5F6E-C9D4CC56843A',
 			'name' => 'The Cult of Yurei',
 			'image' => 'symbolyoma.jpg',
 			'characters' => array(
 				array(
+					'id' => '2458065A-9A63-DA09-8C01-891287291647',
 					'name' => 'Rat Swarm',
 					'rice' => 1,
 					'cards' => array(
@@ -743,6 +836,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'DFEE86C5-8818-88F2-C49A-71A67AE17C0C',
 					'name' => 'Kusatta Kairai',
 					'rice' => 4,
 					'cards' => array(
@@ -751,6 +845,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '361FA583-36EA-4E20-891D-75128FCC93C8',
 					'name' => 'Kairai Farmer',
 					'rice' => 4,
 					'cards' => array(
@@ -759,6 +854,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E23649B6-2570-C2E4-9131-3F53B8ED4B00',
 					'name' => 'Kairai Militia',
 					'rice' => 4,
 					'cards' => array(
@@ -767,6 +863,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B9BE7BFC-025D-96EA-7690-B91B0AAFBF79',
 					'name' => 'Kairai Villager',
 					'rice' => 5,
 					'cards' => array(
@@ -775,6 +872,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '7169AB67-4CE2-E345-D8DD-F4085A17C6E2',
 					'name' => 'Shichiro',
 					'rice' => 5,
 					'cards' => array(
@@ -783,6 +881,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '78ACB2A1-2EC1-DCC8-1DBB-30227029EBA8',
 					'name' => 'Gengo',
 					'rice' => 5,
 					'cards' => array(
@@ -791,6 +890,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'D8BB36AD-B75A-AE2A-A29B-D73B0B3320D7',
 					'name' => 'Nezumi Kun',
 					'rice' => 6,
 					'cards' => array(
@@ -799,6 +899,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '86FA83AA-601C-1313-38DB-1E83ED6465FD',
 					'name' => 'Gaki',
 					'rice' => 6,
 					'cards' => array(
@@ -807,6 +908,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E6B89F50-0F87-5305-7F05-04124175504F',
 					'name' => 'Large Swarm of Rats',
 					'rice' => 6,
 					'cards' => array(
@@ -815,6 +917,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C454A86F-A0CC-5E00-839E-B08D6B7D1F0B',
 					'name' => 'Armoured Kairai',
 					'rice' => 6,
 					'cards' => array(
@@ -823,6 +926,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E8F31DB2-5D6A-18E1-98A2-DB096895A052',
 					'name' => 'Nezumi',
 					'rice' => 7,
 					'cards' => array(
@@ -833,6 +937,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'EB92C136-283C-262B-7A5C-43E4B30319C7',
 					'name' => 'Tadao',
 					'rice' => 8,
 					'cards' => array(
@@ -841,6 +946,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '175F9E43-4E38-C81C-AE62-0CB0BD49A0E8',
 					'name' => 'Mo Ises',
 					'rice' => 8,
 					'cards' => array(
@@ -849,6 +955,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2BDF820F-FDD4-6C1F-9CCA-AFE6C48E4121',
 					'name' => 'Taka',
 					'rice' => 8,
 					'cards' => array(
@@ -857,6 +964,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '46C91E8C-6765-09A2-7D1F-DAC42C048FD3',
 					'name' => 'Taka: Wrath',
 					'rice' => 'Su',
 					'cards' => array(
@@ -865,6 +973,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '57444E09-279D-1925-F42E-00C8DF20FF3F',
 					'name' => 'Wanyudo',
 					'rice' => 9,
 					'cards' => array(
@@ -873,6 +982,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '8CDCAE94-5054-446F-23A8-C89E1B457D00',
 					'name' => 'Harionago',
 					'rice' => 9,
 					'cards' => array(
@@ -881,6 +991,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2107A35C-5BEF-B653-187E-C92662E1AD34',
 					'name' => 'Araka',
 					'rice' => 9,
 					'cards' => array(
@@ -889,6 +1000,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '95D3E230-FE34-64FE-C266-12AF7DF0A322',
 					'name' => 'Ikiryo',
 					'rice' => 10,
 					'cards' => array(
@@ -897,6 +1009,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '56783182-1A08-2F35-3399-6BB481DD4B45',
 					'name' => 'Waku, Soul Collector',
 					'rice' => 11,
 					'cards' => array(
@@ -907,6 +1020,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2A038C2F-720B-3203-F22F-6F8181472076',
 					'name' => 'Gok, the Corpse Collector',
 					'rice' => 11,
 					'cards' => array(
@@ -915,6 +1029,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B0CE192E-B92F-A119-3949-5A94D73CB4D8',
 					'name' => 'Kato, the Puppet Master',
 					'rice' => 11,
 					'cards' => array(
@@ -925,6 +1040,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4A4D43B4-3943-EB20-3ACC-A643A9596770',
 					'name' => 'Kato: Marionette',
 					'rice' => 'Su',
 					'cards' => array(
@@ -933,6 +1049,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '9B574098-1E79-CE64-B14E-0666850BA2F3',
 					'name' => 'Wraith',
 					'rice' => 12,
 					'cards' => array(
@@ -943,10 +1060,12 @@ $data = array(
 			)
 		),
 		array(
+			'id' => '8CB2F624-8F47-C39C-3792-F0CBEB8865AA',
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
 				array(
+					'id' => '7C7EAF0B-68F1-0184-668C-A647702DA174',
 					'name' => 'Bakemono Horde',
 					'rice' => '-',
 					'cards' => array(
@@ -955,6 +1074,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '1A32DA3B-6B7E-FD29-CD20-921913626E56',
 					'name' => 'Oni Slave',
 					'rice' => 3,
 					'cards' => array(
@@ -963,6 +1083,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '55944C3D-4A05-9FD3-BFE3-752B5B7FB1C1',
 					'name' => 'Jun, Oni Slave',
 					'rice' => 4,
 					'cards' => array(
@@ -971,6 +1092,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '24B99E8E-55FE-1BC3-02D3-B1AD95682482',
 					'name' => 'Bakemono Archers',
 					'rice' => 4,
 					'cards' => array(
@@ -979,6 +1101,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C8738825-05C1-E68B-4A2C-2169D045699D',
 					'name' => 'Bakemono Beaters',
 					'rice' => 4,
 					'cards' => array(
@@ -987,6 +1110,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '87773ED2-A38E-8AC9-6953-1EE081C01813',
 					'name' => 'Bakemono Spearmen',
 					'rice' => 4,
 					'cards' => array(
@@ -995,6 +1119,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'A022B4CB-0448-32D2-84E9-F724B1D0A363',
 					'name' => 'Tribal Brute',
 					'rice' => 5,
 					'cards' => array(
@@ -1003,6 +1128,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'CCE713E1-3151-27C4-BAD3-E650FEBEEAC5',
 					'name' => 'Tra Peng',
 					'rice' => 5,
 					'cards' => array(
@@ -1011,6 +1137,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '23C31356-ED3C-50A9-54D8-23019CFCA022',
 					'name' => 'Okina & Oto',
 					'rice' => 5,
 					'cards' => array(
@@ -1019,6 +1146,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'C1DAFF5F-9271-D848-C063-68B885DC9D99',
 					'name' => 'Zung Fu',
 					'rice' => 6,
 					'cards' => array(
@@ -1027,6 +1155,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '2B711990-DCB0-9070-570A-D1D82BD825B4',
 					'name' => 'Uk-Kang',
 					'rice' => 6,
 					'cards' => array(
@@ -1035,6 +1164,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '4F2A853F-685F-DE8F-A965-B3DF99C3C100',
 					'name' => 'Giant Cave Bat',
 					'rice' => 7,
 					'cards' => array(
@@ -1043,6 +1173,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'EFC15F6A-152F-98D9-E5F1-A9DABD614D44',
 					'name' => 'Wu-Zang',
 					'rice' => 7,
 					'cards' => array(
@@ -1051,6 +1182,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B6A5A561-C533-73D8-0893-6EB35F775541',
 					'name' => 'Boba',
 					'rice' => 8,
 					'cards' => array(
@@ -1059,6 +1191,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E05B5B02-EBB6-60A7-05C9-E47FDC1D755C',
 					'name' => 'Kano',
 					'rice' => 8,
 					'cards' => array(
@@ -1067,6 +1200,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'F406CB96-855C-893A-18F8-D42F2FAE1CB0',
 					'name' => 'Kaihei Alpha',
 					'rice' => 9,
 					'cards' => array(
@@ -1075,6 +1209,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'E3889488-6327-6C84-1BF3-3B51775C10CD',
 					'name' => 'Waka',
 					'rice' => 10,
 					'cards' => array(
@@ -1083,6 +1218,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '56E67565-DFC6-932B-AC7F-CE6E27EA9EFF',
 					'name' => 'Nian',
 					'rice' => 10,
 					'cards' => array(
@@ -1091,6 +1227,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'CFD1E9D4-1807-B860-FD1B-F50CB20E8267',
 					'name' => 'Yusha, the Vindictive',
 					'rice' => 11,
 					'cards' => array(
@@ -1099,6 +1236,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '73BC5C7D-9FD6-B1DA-D530-263989B98022',
 					'name' => 'Bobata',
 					'rice' => 13,
 					'cards' => array(
@@ -1107,6 +1245,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'EEDE1C25-EE07-C51A-217E-192FD848FC01',
 					'name' => 'Zuba, the All Seeing',
 					'rice' => 13,
 					'cards' => array(
@@ -1115,6 +1254,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => '7ED28C03-F2B6-D18A-61E1-35D6B7492C21',
 					'name' => 'Kemono, the Savage',
 					'rice' => 15,
 					'cards' => array(
@@ -1123,6 +1263,7 @@ $data = array(
 					)
 				),
 				array(
+					'id' => 'B33FC441-0770-9AF3-94AB-EF5F5B661139',
 					'name' => 'Ushi, the Sadistic',
 					'rice' => 15,
 					'cards' => array(
@@ -1453,5 +1594,12 @@ for ($i = 0; $i < count($data['factions']); $i++) {
 		}
 	);
 }
+
+usort(
+	$data['scenarios'],
+	function($scenario_a, $scenario_b) {
+		return strcmp($scenario_a['name'], $scenario_b['name']);
+	}
+);
 
 file_put_contents('data.js', 'var data = '.json_encode($data).';');
