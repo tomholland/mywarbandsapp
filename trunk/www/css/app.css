@@ -22,7 +22,7 @@
 }
 
 .content .table-view .media-body {
-	padding-top: 12px;
+	padding-top: 10px;
 }
 
 .content .table-view-cell>a:not(.btn):active {
@@ -63,4 +63,13 @@
 
 .content .scenario .victory-conditions .condition {
 	width: 85%;
+}
+
+#addwarband,
+#addcharactertowarband,
+#randomscenario {
+	width: auto;
+	margin: 6px 5px;
+	padding: 12px 0;
+	font-size: 15px;
 }

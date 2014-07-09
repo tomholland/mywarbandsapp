@@ -1,9 +1,16 @@
 var currentContentViewID = null;
 var backContentViewID = null;
 var backContentViewYScroll = 0;
+var factionImages = {};
 
 document.addEventListener('deviceready', function() {
+
+	Keyboard.automaticScrollToTopOnHiding = true;
+	Keyboard.shrinkView(false);
+	Keyboard.disableScrollingInShrinkView(true);
+	
 	$.each(data.factions, function(factionIndex, faction) {
+		factionImages[faction.id] = faction.image;
 		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
 		var html = '';
 		html += '<div class="content-view remember-position" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
@@ -24,10 +31,15 @@ document.addEventListener('deviceready', function() {
 		});
 		$('.content').append(html);
 	});
+	
+	loadWarbands(function() {
+		drawWarbands();
+	});
+	
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
-		html += '<div class="content-view content-padded remember-position scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
+		html += '<div class="content-view content-padded scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
 			html += '<a class="btn show-backstory" data-scenario="'+scenarioIndex+'" id="scenario'+scenarioIndex+'viewbackstory"><span class="icon icon-right"></span> View backstory</a>';
 			html += '<div id="scenario'+scenarioIndex+'backstory" class="scenario-backstory">';
 			html += '<a class="btn hide-backstory" data-scenario="'+scenarioIndex+'"><span class="icon icon-down"></span> Hide backstory</a>';
@@ -72,25 +84,34 @@ document.addEventListener('deviceready', function() {
 		$('#scenario'+$(this).attr('data-scenario')+'backstory').hide();
 		$('#scenario'+$(this).attr('data-scenario')+'viewbackstory').show();
 	});
+	
 	$('#title').html(htmlEncode($('.content .content-view.default').attr('data-title')));
 	$('.content .content-view.default').show();
 	currentContentViewID = $('.content .content-view.default').attr('id');
 	$('nav a').each(function(index) {
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) $(this).addClass('active');
 	});
+	
 	$('#back').tap(function() {
-		changeContentView(currentContentViewID, backContentViewID);
-		if ($('#'+currentContentViewID).hasClass('remember-position')) {
-			// trigger redraw to workaround a WebKit lack of redraw after setting scrollTop:
-			$('.content').css({ 'overflow': 'hidden' });
-			$('.content')[0].scrollTop = backContentViewYScroll;
-			$('.content').css({ 'overflow': 'scroll' });
-		}
+		if (Keyboard.isVisible) return;
+		changeContentView(currentContentViewID, backContentViewID, function() {
+			if ($('#'+currentContentViewID).hasClass('remember-position')) correctScoll(backContentViewYScroll);
+			else correctScoll(0);
+		});
 	});
+	
+	$('#randomscenario').tap(function() {
+		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), function() {
+			correctScoll(0);
+		});
+	});
+	
 	$('.change-content-view').tap(function() {
+		if (Keyboard.isVisible) return;
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
-		if ($('#'+currentContentViewID).hasClass('remember-position')) backContentElement = $(this);
-		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'));
+		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), function() {
+			correctScoll(0);
+		});
 		if ($(this).hasClass('tab-item')) {
 			$('nav a').each(function(index) {
 				$(this).removeClass('active');
@@ -98,16 +119,21 @@ document.addEventListener('deviceready', function() {
 			$(this).addClass('active');
 		}
 	});
+	
 	$('a.pdf').tap(function() {
+		//PDFReader.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'), function(foo) { window.console.log(foo); }, function(bar) { window.console.log(bar); });
+		//PDFReader.clearCache(filePath, finishedCallback);
 		var PDFView = window.open($(this).attr('data-url'), '_blank', 'location=no,closebuttoncaption=Close,enableViewportScale=yes');
 		PDFView.addEventListener('exit', function() {
 			ref.removeEventListener('exit', function(){});
 			ref.close();
 		});
 	});
+	
 	$('a.external').tap(function() {
 		window.open(encodeURI($(this).attr('data-url')), '_system');
 	});
+	
 	$('a.twitter').tap(function() {
 		var username = $(this).attr('data-username');
 		appAvailability.check(
@@ -138,11 +164,21 @@ document.addEventListener('deviceready', function() {
 	});
 }, false);
 
+function correctScoll(amount) {
+	$('.content').css({ 'overflow': 'hidden' }); // trigger redraw to workaround a WebKit lack of redraw after setting scrollTop
+	$('.content')[0].scrollTop = amount;
+	$('.content').css({ 'overflow': 'scroll' });
+}
+
+function randomIntFromInterval(min, max) {
+	return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function changeContentView(visibleContentViewID, newContentViewID) {
+function changeContentView(visibleContentViewID, newContentViewID, callback) {
 	if ($('#'+visibleContentViewID).hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
 	$('#'+newContentViewID).show();
 	$('#'+visibleContentViewID).hide();
@@ -155,4 +191,12 @@ function changeContentView(visibleContentViewID, newContentViewID) {
 		$('#back').hide();
 	}
 	currentContentViewID = newContentViewID;
+	if (callback !== null) callback();
+}
+
+function drawWarbands() {
+	$('#warbands').find('.table-view').empty();
+	for (var warbandID in warbands) {
+		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="editwarband" data-warband-id="'+warbandID+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[warbandID].faction]+'"><div class="media-body">'+htmlEncode(warbands[warbandID].name)+'</div></a></li>');
+	}
 }
