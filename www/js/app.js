@@ -108,6 +108,9 @@ document.addEventListener('deviceready', function() {
 	
 	$('.change-content-view').tap(function() {
 		if (Keyboard.isVisible) return;
+		window.plugin.statusbarOverlay.isHidden(function(isHidden) {
+			if (!isHidden) window.plugin.statusbarOverlay.hide();
+		});
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
 		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), function() {
 			correctScoll(0);
@@ -121,13 +124,7 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('a.pdf').tap(function() {
-		//PDFReader.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'), function(foo) { window.console.log(foo); }, function(bar) { window.console.log(bar); });
-		//PDFReader.clearCache(filePath, finishedCallback);
-		var PDFView = window.open($(this).attr('data-url'), '_blank', 'location=no,closebuttoncaption=Close,enableViewportScale=yes');
-		PDFView.addEventListener('exit', function() {
-			ref.removeEventListener('exit', function(){});
-			ref.close();
-		});
+		PDFReader.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
 	});
 	
 	$('a.external').tap(function() {
