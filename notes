@@ -1,5 +1,0 @@
-Add the following to app.html to enable desktop testing
-
-<script>
-	document.dispatchEvent(new CustomEvent('deviceready'));
-</script>

@@ -1,8 +1,13 @@
-The following Cordova plugins are used:
+For initial setup, run the following commands from inside the project's root directory:
 
-com.ben2.cordova.keyboard
-com.lesfrancschatons.cordova.plugins.pdfreader
-com.ohh2ahh.plugins.appavailability
-de.appplant.cordova.plugin.hidden-statusbar-overlay
-org.apache.cordova.file
-org.apache.cordova.inappbrowser
+mkdir {hooks,merges,platforms,plugins}
+
+cordova platform add ios
+
+cp icons_backup/* platforms/ios/Bushido\ Cards/Resources/icons/
+
+cp splash_backup/* platforms/ios/Bushido\ Cards/Resources/splash/
+
+cordova plugins add com.ben2.cordova.keyboard com.lesfrancschatons.cordova.plugins.pdfreader https://github.com/ohh2ahh/AppAvailability.git de.appplant.cordova.plugin.hidden-statusbar-overlay org.apache.cordova.file org.apache.cordova.inappbrowser
+
+Amend boolean values for settings in plugins/com.lesfrancschatons.cordova.plugins.pdfreader/src/ios/ReaderFramework/src/ReaderConstants.h
