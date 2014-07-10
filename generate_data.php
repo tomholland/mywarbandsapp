@@ -1302,7 +1302,7 @@ $data = array(
 					'Decreasing (Scorer)'
 				)
 			),
-			'image' => '1.png'
+			'image' => 'idols-seigyo-omaju.svg'
 		),
 		array(
 			'name' => 'Keii',
@@ -1331,7 +1331,7 @@ $data = array(
 					'Reset (3,5)'
 				)
 			),
-			'image' => '2.png'
+			'image' => 'keii-ninki-depletion.svg'
 		),
 		array(
 			'name' => 'The Messenger',
@@ -1356,7 +1356,7 @@ $data = array(
 					'Special Rules: At the end of a model’s own action it may reveal itself'
 				)
 			),
-			'image' => '3.png'
+			'image' => 'messenger-envoy.svg'
 		),
 		array(
 			'name' => 'Ryodo',
@@ -1379,7 +1379,7 @@ $data = array(
 					'To the Player who has the most Scenario Points during the End Phase of turn 6'
 				)
 			),
-			'image' => '4.png'
+			'image' => 'ryodo.svg'
 		),
 		array(
 			'name' => 'Reikan',
@@ -1400,7 +1400,7 @@ $data = array(
 					'If your VIM is within 4” of the Opponent’s Baseline Deployment edge during the End Phase and your Opponent’s VIM is not within 4” of your Baseline Deployment edge'
 				)
 			),
-			'image' => '5.png'
+			'image' => 'reikan.svg'
 		),
 		array(
 			'name' => 'Seigyo',
@@ -1425,7 +1425,7 @@ $data = array(
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 6'
 				)
 			),
-			'image' => '6.png'
+			'image' => 'idols-seigyo-omaju.svg'
 		),
 		array(
 			'name' => 'Ichi no Riten',
@@ -1446,7 +1446,7 @@ $data = array(
 					'To the Player whose VIM is closest to the Opponents Deployment Baseline in the End Phase of the last Turn of the game'
 				)
 			),
-			'image' => '7.png'
+			'image' => 'ichi-no-riten.svg'
 		),
 		array(
 			'name' => 'Ninki',
@@ -1473,7 +1473,7 @@ $data = array(
 					'To the player with most Friendly Scenario Objectives during the End Phase of turn 6'
 				)
 			),
-			'image' => '8.png'
+			'image' => 'keii-ninki-depletion.svg'
 		),
 		array(
 			'name' => 'Botoku',
@@ -1500,7 +1500,7 @@ $data = array(
 					'To the Player who has the most Scenario Points during the End Phase of Turn 6'
 				)
 			),
-			'image' => '9.png'
+			'image' => 'botoku.svg'
 		),
 		array(
 			'name' => 'The Envoy',
@@ -1522,7 +1522,7 @@ $data = array(
 					'To the player whose VIM is closest to the Opponent’s Deployment Zone at the end of the game'
 				)
 			),
-			'image' => '10.png'
+			'image' => 'messenger-envoy.svg'
 		),
 		array(
 			'name' => 'Omaju',
@@ -1553,7 +1553,7 @@ $data = array(
 					'Reset Influence (3/5)'
 				)
 			),
-			'image' => '11.png'
+			'image' => 'idols-seigyo-omaju.svg'
 		),
 		array(
 			'name' => 'Depletion',
@@ -1581,7 +1581,7 @@ $data = array(
 					'Decreasing (Popular)'
 				)
 			),
-			'image' => '12.png'
+			'image' => 'keii-ninki-depletion.svg'
 		)
 	)
 );
