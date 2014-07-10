@@ -12,7 +12,7 @@
 	<body>
 		<header class="bar bar-nav">
 			<a class="icon icon-left-nav pull-left" id="back"></a>
-			<h1 class="title" id="title"></h1>
+			<h1 class="title"><span id="title"></span></h1>
 		</header>
 		<nav class="bar bar-tab">
 			<a class="tab-item change-content-view" data-target-content-view-id="factions">
@@ -45,6 +45,11 @@
 				<ul class="table-view"></ul>
 			</div>
 			<div class="content-view remember-position" id="warbands" data-title="Warbands">
+				<div class="segmented-control">
+					<a class="control-item active">Characters</a>
+					<a class="control-item">Events</a>
+					<a class="control-item">Terrain</a>
+				</div>
 				<a class="btn btn-block" id="addwarband"><span class="icon icon-plus"></span> Add a Warband</a>
 				<ul class="table-view"></ul>
 			</div>

@@ -39,17 +39,12 @@ document.addEventListener('deviceready', function() {
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
-		html += '<div class="content-view content-padded scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
-			html += '<a class="btn show-backstory" data-scenario="'+scenarioIndex+'" id="scenario'+scenarioIndex+'viewbackstory"><span class="icon icon-right"></span> View backstory</a>';
-			html += '<div id="scenario'+scenarioIndex+'backstory" class="scenario-backstory">';
-			html += '<a class="btn hide-backstory" data-scenario="'+scenarioIndex+'"><span class="icon icon-down"></span> Hide backstory</a>';
-			$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
-				html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
-			});
-			html += '</div>';
+		html += '<div class="content-view content-padded remember-position scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
+			html += '<a class="btn change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'backstory"><span class="icon icon-right"></span> View backstory</a>';
 			html += '<h5>Type</h5>';
 			html += '<p>'+htmlEncode(scenario.type)+'</p>';
 			html += '<h5>Deployment</h5>';
+			html += '<a class="btn scenario-plan change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'plan"><span class="icon icon-search"></span> View plan</a>';
 			$.each(scenario.deployment, function(scenarioDeploymentItemIndex, scenarioDeploymentItem) {
 				html += '<p>'+htmlEncode(scenarioDeploymentItem)+'</p>';
 			});
@@ -71,18 +66,16 @@ document.addEventListener('deviceready', function() {
 			});
 			html += '</table>';
 			if (scenario.victory_conditions.hasOwnProperty('additional_rules')) html += '<p>'+htmlEncode(scenario.victory_conditions.additional_rules)+'</p>';
-			//scenario.image
+		html += '</div>';
+		html += '<div class="content-view content-padded" id="scenario'+scenarioIndex+'backstory" data-title="'+htmlEncode(scenario.name)+': backstory" data-back-content-view-id="scenario'+scenarioIndex+'">';
+		$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
+			html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
+		});
+		html += '</div>';
+		html += '<div class="content-view content-padded" id="scenario'+scenarioIndex+'plan" data-title="'+htmlEncode(scenario.name)+': plan" data-back-content-view-id="scenario'+scenarioIndex+'">';
+			html += '<img class="scenario-image" src="images/scenarios/'+scenario.image+'">';
 		html += '</div>';
 		$('.content').append(html);
-	});
-	$('.scenario-backstory').hide();
-	$('.show-backstory').tap(function() {
-		$(this).hide();
-		$('#scenario'+$(this).attr('data-scenario')+'backstory').show();
-	});
-	$('.hide-backstory').tap(function() {
-		$('#scenario'+$(this).attr('data-scenario')+'backstory').hide();
-		$('#scenario'+$(this).attr('data-scenario')+'viewbackstory').show();
 	});
 	
 	$('#title').html(htmlEncode($('.content .content-view.default').attr('data-title')));
