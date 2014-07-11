@@ -34,33 +34,34 @@
 	transform: none;
 }
 
-.content-padded {
-	margin: 0;
-	padding: 10px;
-}
-
 .content-view {
 	display: none;
 	background: #fff;
-	/*min-height: 100%;*/
 }
 
-.content-view .content-scroll-wrapper {
-	/* needs fixed height*/
+.content-padded {
+	margin: 0;
+}
+
+.content-view .content-view-scroll-wrapper {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	/*-webkit-overflow-scrolling: touch;*/
+	-webkit-overflow-scrolling: touch;
 }
 
-.content-view .content-scroll-wrapper .table-view {
+.content-view.content-padded .content-view-scroll-wrapper {
+	padding: 10px;
+}
+
+.content-view .content-view-scroll-wrapper .table-view {
 	/*-webkit-transform: translateZ(0);*/
 }
 
 .content-view.animatable {
 	position: absolute;
+	top: 0;
 	z-index: 1;
 	width: 100%;
-	height: 10000px;
 }
 
 .content-view.animation {
