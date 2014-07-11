@@ -1,6 +1,4 @@
-#back,
-.content .content-view,
-.content .slider {
+#back {
 	display: none;
 }
 
@@ -29,6 +27,28 @@
 	margin: 44px 0 50px 0;
 }
 
+.content-padded {
+	margin: 0;
+	padding: 10px;
+}
+
+.content-view {
+	display: none;
+	background: #fff;
+	min-height: 100%;
+}
+
+.content-view.animatable {
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+}
+
+.content-view.animation {
+	-webkit-transition: left .5s;
+	transition: left .5s;
+}
+
 .content .table-view {
 	margin-bottom: 0;
 }
@@ -41,12 +61,17 @@
 	padding-top: 10px;
 }
 
+.content .table-view-cell>a:not(.btn) {
+	-webkit-transition: opacity .3s;
+	transition: opacity .3s;
+}
+
 .content .table-view-cell>a:not(.btn):active {
 	background-color: inherit;
 	opacity: .4;
 }
 
-.content .faction-image {
+.faction-image {
 	width: 42px;
 	height: 42px;
 }
@@ -54,6 +79,7 @@
 .content .slider,
 .content .slider .slide-group {
 	height: 100%; /* not set in Ratchet for some reasons... */
+	background: #000;
 }
 
 .content .slider .slide {
@@ -62,18 +88,18 @@
 	background-position: center center;
 }
 
-.content .scenario h5 {
+.scenario h5 {
 	border-bottom: 1px solid #999;
 	padding: 5px 0;
 	font-weight: bold;
 }
 
-.content .scenario .victory-conditions .points {
+.scenario .victory-conditions .points {
 	width: 15%;
 	vertical-align: top;
 }
 
-.content .scenario .victory-conditions .condition {
+.scenario .victory-conditions .condition {
 	width: 85%;
 }
 
@@ -81,9 +107,15 @@
 #addcharactertowarband,
 #randomscenario {
 	width: auto;
-	margin: 6px 5px;
+	margin: 0 5px 6px 5px;
 	padding: 12px 0;
 	font-size: 15px;
+}
+
+#scenarios,
+#warbands,
+#warband {
+	padding-top: 6px;
 }
 
 .btn.scenario-plan {
@@ -93,7 +125,6 @@
 .scenario-image {
 	width: 100%;
 	border: 1px solid #ccc;
-	background: #fff;
 }
 
 .segmented-control {
