@@ -1,3 +1,4 @@
+var animating = false;
 var currentContentViewID = null;
 var backContentViewID = null;
 var backContentViewYScroll = 0;
@@ -11,17 +12,17 @@ document.addEventListener('deviceready', function() {
 	
 	$.each(data.factions, function(factionIndex, faction) {
 		factionImages[faction.id] = faction.image;
-		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
+		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
 		var html = '';
 		html += '<div class="content-view remember-position" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
 			html += '<ul class="table-view">';
 				$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-					html += '<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
+					html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
 				});
 			html += '</ul>';
 		html += '</div>';
 		$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-			html += '<div class="slider" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
+			html += '<div class="slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
 				html += '<div class="slide-group">';
 					$.each(factionCharacter.cards, function(factionCharacterContentViewIndex, factionCharacterCard) {
 						html += '<div class="slide" style="background-image: url(\'images/cards/'+factionCharacterCard+'\');"></div>';
@@ -37,14 +38,14 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
-		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
+		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
 		html += '<div class="content-view content-padded remember-position scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
-			html += '<a class="btn change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'backstory"><span class="icon icon-right"></span> View backstory</a>';
+			html += '<a class="btn change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'backstory"><span class="icon icon-right"></span> View backstory</a>';
 			html += '<h5>Type</h5>';
 			html += '<p>'+htmlEncode(scenario.type)+'</p>';
 			html += '<h5>Deployment</h5>';
-			html += '<a class="btn scenario-plan change-content-view" data-target-content-view-id="scenario'+scenarioIndex+'plan"><span class="icon icon-search"></span> View plan</a>';
+			html += '<a class="btn scenario-plan change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'plan"><span class="icon icon-search"></span> View plan</a>';
 			$.each(scenario.deployment, function(scenarioDeploymentItemIndex, scenarioDeploymentItem) {
 				html += '<p>'+htmlEncode(scenarioDeploymentItem)+'</p>';
 			});
@@ -67,12 +68,12 @@ document.addEventListener('deviceready', function() {
 			html += '</table>';
 			if (scenario.victory_conditions.hasOwnProperty('additional_rules')) html += '<p>'+htmlEncode(scenario.victory_conditions.additional_rules)+'</p>';
 		html += '</div>';
-		html += '<div class="content-view content-padded" id="scenario'+scenarioIndex+'backstory" data-title="'+htmlEncode(scenario.name)+': backstory" data-back-content-view-id="scenario'+scenarioIndex+'">';
+		html += '<div class="content-view content-padded scenario-backstory" id="scenario'+scenarioIndex+'backstory" data-title="'+htmlEncode(scenario.name)+': backstory" data-back-content-view-id="scenario'+scenarioIndex+'">';
 		$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
 			html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
 		});
 		html += '</div>';
-		html += '<div class="content-view content-padded" id="scenario'+scenarioIndex+'plan" data-title="'+htmlEncode(scenario.name)+': plan" data-back-content-view-id="scenario'+scenarioIndex+'">';
+		html += '<div class="content-view scenario-image-view content-padded" id="scenario'+scenarioIndex+'plan" data-title="'+htmlEncode(scenario.name)+': plan" data-back-content-view-id="scenario'+scenarioIndex+'">';
 			html += '<img class="scenario-image" src="images/scenarios/'+scenario.image+'">';
 		html += '</div>';
 		$('.content').append(html);
@@ -86,26 +87,29 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('#back').tap(function() {
+		if (animating) return;
 		if (Keyboard.isVisible) return;
-		changeContentView(currentContentViewID, backContentViewID, function() {
+		changeContentView(currentContentViewID, backContentViewID, 'left', function() {
 			if ($('#'+currentContentViewID).hasClass('remember-position')) correctScoll(backContentViewYScroll);
 			else correctScoll(0);
 		});
 	});
 	
 	$('#randomscenario').tap(function() {
-		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), function() {
+		if (animating) return;
+		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), 'right', function() {
 			correctScoll(0);
 		});
 	});
 	
 	$('.change-content-view').tap(function() {
+		if (animating) return;
 		if (Keyboard.isVisible) return;
 		window.plugin.statusbarOverlay.isHidden(function(isHidden) {
 			if (!isHidden) window.plugin.statusbarOverlay.hide();
 		});
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
-		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), function() {
+		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), (($(this).hasClass('appear-from-right')) ? 'right':'none'), function() {
 			correctScoll(0);
 		});
 		if ($(this).hasClass('tab-item')) {
@@ -155,9 +159,9 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 function correctScoll(amount) {
-	$('.content').css({ 'overflow': 'hidden' }); // trigger redraw to workaround a WebKit lack of redraw after setting scrollTop
+	$('.content').css('overflow', 'hidden'); // trigger redraw to workaround a WebKit lack of redraw after setting scrollTop
 	$('.content')[0].scrollTop = amount;
-	$('.content').css({ 'overflow': 'scroll' });
+	$('.content').css('overflow', 'scroll');
 }
 
 function randomIntFromInterval(min, max) {
@@ -168,25 +172,44 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function changeContentView(visibleContentViewID, newContentViewID, callback) {
-	if ($('#'+visibleContentViewID).hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
-	$('#'+newContentViewID).show();
-	$('#'+visibleContentViewID).hide();
+function changeContentView(visibleContentViewID, newContentViewID, direction, callback) {
+	animating = true;
+	$('.content-view').each(function(index) {
+		if ($(this).css('display') != 'none' && $(this).attr('id') != visibleContentViewID) $(this).hide().removeClass('animation').removeClass('animatable');
+	});
+	var visibleContentView = $('#'+visibleContentViewID);
+	var newContentView = $('#'+newContentViewID);
+	if (visibleContentView.hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
+	if (newContentView.hasClass('slider')) newContentView.find('.slide-group').css('-webkit-transform', 'translateX(0)');
+	if (direction == 'none') {
+		newContentView.show();
+		visibleContentView.hide();
+	} else {
+		newContentView.css({'top': $('.content')[0].scrollTop+'px', 'left': ((direction == 'left') ? '-320px':'320px')}).addClass('animatable').show().addClass('animation');
+		setTimeout(function() { // workaround transition not firing without first reading the value
+			newContentView.css('left', 0);
+		}, 1); 
+		setTimeout(function() {
+			visibleContentView.hide();
+			newContentView.removeClass('animation').removeClass('animatable');
+		}, 501);
+	}
 	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
-	if ($('#'+newContentViewID).attr('data-back-content-view-id')) {
-		backContentViewID = $('#'+newContentViewID).attr('data-back-content-view-id');
+	if (newContentView.attr('data-back-content-view-id')) {
+		backContentViewID = newContentView.attr('data-back-content-view-id');
 		$('#back').show();
 	} else {
 		backContentViewID = null;
 		$('#back').hide();
 	}
 	currentContentViewID = newContentViewID;
-	if (callback !== null) callback();
+	animating = false;
+	//if (callback !== null) callback();
 }
 
 function drawWarbands() {
 	$('#warbands').find('.table-view').empty();
 	for (var warbandID in warbands) {
-		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="editwarband" data-warband-id="'+warbandID+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[warbandID].faction]+'"><div class="media-body">'+htmlEncode(warbands[warbandID].name)+'</div></a></li>');
+		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="editwarband" data-warband-id="'+warbandID+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[warbandID].faction]+'"><div class="media-body">'+htmlEncode(warbands[warbandID].name)+'</div></a></li>');
 	}
 }
