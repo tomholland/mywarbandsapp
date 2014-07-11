@@ -1,7 +1,7 @@
 var animating = false;
 var currentContentViewID = null;
 var backContentViewID = null;
-var backContentViewYScroll = 0;
+var backContentViewsYScroll = [];
 var factionImages = {};
 
 document.addEventListener('deviceready', function() {
@@ -12,14 +12,20 @@ document.addEventListener('deviceready', function() {
 	
 	$.each(data.factions, function(factionIndex, faction) {
 		factionImages[faction.id] = faction.image;
-		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
+		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
 		var html = '';
 		html += '<div class="content-view remember-position" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
-			html += '<ul class="table-view">';
-				$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-					html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
-				});
-			html += '</ul>';
+			
+			html += '<div class="content-scroll-wrapper">';
+			
+				html += '<ul class="table-view">';
+					$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
+						html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
+					});
+				html += '</ul>';
+			
+			html += '</div>';
+			
 		html += '</div>';
 		$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
 			html += '<div class="slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
@@ -89,29 +95,23 @@ document.addEventListener('deviceready', function() {
 	$('#back').tap(function() {
 		if (animating) return;
 		if (Keyboard.isVisible) return;
-		changeContentView(currentContentViewID, backContentViewID, 'left', function() {
-			if ($('#'+currentContentViewID).hasClass('remember-position')) correctScoll(backContentViewYScroll);
-			else correctScoll(0);
-		});
+		changeContentView(currentContentViewID, backContentViewID, 'left');
 	});
 	
 	$('#randomscenario').tap(function() {
 		if (animating) return;
-		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), 'right', function() {
-			correctScoll(0);
-		});
+		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), 'right');
 	});
 	
 	$('.change-content-view').tap(function() {
 		if (animating) return;
-		if (Keyboard.isVisible) return;
 		window.plugin.statusbarOverlay.isHidden(function(isHidden) {
 			if (!isHidden) window.plugin.statusbarOverlay.hide();
 		});
+		if (Keyboard.isVisible) return;
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
-		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), (($(this).hasClass('appear-from-right')) ? 'right':'none'), function() {
-			correctScoll(0);
-		});
+		if ($(this).hasClass('tab-item')) backContentViewsYScroll.length = 0;
+		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), (($(this).hasClass('appear-from-right')) ? 'right':'none'));
 		if ($(this).hasClass('tab-item')) {
 			$('nav a').each(function(index) {
 				$(this).removeClass('active');
@@ -158,12 +158,6 @@ document.addEventListener('deviceready', function() {
 	});
 }, false);
 
-function correctScoll(amount) {
-	$('.content').css('overflow', 'hidden'); // trigger redraw to workaround a WebKit lack of redraw after setting scrollTop
-	$('.content')[0].scrollTop = amount;
-	$('.content').css('overflow', 'scroll');
-}
-
 function randomIntFromInterval(min, max) {
 	return Math.floor(Math.random()*(max-min+1)+min);
 }
@@ -172,27 +166,54 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function changeContentView(visibleContentViewID, newContentViewID, direction, callback) {
+function changeContentView(visibleContentViewID, newContentViewID, direction) {
 	animating = true;
 	$('.content-view').each(function(index) {
 		if ($(this).css('display') != 'none' && $(this).attr('id') != visibleContentViewID) $(this).hide().removeClass('animation').removeClass('animatable');
 	});
 	var visibleContentView = $('#'+visibleContentViewID);
 	var newContentView = $('#'+newContentViewID);
-	if (visibleContentView.hasClass('remember-position')) backContentViewYScroll = $('.content')[0].scrollTop;
+	
+	var contentViewYScroll = $('.content')[0].scrollTop;
+	
 	if (newContentView.hasClass('slider')) newContentView.find('.slide-group').css('-webkit-transform', 'translateX(0)');
 	if (direction == 'none') {
 		newContentView.show();
+		$('.content')[0].scrollTop = 0;
 		visibleContentView.hide();
 	} else {
-		newContentView.css({'top': $('.content')[0].scrollTop+'px', 'left': ((direction == 'left') ? '-320px':'320px')}).addClass('animatable').show().addClass('animation');
+	
+		$('.content').css('overflow', 'hidden');
+		
+		var scrollFromTop = 0;
+		var top = 0;
+		if (direction == 'right') top = contentViewYScroll;
+		else if (direction == 'left') {
+			if (newContentView.hasClass('remember-position')) {
+				//window.console.log(['Before'], backContentViewsYScroll);
+				scrollFromTop = backContentViewsYScroll.pop();
+				top = scrollFromTop * -1;
+				//window.console.log('Applying for #'+newContentViewID+': '+scrollFromTop);
+				//window.console.log(['After'], backContentViewsYScroll);
+			} else top = contentViewYScroll;
+		}
+		
+		newContentView.css({'top': top+'px', 'left': ((direction == 'left') ? '-320px':'320px')}).addClass('animatable').show().addClass('animation');
+		
 		setTimeout(function() { // workaround transition not firing without first reading the value
 			newContentView.css('left', 0);
-		}, 1); 
+		}, 1);
+		
 		setTimeout(function() {
 			visibleContentView.hide();
 			newContentView.removeClass('animation').removeClass('animatable');
-		}, 501);
+			
+			newContentView.css('top', 0);
+			
+			$('.content')[0].scrollTop = scrollFromTop;
+			
+			$('.content').css('overflow', 'scroll');
+		}, 301);
 	}
 	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
 	if (newContentView.attr('data-back-content-view-id')) {
@@ -203,8 +224,15 @@ function changeContentView(visibleContentViewID, newContentViewID, direction, ca
 		$('#back').hide();
 	}
 	currentContentViewID = newContentViewID;
+	
+	if (direction == 'right' && visibleContentView.hasClass('remember-position')) {
+		//window.console.log(['Before'], backContentViewsYScroll);
+		backContentViewsYScroll.push(contentViewYScroll);
+		//window.console.log('Adding for #'+visibleContentViewID+': '+contentViewYScroll);
+		//window.console.log(['After'], backContentViewsYScroll);
+	}
+	
 	animating = false;
-	//if (callback !== null) callback();
 }
 
 function drawWarbands() {
