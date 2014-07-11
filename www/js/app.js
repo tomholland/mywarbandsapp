@@ -1,7 +1,7 @@
 var animating = false;
+var contentViewWidth;
 var currentContentViewID = null;
 var backContentViewID = null;
-var backContentViewsYScroll = [];
 var factionImages = {};
 
 document.addEventListener('deviceready', function() {
@@ -12,20 +12,16 @@ document.addEventListener('deviceready', function() {
 	
 	$.each(data.factions, function(factionIndex, faction) {
 		factionImages[faction.id] = faction.image;
-		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
+		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
 		var html = '';
-		html += '<div class="content-view remember-position" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
-			
-			html += '<div class="content-scroll-wrapper">';
-			
+		html += '<div class="content-view" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
+			html += '<div class="content-view-scroll-wrapper">';
 				html += '<ul class="table-view">';
 					$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
 						html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+htmlEncode(factionCharacter.rice)+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
 					});
 				html += '</ul>';
-			
 			html += '</div>';
-			
 		html += '</div>';
 		$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
 			html += '<div class="slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
@@ -46,44 +42,53 @@ document.addEventListener('deviceready', function() {
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
-		html += '<div class="content-view content-padded remember-position scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
-			html += '<a class="btn change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'backstory"><span class="icon icon-right"></span> View backstory</a>';
-			html += '<h5>Type</h5>';
-			html += '<p>'+htmlEncode(scenario.type)+'</p>';
-			html += '<h5>Deployment</h5>';
-			html += '<a class="btn scenario-plan change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'plan"><span class="icon icon-search"></span> View plan</a>';
-			$.each(scenario.deployment, function(scenarioDeploymentItemIndex, scenarioDeploymentItem) {
-				html += '<p>'+htmlEncode(scenarioDeploymentItem)+'</p>';
-			});
-			html += '<h5>Game Length</h5>';
-			html += '<p>'+htmlEncode(scenario.game_length)+'</p>';
-			if (scenario.hasOwnProperty('objective_interaction')) {
-				html += '<h5>Scenario Objective Interaction</h5>';
-				$.each(scenario.objective_interaction, function(scenarioObjectiveInteractionIndex, scenarioObjectiveInteraction) {
-					html += '<p>'+htmlEncode(scenarioObjectiveInteraction)+'</p>';
+		html += '<div class="content-view content-padded scenario" id="scenario'+scenarioIndex+'" data-title="'+htmlEncode(scenario.name)+'" data-back-content-view-id="scenarios">';
+			html += '<div class="content-view-scroll-wrapper">';
+				html += '<a class="btn change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'backstory"><span class="icon icon-right"></span> View backstory</a>';
+				html += '<h5>Type</h5>';
+				html += '<p>'+htmlEncode(scenario.type)+'</p>';
+				html += '<h5>Deployment</h5>';
+				html += '<a class="btn scenario-plan change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'plan"><span class="icon icon-search"></span> View plan</a>';
+				$.each(scenario.deployment, function(scenarioDeploymentItemIndex, scenarioDeploymentItem) {
+					html += '<p>'+htmlEncode(scenarioDeploymentItem)+'</p>';
 				});
-			}
-			html += '<h5>Victory Conditions</h5>';
-			html += '<table class="victory-conditions">';
-			$.each(scenario.victory_conditions.points, function(scenarioVictoryConditionsPointIndex, scenarioVictoryConditionsPoint) {
-				html += '<tr>';
-					html += '<td class="points"><p>1 VP</p></td>';
-					html += '<td class="condition"><p>'+htmlEncode(scenarioVictoryConditionsPoint)+'</p></td>';
-				html += '</tr>';
-			});
-			html += '</table>';
-			if (scenario.victory_conditions.hasOwnProperty('additional_rules')) html += '<p>'+htmlEncode(scenario.victory_conditions.additional_rules)+'</p>';
+				html += '<h5>Game Length</h5>';
+				html += '<p>'+htmlEncode(scenario.game_length)+'</p>';
+				if (scenario.hasOwnProperty('objective_interaction')) {
+					html += '<h5>Scenario Objective Interaction</h5>';
+					$.each(scenario.objective_interaction, function(scenarioObjectiveInteractionIndex, scenarioObjectiveInteraction) {
+						html += '<p>'+htmlEncode(scenarioObjectiveInteraction)+'</p>';
+					});
+				}
+				html += '<h5>Victory Conditions</h5>';
+				html += '<table class="victory-conditions">';
+				$.each(scenario.victory_conditions.points, function(scenarioVictoryConditionsPointIndex, scenarioVictoryConditionsPoint) {
+					html += '<tr>';
+						html += '<td class="points"><p>1 VP</p></td>';
+						html += '<td class="condition"><p>'+htmlEncode(scenarioVictoryConditionsPoint)+'</p></td>';
+					html += '</tr>';
+				});
+				html += '</table>';
+				if (scenario.victory_conditions.hasOwnProperty('additional_rules')) html += '<p>'+htmlEncode(scenario.victory_conditions.additional_rules)+'</p>';
+			html += '</div>';
 		html += '</div>';
 		html += '<div class="content-view content-padded scenario-backstory" id="scenario'+scenarioIndex+'backstory" data-title="'+htmlEncode(scenario.name)+': backstory" data-back-content-view-id="scenario'+scenarioIndex+'">';
-		$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
-			html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
-		});
+			html += '<div class="content-view-scroll-wrapper">';
+			$.each(scenario.story, function(scenarioStoryParagraphIndex, scenarioStoryParagraph) {
+				html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
+			});
+			html += '</div>';
 		html += '</div>';
 		html += '<div class="content-view scenario-image-view content-padded" id="scenario'+scenarioIndex+'plan" data-title="'+htmlEncode(scenario.name)+': plan" data-back-content-view-id="scenario'+scenarioIndex+'">';
-			html += '<img class="scenario-image" src="images/scenarios/'+scenario.image+'">';
+			html += '<div class="content-view-scroll-wrapper">';
+				html += '<img class="scenario-image" src="images/scenarios/'+scenario.image+'">';
+			html += '</div>';
 		html += '</div>';
 		$('.content').append(html);
 	});
+	
+	$('.content-view .content-view-scroll-wrapper').css('height', $('.content').height()+'px');
+	contentViewWidth = $('.content').width();
 	
 	$('#title').html(htmlEncode($('.content .content-view.default').attr('data-title')));
 	$('.content .content-view.default').show();
@@ -110,7 +115,6 @@ document.addEventListener('deviceready', function() {
 		});
 		if (Keyboard.isVisible) return;
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) return;
-		if ($(this).hasClass('tab-item')) backContentViewsYScroll.length = 0;
 		changeContentView(currentContentViewID, $(this).attr('data-target-content-view-id'), (($(this).hasClass('appear-from-right')) ? 'right':'none'));
 		if ($(this).hasClass('tab-item')) {
 			$('nav a').each(function(index) {
@@ -173,46 +177,21 @@ function changeContentView(visibleContentViewID, newContentViewID, direction) {
 	});
 	var visibleContentView = $('#'+visibleContentViewID);
 	var newContentView = $('#'+newContentViewID);
-	
-	var contentViewYScroll = $('.content')[0].scrollTop;
-	
 	if (newContentView.hasClass('slider')) newContentView.find('.slide-group').css('-webkit-transform', 'translateX(0)');
+	var newContentViewScrollWapper = newContentView.find('.content-view-scroll-wrapper');
 	if (direction == 'none') {
 		newContentView.show();
-		$('.content')[0].scrollTop = 0;
+		if (newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
 		visibleContentView.hide();
 	} else {
-	
-		$('.content').css('overflow', 'hidden');
-		
-		var scrollFromTop = 0;
-		var top = 0;
-		if (direction == 'right') top = contentViewYScroll;
-		else if (direction == 'left') {
-			if (newContentView.hasClass('remember-position')) {
-				//window.console.log(['Before'], backContentViewsYScroll);
-				scrollFromTop = backContentViewsYScroll.pop();
-				top = scrollFromTop * -1;
-				//window.console.log('Applying for #'+newContentViewID+': '+scrollFromTop);
-				//window.console.log(['After'], backContentViewsYScroll);
-			} else top = contentViewYScroll;
-		}
-		
-		newContentView.css({'top': top+'px', 'left': ((direction == 'left') ? '-320px':'320px')}).addClass('animatable').show().addClass('animation');
-		
-		setTimeout(function() { // workaround transition not firing without first reading the value
+		newContentView.css({'left': ((direction == 'left') ? '-'+contentViewWidth+'px':contentViewWidth+'px')}).addClass('animatable').show().addClass('animation');
+		if (direction == 'right' && newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
+		setTimeout(function() { // workaround transition not firing when edited directly
 			newContentView.css('left', 0);
 		}, 1);
-		
 		setTimeout(function() {
 			visibleContentView.hide();
 			newContentView.removeClass('animation').removeClass('animatable');
-			
-			newContentView.css('top', 0);
-			
-			$('.content')[0].scrollTop = scrollFromTop;
-			
-			$('.content').css('overflow', 'scroll');
 		}, 301);
 	}
 	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
@@ -224,14 +203,6 @@ function changeContentView(visibleContentViewID, newContentViewID, direction) {
 		$('#back').hide();
 	}
 	currentContentViewID = newContentViewID;
-	
-	if (direction == 'right' && visibleContentView.hasClass('remember-position')) {
-		//window.console.log(['Before'], backContentViewsYScroll);
-		backContentViewsYScroll.push(contentViewYScroll);
-		//window.console.log('Adding for #'+visibleContentViewID+': '+contentViewYScroll);
-		//window.console.log(['After'], backContentViewsYScroll);
-	}
-	
 	animating = false;
 }
 
