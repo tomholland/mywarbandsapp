@@ -39,10 +39,6 @@ document.addEventListener('deviceready', function() {
 		$('.content').append(html);
 	});
 	
-	loadWarbands(function() {
-		drawWarbands();
-	});
-	
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
 		var html = '';
@@ -102,70 +98,17 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('.change-content-view').tap(function() {
-		if (animating) return;
-		window.plugin.statusbarOverlay.isHidden(function(isHidden) {
-			if (!isHidden) window.plugin.statusbarOverlay.hide();
-		});
-		if (Keyboard.isVisible) return;
-		var targetContentViewID = $(this).attr('data-target-content-view-id');
-		if (targetContentViewID == currentContentViewID) return;
-		if ($(this).attr('data-warband-id')) selectedWarbandID = $(this).attr('data-warband-id');
-		var changeContentViewCallback = null;
-		switch ($(this).attr('id')) {
-			case 'addwarband':
-				$('#'+targetContentViewID).attr('data-title', 'Add a Warband');
-				$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbands');
-				$('#savewarband').attr('data-mode', 'add');
-				$('#editwarbandfaction').val('');
-				$('#editwarbandname').val('');
-				$('#editwarbandrice').val('');
-				$('#editwarbandfaction').removeAttr('disabled');
-				$('#editwarbandname').removeAttr('disabled');
-				$('#editwarbandrice').removeAttr('disabled');
-			break;
-			case 'editwarband':
-				$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
-				$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbandcharacters');
-				$('#savewarband').attr('data-mode', 'edit');
-				$('#editwarbandfaction').val(warbands['id_'+selectedWarbandID].faction);
-				$('#editwarbandname').val(htmlEncode(warbands['id_'+selectedWarbandID].name));
-				$('#editwarbandrice').val(warbands['id_'+selectedWarbandID].rice);
-				$('#editwarbandfaction').attr('disabled', 'disabled');
-				$('#editwarbandname').removeAttr('disabled');
-				$('#editwarbandrice').removeAttr('disabled');
-			break;
-		}
-		switch (targetContentViewID) {
-			case 'warbandcharacters':
-				drawWarbandCharacters();
-				/*
-				forEach (warbands['id_'+selectedWarbandID].characters {
-					html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="editwarbandcharacter"><span class="badge">'+factionCharacter.rice+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
-				}
-				*/
-			break;
-			case 'warbandevents':
-				drawWarbandEvents();
-				
-			break;
-			case 'warbandterrain':
-				drawWarbandTerrain();
-				
-			break;
-		}
-		changeContentView(currentContentViewID, targetContentViewID, (($(this).hasClass('appear-from-right')) ? 'right':'none'), changeContentViewCallback);
-		if ($(this).hasClass('tab-item')) {
-			$('nav a').each(function(index) {
-				$(this).removeClass('active');
-			});
-			$(this).addClass('active');
-		}
+		changeContentView(this);
+	});
+	
+	loadWarbands(function() {
+		drawWarbands();
 	});
 	
 	$('#back').tap(function() {
 		if (animating) return;
 		if (Keyboard.isVisible) return;
-		changeContentView(currentContentViewID, backContentViewID, 'left', null);
+		swapContentView(currentContentViewID, backContentViewID, 'left', null);
 	});
 	
 	$('#savewarband').tap(function() {
@@ -224,13 +167,13 @@ document.addEventListener('deviceready', function() {
 		warbands['id_'+selectedWarbandID].save(function() {
 			drawWarbands();
 			drawWarbandCharacters();
-			changeContentView('editwarband', 'warbandcharacters', 'none', null);
+			swapContentView('editwarband', 'warbandcharacters', 'none', null);
 		});
 	});
 	
 	$('#randomscenario').tap(function() {
 		if (animating) return;
-		changeContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), 'right', null);
+		swapContentView('scenarios', 'scenario'+randomIntFromInterval(0, data.scenarios.length - 1), 'right', null);
 	});
 	
 	$('a.pdf').tap(function() {
@@ -289,7 +232,68 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function changeContentView(visibleContentViewID, newContentViewID, direction, callback) {
+function changeContentView(tappedElement) {
+	if (animating) return;
+	window.plugin.statusbarOverlay.isHidden(function(isHidden) {
+		if (!isHidden) window.plugin.statusbarOverlay.hide();
+	});
+	if (Keyboard.isVisible) return;
+	var targetContentViewID = $(tappedElement).attr('data-target-content-view-id');
+	if (targetContentViewID == currentContentViewID) return;
+	if ($(tappedElement).attr('data-warband-id')) selectedWarbandID = $(tappedElement).attr('data-warband-id');
+	var changeContentViewCallback = null;
+	switch ($(tappedElement).attr('id')) {
+		case 'addwarband':
+			$('#'+targetContentViewID).attr('data-title', 'Add a Warband');
+			$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbands');
+			$('#savewarband').attr('data-mode', 'add');
+			$('#editwarbandfaction').val('');
+			$('#editwarbandname').val('');
+			$('#editwarbandrice').val('');
+			$('#editwarbandfaction').removeAttr('disabled');
+			$('#editwarbandname').removeAttr('disabled');
+			$('#editwarbandrice').removeAttr('disabled');
+		break;
+		case 'editwarband':
+			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
+			$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbandcharacters');
+			$('#savewarband').attr('data-mode', 'edit');
+			$('#editwarbandfaction').val(warbands['id_'+selectedWarbandID].faction);
+			$('#editwarbandname').val(htmlEncode(warbands['id_'+selectedWarbandID].name));
+			$('#editwarbandrice').val(warbands['id_'+selectedWarbandID].rice);
+			$('#editwarbandfaction').attr('disabled', 'disabled');
+			$('#editwarbandname').removeAttr('disabled');
+			$('#editwarbandrice').removeAttr('disabled');
+		break;
+	}
+	switch (targetContentViewID) {
+		case 'warbandcharacters':
+			drawWarbandCharacters();
+			/*
+			forEach (warbands['id_'+selectedWarbandID].characters {
+				html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="editwarbandcharacter"><span class="badge">'+factionCharacter.rice+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
+			}
+			*/
+		break;
+		case 'warbandevents':
+			drawWarbandEvents();
+			
+		break;
+		case 'warbandterrain':
+			drawWarbandTerrain();
+			
+		break;
+	}
+	swapContentView(currentContentViewID, targetContentViewID, (($(tappedElement).hasClass('appear-from-right')) ? 'right':'none'), changeContentViewCallback);
+	if ($(tappedElement).hasClass('tab-item')) {
+		$('nav a').each(function(index) {
+			$(this).removeClass('active');
+		});
+		$(tappedElement).addClass('active');
+	}
+}
+
+function swapContentView(visibleContentViewID, newContentViewID, direction, callback) {
 	animating = true;
 	$('.content-view').each(function(index) {
 		if ($(this).css('display') != 'none' && $(this).attr('id') != visibleContentViewID) $(this).hide().removeClass('animation').removeClass('animatable');
@@ -329,8 +333,15 @@ function changeContentView(visibleContentViewID, newContentViewID, direction, ca
 function drawWarbands() {
 	$('#warbands').find('.table-view').empty();
 	for (var prop in warbands) {
-		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbands[prop].id+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[prop].faction]+'"><div class="media-body">'+htmlEncode(warbands[prop].name)+'</div></a></li>');
+		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><a class="delete" data-warband-id="'+warbands[prop].id+'"><span class="icon icon-trash"></span></a><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbands[prop].id+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[prop].faction]+'"><div class="media-body">'+htmlEncode(warbands[prop].name)+'</div></a></li>');
 	}
+	$('#warbands').find('.change-content-view').tap(function() {
+		changeContentView(this);
+	});
+	$('#warbands').find('.delete').css('left', contentViewWidth+'px');
+	$('#warbands').find('.delete').tap(function() {
+		deleteWarband($(this).attr('data-warband-id'));
+	});
 }
 
 function drawWarbandCharacters() {
@@ -341,6 +352,13 @@ function drawWarbandCharacters() {
 		else $(this).removeClass('active');
 	});
 	
+	$('#warbandcharacters').find('.change-content-view').tap(function() {
+		changeContentView(this);
+	});
+	$('#warbandcharacters').find('.delete').css('left', contentViewWidth+'px');
+	$('#warbandcharacters').find('.delete').tap(function() {
+		
+	});
 }
 
 function drawWarbandEvents() {
@@ -351,6 +369,13 @@ function drawWarbandEvents() {
 		else $(this).removeClass('active');
 	});
 	
+	$('#warbandevents').find('.change-content-view').tap(function() {
+		changeContentView(this);
+	});
+	$('#warbandevents').find('.delete').css('left', contentViewWidth+'px');
+	$('#warbandevents').find('.delete').tap(function() {
+		
+	});
 }
 
 function drawWarbandTerrain() {
@@ -361,6 +386,13 @@ function drawWarbandTerrain() {
 		else $(this).removeClass('active');
 	});
 	
+	$('#warbandterrain').find('.change-content-view').tap(function() {
+		changeContentView(this);
+	});
+	$('#warbandterrain').find('.delete').css('left', contentViewWidth+'px');
+	$('#warbandterrain').find('.delete').tap(function() {
+		
+	});
 }
 
 function deleteWarband(id) {
