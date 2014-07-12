@@ -53,8 +53,8 @@
 	padding: 10px;
 }
 
-.content-view .content-view-scroll-wrapper .table-view {
-	/*-webkit-transform: translateZ(0);*/
+.content-view .content-view-scroll-wrapper .table-view li {
+	-webkit-transform: translateZ(0);
 }
 
 .content-view.animatable {
@@ -125,7 +125,10 @@
 
 #addwarband,
 #addcharactertowarband,
-#randomscenario {
+#randomscenario,
+#editwarbandcharacter,
+#editwarbandevent,
+#editwarbandterrain {
 	width: auto;
 	margin: 0 5px 6px 5px;
 	padding: 12px 0;
@@ -149,4 +152,20 @@
 
 .segmented-control {
 	margin: 5px;
+}
+
+#warbands .delete,
+#warbandcharacters .delete,
+#warbandevents .delete,
+#warbandterrain .delete {
+	position: absolute;
+	color: #fff;
+	background: red;
+	display: block;
+	width: 70px;
+	height: 63px;
+	padding: 20px 0 0 0;
+	margin: 0;
+	top: 0;
+	text-align: center;
 }
