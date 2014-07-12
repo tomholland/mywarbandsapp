@@ -9,7 +9,7 @@ function loadWarbands(callback) {
 				for (var prop in record.data) {
 					warband[prop] = record.data[prop];
 				}
-				warbands[warband.id] = warband;
+				warbands['id_'+warband.id] = warband;
 			});
 		});
 	});
@@ -34,9 +34,7 @@ Warband.prototype.removeCharacter = function(characterIndex) {
 }
 
 Warband.prototype.save = function(callback) {
-	if (this.id === null) this.id = 'foo';
-	var now = new Date();
-	this.lastModified = now.toISOString();
+	this.lastModified = new Date().toISOString();
 	var dataObj = {};
 	for (var prop in this) {
 		dataObj[prop] = this[prop];
