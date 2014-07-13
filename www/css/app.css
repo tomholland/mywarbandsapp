@@ -65,8 +65,7 @@
 }
 
 .content-view.animation {
-	-webkit-transition: left .3s;
-	transition: left .3s;
+	-webkit-transition: left .3s ease-in-out;
 }
 
 .content .table-view {
@@ -83,7 +82,6 @@
 
 .content .table-view-cell>a:not(.btn) {
 	-webkit-transition: opacity .3s;
-	transition: opacity .3s;
 }
 
 .content .table-view-cell>a:not(.btn):active {
@@ -154,18 +152,102 @@
 	margin: 5px;
 }
 
+#warbands .table-view-cell {
+	padding: 0;
+}
+
+#warbands .table-view-cell .change-content-view:active {
+	opacity: .4;
+}
+
+#warbands .wrapper {
+	padding: 11px 40px 22px 15px;
+	transition: -webkit-transform .2s ease-in-out;
+}
+
+#warbandcharacters .wrapper,
+#warbandevents .wrapper,
+#warbandterrain .wrapper {
+	transition: -webkit-transform .2s ease-in-out;
+}
+
+#warbands .wrapper.offset,
+#warbandcharacters .wrapper.offset,
+#warbandevents .wrapper.offset,
+#warbandterrain .wrapper.offset {
+	-webkit-transform: translateX(-140px);
+}
+
+#warbands .edit,
+#warbandcharacters .edit,
+#warbandevents .edit,
+#warbandterrain .edit {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 70px;
+	background: blue;
+	color: #fff;
+}
+
 #warbands .delete,
 #warbandcharacters .delete,
 #warbandevents .delete,
 #warbandterrain .delete {
-	position: absolute;
-	color: #fff;
-	background: red;
 	display: block;
-	width: 70px;
-	height: 63px;
-	padding: 20px 0 0 0;
-	margin: 0;
+	position: absolute;
 	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 70px;
+	background: red;
+	color: #fff;
+}
+
+#warbands .edit:active,
+#warbands .delete:active,
+#warbandcharacters .edit:active,
+#warbandcharacters .delete:active,
+#warbandevents .edit:active,
+#warbandevents .delete:active,
+#warbandterrain .edit:active,
+#warbandterrain .delete:active {
+	opacity: .4;
+}
+
+#warbands .edit .icon-wrapper,
+#warbands .delete .icon-wrapper,
+#warbandcharacters .edit .icon-wrapper,
+#warbandcharacters .delete .icon-wrapper,
+#warbandevents .edit .icon-wrapper,
+#warbandevents .delete .icon-wrapper
+#warbandterrain .edit .icon-wrapper,
+#warbandterrain .delete .icon-wrapper {
+	display: table;
+	height: 100%;
+	width: 70px;
+}
+
+#warbands .edit .icon,
+#warbands .delete .icon,
+#warbandcharacters .edit .icon,
+#warbandcharacters .delete .icon,
+#warbandevents .edit .icon,
+#warbandevents .delete .icon,
+#warbandterrain .edit .icon,
+#warbandterrain .delete .icon {
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
 	text-align: center;
+}
+
+#warbands .navigate-right {
+	display: block;
+}
+
+#warbands .media-body {
+	color: #000;
 }
