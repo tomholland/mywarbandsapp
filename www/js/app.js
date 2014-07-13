@@ -246,7 +246,6 @@ function changeContentView(tappedElement) {
 	switch ($(tappedElement).attr('id')) {
 		case 'addwarband':
 			$('#'+targetContentViewID).attr('data-title', 'Add a Warband');
-			$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbands');
 			$('#savewarband').attr('data-mode', 'add');
 			$('#editwarbandfaction').val(factionIDs[0]);
 			$('#editwarbandname').val('');
@@ -261,7 +260,6 @@ function changeContentView(tappedElement) {
 		case 'editwarband':
 			if ($(tappedElement).attr('id') == 'addwarband') break;
 			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
-			$('#'+targetContentViewID).attr('data-back-content-view-id', 'warbandcharacters');
 			$('#savewarband').attr('data-mode', 'edit');
 			$('#editwarbandfaction').val(warbands['id_'+selectedWarbandID].faction);
 			$('#editwarbandname').val(htmlEncode(warbands['id_'+selectedWarbandID].name));
