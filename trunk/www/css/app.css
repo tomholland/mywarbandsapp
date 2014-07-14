@@ -2,7 +2,7 @@
 	padding: 0;
 }
 
-#back {
+.bar-nav .icon {
 	display: none;
 	padding: 10px;
 }
@@ -126,21 +126,14 @@
 	width: 85%;
 }
 
-#addwarband,
-#addcharactertowarband,
-#randomscenario,
-#editwarbandcharacter,
-#editwarbandevent,
-#editwarbandterrain {
+#randomscenario {
 	width: auto;
 	margin: 0 5px 6px 5px;
 	padding: 12px 0;
 	font-size: 15px;
 }
 
-#scenarios,
-#warbands,
-#warband {
+#scenarios {
 	padding-top: 6px;
 }
 
