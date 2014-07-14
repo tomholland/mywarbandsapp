@@ -1,11 +1,16 @@
+.bar-nav {
+	padding: 0;
+}
+
 #back {
 	display: none;
+	padding: 10px;
 }
 
 .title {
 	display: table;
 	table-layout: fixed;
-	padding: 0 30px;
+	padding: 0 50px;
 	margin: 0;
 	line-height: 17px;
 	white-space: normal;
