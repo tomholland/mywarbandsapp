@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 		<meta name="format-detection" content="telephone=no">
-		<title>Bushido</title>
+		<title>Bushido Cards</title>
 		<link href="css/libs/ratchet.min.css" rel="stylesheet">
 		<link href="css/libs/ratchet-theme-ios.min.css" rel="stylesheet">
 		<link href="css/app.css" rel="stylesheet">
@@ -12,6 +12,7 @@
 	<body>
 		<header class="bar bar-nav">
 			<a class="icon icon-left-nav pull-left" id="back"></a>
+			<a class="icon icon-plus pull-right change-content-view appear-from-right" id="add"></a>
 			<h1 class="title"><span id="title"></span></h1>
 		</header>
 		<nav class="bar bar-tab">
@@ -50,17 +51,16 @@
 			</div>
 			<div class="content-view" id="warbands" data-title="Warbands">
 				<div class="content-view-scroll-wrapper">
-					<a class="btn btn-block change-content-view" id="addwarband" data-target-content-view-id="editwarband"><span class="icon icon-plus"></span> Add a Warband</a>
 					<ul class="table-view"></ul>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="editwarband" data-back-content-view-id="warbands">
+			<div class="content-view content-padded" id="warband" data-back-content-view-id="warbands">
 				<div class="content-view-scroll-wrapper">
 					<form>
-						<select id="editwarbandfaction"></select>
-						<input id="editwarbandname" type="text" placeholder="Name (upto 28 characters)" maxlength="28">
-						<input id="editwarbandrice" type="number" placeholder="Rice limit (0-999)">
-						<a class="btn btn-block btn-positive" id="savewarband" data-mode="">Save Warband</a>
+						<select id="warbandfaction"></select>
+						<input id="warbandname" type="text" placeholder="Name (upto 28 characters)" maxlength="28">
+						<input id="warbandrice" type="number" placeholder="Rice limit (0-999)">
+						<a class="btn btn-block btn-positive" id="savewarband">Save Warband</a>
 					</form>
 				</div>
 			</div>
@@ -71,7 +71,6 @@
 						<a class="control-item change-content-view" data-target-content-view-id="warbandevents">Events</a>
 						<a class="control-item change-content-view" data-target-content-view-id="warbandterrain">Terrain</a>
 					</div>
-					<a class="btn btn-block" id="editwarbandcharacter"><span class="icon icon-plus"></span> Add a character to Warband</a>
 					<ul class="table-view"></ul>
 				</div>
 			</div>
@@ -82,7 +81,6 @@
 						<a class="control-item change-content-view" data-target-content-view-id="warbandevents" data-selection="1">Events</a>
 						<a class="control-item change-content-view" data-target-content-view-id="warbandterrain">Terrain</a>
 					</div>
-					<a class="btn btn-block" id="editwarbandevent"><span class="icon icon-plus"></span> Add an event to Warband</a>
 					<ul class="table-view"></ul>
 				</div>
 			</div>
@@ -93,23 +91,22 @@
 						<a class="control-item change-content-view" data-target-content-view-id="warbandevents">Events</a>
 						<a class="control-item change-content-view" data-target-content-view-id="warbandterrain" data-selection="1">Terrain</a>
 					</div>
-					<a class="btn btn-block" id="editwarbandterrain"><span class="icon icon-plus"></span> Add a terrain item to Warband</a>
 					<ul class="table-view"></ul>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="editwarbandcharacter" data-back-content-view-id="warbandcharacters">
+			<div class="content-view content-padded" id="warbandcharacter" data-back-content-view-id="warbandcharacters">
 				<div class="content-view-scroll-wrapper">
-					
+					warbandcharacter
 				</div>
 			</div>
-			<div class="content-view content-padded" id="editwarbandevent" data-back-content-view-id="warbandevents">
+			<div class="content-view content-padded" id="warbandevent" data-back-content-view-id="warbandevents">
 				<div class="content-view-scroll-wrapper">
-					
+					warbandevent
 				</div>
 			</div>
-			<div class="content-view content-padded" id="editwarbandterrain" data-back-content-view-id="warbandterrain">
+			<div class="content-view content-padded" id="warbandterrainitem" data-back-content-view-id="warbandterrain">
 				<div class="content-view-scroll-wrapper">
-					
+					warbandterrainitem
 				</div>
 			</div>
 			<div class="content-view" id="guides" data-title="Guides">
