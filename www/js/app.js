@@ -383,11 +383,11 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 }
 
 function drawWarbands() {
-	$('#warbands').find('.table-view').empty();
+	$('#warbands').find('.warbands-list').empty();
 	for (var prop in warbands) {
-		$('#warbands').find('.table-view').append('<li class="table-view-cell media"><div class="wrapper"><a class="edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbands[prop].id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a><a class="delete" data-warband-id="'+warbands[prop].id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbands[prop].id+'"><img class="media-object pull-left faction-image" src="images/factions/'+factionImages[warbands[prop].faction]+'"><div class="media-body">'+htmlEncode(warbands[prop].name)+'</div></a></div></li>');
+		$('#warbands').find('.warbands-list').append('<li class="warbands-list-item"><div class="wrapper"><a class="edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbands[prop].id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a><a class="delete" data-warband-id="'+warbands[prop].id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a><a class="warband change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbands[prop].id+'"><img class="faction-image" src="images/factions/'+factionImages[warbands[prop].faction]+'"><span class="name">'+htmlEncode(warbands[prop].name)+'</span><span class="icon icon-right-nav"></span></a></div></li>');
 	}
-	$('#warbands').find('.table-view-cell').swipeLeft(function() {
+	$('#warbands').find('.warbands-list-item').swipeLeft(function() {
 		$(this).find('.wrapper').addClass('offset');
 	}).swipeRight(function() {
 		$(this).find('.wrapper').removeClass('offset');
@@ -395,8 +395,8 @@ function drawWarbands() {
 	$('#warbands').find('.change-content-view').tap(function() {
 		changeContentView(this);
 	});
-	$('#warbands').find('.edit').css('left', contentViewWidth+'px');
-	$('#warbands').find('.delete').css('left', (contentViewWidth + 70)+'px').tap(function() {
+	$('#warbands').find('.edit').css('margin-left', contentViewWidth+'px');
+	$('#warbands').find('.delete').css('margin-left', (contentViewWidth + 70)+'px').tap(function() {
 		deleteWarband($(this).attr('data-warband-id'));
 	});
 }

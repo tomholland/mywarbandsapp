@@ -150,16 +150,7 @@
 	margin: 5px;
 }
 
-#warbands .table-view-cell {
-	padding: 0;
-}
-
-#warbands .table-view-cell .change-content-view:active {
-	opacity: .4;
-}
-
 #warbands .wrapper {
-	padding: 11px 40px 22px 15px;
 	transition: -webkit-transform .2s ease-in-out;
 }
 
@@ -182,9 +173,7 @@
 #warbandterrain .edit {
 	display: block;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+	height: 100%;
 	width: 70px;
 	background: blue;
 	color: #fff;
@@ -196,9 +185,7 @@
 #warbandterrain .delete {
 	display: block;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+	height: 100%;
 	width: 70px;
 	background: red;
 	color: #fff;
@@ -225,7 +212,7 @@
 #warbandterrain .delete .icon-wrapper {
 	display: table;
 	height: 100%;
-	width: 70px;
+	width: 100%;
 }
 
 #warbands .edit .icon,
@@ -242,10 +229,38 @@
 	text-align: center;
 }
 
-#warbands .navigate-right {
-	display: block;
+.warbands-list {
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #ccc;
 }
 
-#warbands .media-body {
+.warbands-list-item {
+	list-style: none;
+	display: block;
+	border-top: 1px solid #ccc;
+	width: 100%;
+	overflow: hidden;
+}
+
+.warbands-list-item .warband {
+	display: block;
+	height: 1%;
+	overflow: hidden;
+	padding: 10px;
+	vertical-align: middle;
+}
+
+.warbands-list-item .warband .faction-image {
+	float: left;
+}
+
+.warbands-list-item .warband .name {
+	float: left;
 	color: #000;
+}
+
+.warbands-list-item .warband .icon {
+	float: right;
+	color: #ccc;
 }
