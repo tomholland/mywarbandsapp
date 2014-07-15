@@ -1,3 +1,5 @@
+/* Header */
+
 .bar-nav {
 	padding: 0;
 }
@@ -22,6 +24,8 @@
 	vertical-align: middle;
 	word-wrap: break-word;
 }
+
+/* Content */
 
 .bar-nav~.content,
 .bar-tab~.content {
@@ -78,7 +82,7 @@
 }
 
 .content .table-view .table-view-cell {
-	background-position: 0 100%; /* Ratchet iOS theme bug fix */
+	background-position: 0 100%;
 }
 
 .content .table-view .media-body {
@@ -94,21 +98,127 @@
 	opacity: .4;
 }
 
-.faction-image {
+/* Factions */
+
+#factions .faction-image {
 	width: 42px;
 	height: 42px;
 }
 
-.content .slider,
-.content .slider .slide-group {
-	height: 100%; /* not set in Ratchet for some reasons... */
+#factions .slider,
+#factions .slide-group {
+	height: 100%;
 	background: #000;
 }
 
-.content .slider .slide {
+#factions .slide {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center center;
+}
+
+/* Warbands */
+
+.segmented-control {
+	margin: 5px;
+}
+
+.warbands-list .swipe-wrapper {
+	transition: -webkit-transform .2s ease-in-out;
+}
+
+.warbands-list .swipe-wrapper.offset {
+	-webkit-transform: translateX(-140px);
+}
+
+.warbands-list .action-block {
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 70px;
+	background: blue;
+	color: #fff;
+	-webkit-transition: opacity .3s;
+}
+
+.warbands-list .action-block.delete {
+	background: red;
+}
+
+.warbands-list .action-block:active {
+	opacity: .4;
+}
+
+.warbands-list .action-block .icon-wrapper {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.warbands-list .action-block .icon {
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.warbands-list {
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+.warbands-list li {
+	list-style: none;
+	display: block;
+	border-top: 1px solid #ccc;
+	width: 100%;
+	overflow: hidden;
+}
+
+.warbands-list .listing-block {
+	display: table;
+	width: 100%;
+	padding: 10px;
+}
+
+.warbands-list .listing-block .cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.warbands-list .listing-block .cell.image {
+	width: 52px;
+	text-align: left;
+}
+
+.warbands-list .listing-block .cell.image img {
+	width: 42px;
+	height: 42px;
+}
+
+.warbands-list .listing-block .cell.name {
+	color: #000;
+	text-align: left;
+}
+
+.warbands-list .listing-block .cell.icon {
+	color: #ccc;
+	width: 30px;
+	text-align: right;
+}
+
+/* Scenarios */
+
+#scenarios {
+	padding-top: 6px;
+}
+
+#randomscenario {
+	width: auto;
+	margin: 0 5px 6px 5px;
+	padding: 12px 0;
+	font-size: 15px;
 }
 
 .scenario h5 {
@@ -126,17 +236,6 @@
 	width: 85%;
 }
 
-#randomscenario {
-	width: auto;
-	margin: 0 5px 6px 5px;
-	padding: 12px 0;
-	font-size: 15px;
-}
-
-#scenarios {
-	padding-top: 6px;
-}
-
 .btn.scenario-plan {
 	margin-bottom: 10px;
 }
@@ -144,123 +243,4 @@
 .scenario-image {
 	width: 100%;
 	border: 1px solid #ccc;
-}
-
-.segmented-control {
-	margin: 5px;
-}
-
-#warbands .wrapper {
-	transition: -webkit-transform .2s ease-in-out;
-}
-
-#warbandcharacters .wrapper,
-#warbandevents .wrapper,
-#warbandterrain .wrapper {
-	transition: -webkit-transform .2s ease-in-out;
-}
-
-#warbands .wrapper.offset,
-#warbandcharacters .wrapper.offset,
-#warbandevents .wrapper.offset,
-#warbandterrain .wrapper.offset {
-	-webkit-transform: translateX(-140px);
-}
-
-#warbands .edit,
-#warbandcharacters .edit,
-#warbandevents .edit,
-#warbandterrain .edit {
-	display: block;
-	position: absolute;
-	height: 100%;
-	width: 70px;
-	background: blue;
-	color: #fff;
-}
-
-#warbands .delete,
-#warbandcharacters .delete,
-#warbandevents .delete,
-#warbandterrain .delete {
-	display: block;
-	position: absolute;
-	height: 100%;
-	width: 70px;
-	background: red;
-	color: #fff;
-}
-
-#warbands .edit:active,
-#warbands .delete:active,
-#warbandcharacters .edit:active,
-#warbandcharacters .delete:active,
-#warbandevents .edit:active,
-#warbandevents .delete:active,
-#warbandterrain .edit:active,
-#warbandterrain .delete:active {
-	opacity: .4;
-}
-
-#warbands .edit .icon-wrapper,
-#warbands .delete .icon-wrapper,
-#warbandcharacters .edit .icon-wrapper,
-#warbandcharacters .delete .icon-wrapper,
-#warbandevents .edit .icon-wrapper,
-#warbandevents .delete .icon-wrapper
-#warbandterrain .edit .icon-wrapper,
-#warbandterrain .delete .icon-wrapper {
-	display: table;
-	height: 100%;
-	width: 100%;
-}
-
-#warbands .edit .icon,
-#warbands .delete .icon,
-#warbandcharacters .edit .icon,
-#warbandcharacters .delete .icon,
-#warbandevents .edit .icon,
-#warbandevents .delete .icon,
-#warbandterrain .edit .icon,
-#warbandterrain .delete .icon {
-	display: table-cell;
-	height: 100%;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.warbands-list {
-	padding: 0;
-	margin: 0;
-	border-bottom: 1px solid #ccc;
-}
-
-.warbands-list-item {
-	list-style: none;
-	display: block;
-	border-top: 1px solid #ccc;
-	width: 100%;
-	overflow: hidden;
-}
-
-.warbands-list-item .warband {
-	display: block;
-	height: 1%;
-	overflow: hidden;
-	padding: 10px;
-	vertical-align: middle;
-}
-
-.warbands-list-item .warband .faction-image {
-	float: left;
-}
-
-.warbands-list-item .warband .name {
-	float: left;
-	color: #000;
-}
-
-.warbands-list-item .warband .icon {
-	float: right;
-	color: #ccc;
 }
