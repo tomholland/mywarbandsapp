@@ -85,10 +85,6 @@
 	background-position: 0 100%;
 }
 
-.content .table-view .media-body {
-	padding-top: 10px;
-}
-
 .content .table-view-cell>a:not(.btn) {
 	-webkit-transition: opacity .3s;
 }
@@ -98,20 +94,67 @@
 	opacity: .4;
 }
 
-/* Factions */
+.content-items-list {
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #c8c7cc;
+}
 
-#factions .faction-image {
+.content-items-list li {
+	list-style: none;
+	display: block;
+	border-top: 1px solid #c8c7cc;
+	width: 100%;
+	overflow: hidden;
+}
+
+.content-items-list .listing-block {
+	display: table;
+	width: 100%;
+	padding: 10px;
+	-webkit-transition: opacity .3s;
+}
+
+.content-items-list .listing-block:active {
+	opacity: .4;
+}
+
+.content-items-list .listing-block .cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.content-items-list .listing-block .cell.image {
+	width: 52px;
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.image img {
+	display: block;
 	width: 42px;
 	height: 42px;
 }
 
-#factions .slider,
-#factions .slide-group {
+.content-items-list .listing-block .cell.name {
+	color: #000;
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.icon {
+	color: #bbb;
+	width: 30px;
+	text-align: right;
+}
+
+/* Factions */
+
+.faction-cards.slider,
+.faction-cards.slider .slide-group {
 	height: 100%;
 	background: #000;
 }
 
-#factions .slide {
+.faction-cards.slider .slide {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center center;
@@ -123,15 +166,15 @@
 	margin: 5px;
 }
 
-.warbands-list .swipe-wrapper {
+.content-items-list .swipe-wrapper {
 	transition: -webkit-transform .2s ease-in-out;
 }
 
-.warbands-list .swipe-wrapper.offset {
+.content-items-list .swipe-wrapper.offset {
 	-webkit-transform: translateX(-140px);
 }
 
-.warbands-list .action-block {
+.content-items-list .action-block {
 	display: block;
 	position: absolute;
 	height: 100%;
@@ -141,71 +184,25 @@
 	-webkit-transition: opacity .3s;
 }
 
-.warbands-list .action-block.delete {
+.content-items-list .action-block.delete {
 	background: red;
 }
 
-.warbands-list .action-block:active {
+.content-items-list .action-block:active {
 	opacity: .4;
 }
 
-.warbands-list .action-block .icon-wrapper {
+.content-items-list .action-block .icon-wrapper {
 	display: table;
 	height: 100%;
 	width: 100%;
 }
 
-.warbands-list .action-block .icon {
+.content-items-list .action-block .icon {
 	display: table-cell;
 	height: 100%;
 	vertical-align: middle;
 	text-align: center;
-}
-
-.warbands-list {
-	padding: 0;
-	margin: 0;
-	border-bottom: 1px solid #ccc;
-}
-
-.warbands-list li {
-	list-style: none;
-	display: block;
-	border-top: 1px solid #ccc;
-	width: 100%;
-	overflow: hidden;
-}
-
-.warbands-list .listing-block {
-	display: table;
-	width: 100%;
-	padding: 10px;
-}
-
-.warbands-list .listing-block .cell {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.warbands-list .listing-block .cell.image {
-	width: 52px;
-	text-align: left;
-}
-
-.warbands-list .listing-block .cell.image img {
-	width: 42px;
-	height: 42px;
-}
-
-.warbands-list .listing-block .cell.name {
-	color: #000;
-	text-align: left;
-}
-
-.warbands-list .listing-block .cell.icon {
-	color: #ccc;
-	width: 30px;
-	text-align: right;
 }
 
 /* Scenarios */
