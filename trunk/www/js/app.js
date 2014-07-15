@@ -16,27 +16,34 @@ document.addEventListener('deviceready', function() {
 		$('#warbandfaction').append('<option value="'+faction.id+'">'+htmlEncode(faction.name)+'</option>');
 		factionIDs.push(faction.id);
 		factionImages[faction.id] = faction.image;
-		$('#factions').find('.table-view').append('<li class="table-view-cell media"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'"><img class="media-object pull-left faction-image" src="images/factions/'+faction.image+'"><div class="media-body">'+htmlEncode(faction.name)+'</div></a></li>');
-		var html = '';
-		html += '<div class="content-view" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
-			html += '<div class="content-view-scroll-wrapper">';
-				html += '<ul class="table-view">';
+		var factionContentItemsListHTML = '<li>';
+			factionContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'">';
+				factionContentItemsListHTML += '<span class="cell image"><img src="images/factions/'+faction.image+'"></span>';
+				factionContentItemsListHTML += '<span class="cell name">'+htmlEncode(faction.name)+'</span>';
+				factionContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span></span>';
+			factionContentItemsListHTML += '</a>';
+		factionContentItemsListHTML += '</li>';
+		$('#factions').find('.content-items-list').append(factionContentItemsListHTML);
+		var contentHTMLAdditions = '';
+		contentHTMLAdditions += '<div class="content-view" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
+			contentHTMLAdditions += '<div class="content-view-scroll-wrapper">';
+				contentHTMLAdditions += '<ul class="table-view">';
 					$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-						html += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+factionCharacter.rice+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
+						contentHTMLAdditions += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+factionCharacter.rice+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
 					});
-				html += '</ul>';
-			html += '</div>';
-		html += '</div>';
+				contentHTMLAdditions += '</ul>';
+			contentHTMLAdditions += '</div>';
+		contentHTMLAdditions += '</div>';
 		$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-			html += '<div class="slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
-				html += '<div class="slide-group">';
+			contentHTMLAdditions += '<div class="faction-cards slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
+				contentHTMLAdditions += '<div class="slide-group">';
 					$.each(factionCharacter.cards, function(factionCharacterContentViewIndex, factionCharacterCard) {
-						html += '<div class="slide" style="background-image: url(\'images/cards/'+factionCharacterCard+'\');"></div>';
+						contentHTMLAdditions += '<div class="slide" style="background-image: url(\'images/cards/'+factionCharacterCard+'\');"></div>';
 					});
-				html += '</div>';
-			html += '</div>';
+				contentHTMLAdditions += '</div>';
+			contentHTMLAdditions += '</div>';
 		});
-		$('.content').append(html);
+		$('.content').append(contentHTMLAdditions);
 	});
 	
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
@@ -405,12 +412,12 @@ function drawWarbands() {
 				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbands[prop].id+'">';
 					html += '<span class="cell image"><img src="images/factions/'+factionImages[warbands[prop].faction]+'"></span>';
 					html += '<span class="cell name">'+htmlEncode(warbands[prop].name)+'</span>';
-					html += '<span class="cell icon"><span class="icon icon-right-nav"></span></span></span>';
+					html += '<span class="cell icon"><span class="icon icon-right"></span></span></span>';
 				html += '</a>';
 			html += '</div>';
 		html += '</li>';
 	}
-	$('#warbands').find('.warbands-list').empty().append(html);
+	$('#warbands').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbands');
 	$('#warbands').find('.delete').tap(function() {
 		deleteWarband($(this).attr('data-warband-id'));
@@ -429,7 +436,7 @@ function drawWarbandCharacters() {
 	setWarbandContentScreenTitleAndSubNavSelection('warbandcharacters');
 	var html = '';
 	
-	$('#warbandcharacters').find('.warbands-list').empty().append(html);
+	$('#warbandcharacters').find('.list').empty().append(html);
 	setupWarbandSwipeableListing('warbandcharacters');
 	$('#warbandcharacters').find('.delete').tap(function() {
 		deleteWarbandCharacter($(this).attr('data-warband-character-id'));
@@ -440,7 +447,7 @@ function drawWarbandEvents() {
 	setWarbandContentScreenTitleAndSubNavSelection('warbandevents');
 	var html = '';
 	
-	$('#warbandevents').find('.warbands-list').empty().append(html);
+	$('#warbandevents').find('.list').empty().append(html);
 	setupWarbandSwipeableListing('warbandevents');
 	$('#warbandevents').find('.delete').tap(function() {
 		deleteWarbandEvent($(this).attr('data-warband-event-id'));
@@ -451,7 +458,7 @@ function drawWarbandTerrain() {
 	setWarbandContentScreenTitleAndSubNavSelection('warbandterrain');
 	var html = '';
 	
-	$('#warbandterrain').find('.warbands-list').empty().append(html);
+	$('#warbandterrain').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbandterrain');
 	$('#warbandterrain').find('.delete').tap(function() {
 		deleteWarbandTerrain($(this).attr('data-warband-terrain-id'));
