@@ -1,10 +1,9 @@
 var animating = false;
-var contentViewWidth;
+var contentViewWidth = 0;
 var currentContentViewID = null;
 var backContentViewID = null;
-var factionImages = {};
-var factionIDs = [];
 var selectedWarbandID = null;
+var factionIDs = [];
 
 document.addEventListener('deviceready', function() {
 
@@ -12,39 +11,38 @@ document.addEventListener('deviceready', function() {
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
 	
-	$.each(data.factions, function(factionIndex, faction) {
-		$('#warbandfaction').append('<option value="'+faction.id+'">'+htmlEncode(faction.name)+'</option>');
-		factionIDs.push(faction.id);
-		factionImages[faction.id] = faction.image;
+	for (var factionID in data.factions) {
+		factionIDs.push(factionID);
+		$('#warbandfaction').append('<option value="'+factionID+'">'+htmlEncode(data.factions[factionID].name)+'</option>');
 		var factionContentItemsListHTML = '<li>';
-			factionContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'">';
-				factionContentItemsListHTML += '<span class="cell image"><img src="images/factions/'+faction.image+'"></span>';
-				factionContentItemsListHTML += '<span class="cell name">'+htmlEncode(faction.name)+'</span>';
+			factionContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-'+factionID+'">';
+				factionContentItemsListHTML += '<span class="cell image"><img src="images/factions/'+data.factions[factionID].image+'"></span>';
+				factionContentItemsListHTML += '<span class="cell name">'+htmlEncode(data.factions[factionID].name)+'</span>';
 				factionContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span></span>';
 			factionContentItemsListHTML += '</a>';
 		factionContentItemsListHTML += '</li>';
 		$('#factions').find('.content-items-list').append(factionContentItemsListHTML);
 		var contentHTMLAdditions = '';
-		contentHTMLAdditions += '<div class="content-view" id="faction'+factionIndex+'" data-title="'+htmlEncode(faction.name)+'" data-back-content-view-id="factions">';
+		contentHTMLAdditions += '<div class="content-view" id="faction-'+factionID+'" data-title="'+htmlEncode(data.factions[factionID].name)+'" data-back-content-view-id="factions">';
 			contentHTMLAdditions += '<div class="content-view-scroll-wrapper">';
 				contentHTMLAdditions += '<ul class="table-view">';
-					$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-						contentHTMLAdditions += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction'+factionIndex+'character'+factionCharacterIndex+'cards"><span class="badge">'+factionCharacter.rice+'</span><span class="name">'+htmlEncode(factionCharacter.name)+'</span></a></li>';
-					});
+					for (var factionCharacterID in data.factions[factionID].characters) {
+						contentHTMLAdditions += '<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="faction-character-'+factionCharacterID+'-cards"><span class="badge">'+data.factions[factionID].characters[factionCharacterID].rice+'</span><span class="name">'+htmlEncode(data.factions[factionID].characters[factionCharacterID].name)+'</span></a></li>';
+					}
 				contentHTMLAdditions += '</ul>';
 			contentHTMLAdditions += '</div>';
 		contentHTMLAdditions += '</div>';
-		$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-			contentHTMLAdditions += '<div class="faction-cards slider content-view" id="faction'+factionIndex+'character'+factionCharacterIndex+'cards" data-title="'+htmlEncode(factionCharacter.name)+'" data-back-content-view-id="faction'+factionIndex+'">';
+		for (var factionCharacterID in data.factions[factionID].characters) {
+			contentHTMLAdditions += '<div class="faction-cards slider content-view" id="faction-character-'+factionCharacterID+'-cards" data-title="'+htmlEncode(data.factions[factionID].characters[factionCharacterID].name)+'" data-back-content-view-id="faction-'+factionID+'">';
 				contentHTMLAdditions += '<div class="slide-group">';
-					$.each(factionCharacter.cards, function(factionCharacterContentViewIndex, factionCharacterCard) {
+					$.each(data.factions[factionID].characters[factionCharacterID].cards, function(index, factionCharacterCard) {
 						contentHTMLAdditions += '<div class="slide" style="background-image: url(\'images/cards/'+factionCharacterCard+'\');"></div>';
 					});
 				contentHTMLAdditions += '</div>';
 			contentHTMLAdditions += '</div>';
-		});
+		}
 		$('.content').append(contentHTMLAdditions);
-	});
+	}
 	
 	$.each(data.scenarios, function(scenarioIndex, scenario) {
 		$('#scenarios').find('.table-view').append('<li class="table-view-cell"><a class="navigate-right change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">'+htmlEncode(scenario.name)+'</a></li>');
@@ -354,20 +352,16 @@ function changeContentView(tappedElement) {
 
 function populateWarbandCharacterSuggestions(search) {
 	var html = '';
-	$.each(data.factions, function(factionIndex, faction) {
-		if (warbands[selectedWarbandID].faction == faction.id) {
-			$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
-				if (search.length == 0 || (factionCharacter.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
-					html += '<li class="table-view-cell">';
-						html += '<a class="select-character" data-character-id="'+factionCharacter.id+'">';
-							html += '<span class="badge">'+factionCharacter.rice+'</span>';
-							html += '<span class="name">'+htmlEncode(factionCharacter.name)+'</span>';
-						html += '</a>';
-					html += '</li>';
-				}
-			});
+	for (var factionCharacterID in data.factions[warbands[selectedWarbandID].faction].characters) {
+		if (search.length == 0 || (data.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
+			html += '<li class="table-view-cell">';
+				html += '<a class="select-character" data-character-id="'+factionCharacterID+'">';
+					html += '<span class="badge">'+data.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice+'</span>';
+					html += '<span class="name">'+htmlEncode(data.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
+				html += '</a>';
+			html += '</li>';
 		}
-	});
+	}
 	$('#warbandcharacter').find('.table-view').empty().append(html).find('.select-character').click(function() {
 		warbands[selectedWarbandID].addCharacter($(this).attr('data-character-id'));
 		warbands[selectedWarbandID].save(function() {
@@ -434,7 +428,7 @@ function drawWarbands() {
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbandID+'">';
-					html += '<span class="cell image"><img src="images/factions/'+factionImages[warbands[warbandID].faction]+'"></span>';
+					html += '<span class="cell image"><img src="images/factions/'+data.factions[warbands[warbandID].faction].image+'"></span>';
 					html += '<span class="cell name">'+htmlEncode(warbands[warbandID].name)+'</span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span></span>';
 				html += '</a>';
@@ -464,8 +458,8 @@ function drawWarbandCharacters() {
 			html += '<div class="swipe-wrapper">';
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="foo">';
-					html += '<span class="cell name">'+htmlEncode(warbandCharacterID)+'</span>';
+				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID+'-cards">';
+					html += '<span class="cell name">'+htmlEncode(data.factions[warbands[selectedWarbandID].faction].characters[warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID].name)+'</span>';
 					// +rice badge: {total_rice}({character_rice}+{enhancement_rice}e)
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span></span>';
 				html += '</a>';
@@ -544,7 +538,7 @@ function deleteWarband(warbandID) {
 
 function deleteWarbandCharacter(warbandCharacterID) {
 	navigator.notification.confirm(
-		'Are you sure you want to delete '+warbandCharacterID+' from your Warband "'+warbands[selectedWarbandID].name+'"?',
+		'Are you sure you want to delete '+data.factions[warbands[selectedWarbandID].faction].characters[warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID].name+' from your Warband "'+warbands[selectedWarbandID].name+'"?',
 		function(button) {
 			if (button != 2) return;
 			warbands[selectedWarbandID].removeCharacter(warbandCharacterID);
