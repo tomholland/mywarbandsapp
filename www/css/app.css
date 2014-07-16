@@ -210,6 +210,20 @@
 	text-align: center;
 }
 
+#warbandcharacter {
+	padding-top: 6px;
+}
+
+#warbandcharacter .heading {
+	margin: 0 5px;
+	text-align: center;
+}
+
+#warbandcharacter input[type=search] {
+	text-align: left;
+	margin: 6px 0;
+}
+
 /* Scenarios */
 
 #scenarios {

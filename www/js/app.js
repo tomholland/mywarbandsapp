@@ -114,10 +114,7 @@ document.addEventListener('deviceready', function() {
 	
 	$('#back').tap(function() {
 		if (animating) return;
-		if (Keyboard.isVisible) {
-			keyboardVisibleAlert();
-			return;
-		}
+		$('input,select').blur();
 		$('#add').hide();
 		switch(backContentViewID) {
 			case 'warbands':
@@ -138,10 +135,7 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('#savewarband').tap(function() {
-		if (Keyboard.isVisible) {
-			keyboardVisibleAlert();
-			return;
-		}
+		$('input,select').blur();
 		var warbandFaction = $('#warbandfaction').val();
 		var warbandName = $('#warbandname').val().trim();
 		var warbandRice = $('#warbandrice').val().trim();
@@ -262,22 +256,12 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function keyboardVisibleAlert() {
-	navigator.notification.alert(
-		'Please dismiss the keyboard or menu selector first',
-		function() {}
-	);
-}
-
 function changeContentView(tappedElement) {
 	if (animating) return;
 	window.plugin.statusbarOverlay.isHidden(function(isHidden) {
 		if (!isHidden) window.plugin.statusbarOverlay.hide();
 	});
-	if (Keyboard.isVisible) {
-		keyboardVisibleAlert();
-		return;
-	}
+	$('input,select').blur();
 	var targetContentViewID = $(tappedElement).attr('data-target-content-view-id');
 	if (targetContentViewID == currentContentViewID) return;
 	if ($(tappedElement).attr('data-warband-id')) selectedWarbandID = $(tappedElement).attr('data-warband-id');
@@ -319,15 +303,30 @@ function changeContentView(tappedElement) {
 			
 		break;
 		case 'warbandcharacter':
-			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
+			$('#warbandcharacter').attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
 			if ($(tappedElement).attr('id') == 'add') {
-				
+				var html = '<div class="heading">';
+					html += 'Add a character to Warband';
+					html += '<form><input id="warbandcharactersearch" type="search" placeholder="Search"></form>';
+				html += '</div>';
+				html += '<ul class="table-view"></ul>';
+				$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
+				populateWarbandCharacterSuggestions('');
+				$('#warbandcharactersearch').focus(function() {
+					$('#warbandcharacter').find('.content-view-scroll-wrapper').scroll(function() {
+						$('#warbandcharactersearch').blur();
+					});
+				}).keyup(function() {
+					populateWarbandCharacterSuggestions($(this).val());
+				}).blur(function() {
+					$('#warbandcharacter').find('.content-view-scroll-wrapper').off();
+				});
 				break;
 			}
 			
 		break;
 		case 'warbandevent':
-			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
+			$('#warbandevent').attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
 			if ($(tappedElement).attr('id') == 'add') {
 				
 				break;
@@ -335,7 +334,7 @@ function changeContentView(tappedElement) {
 			
 		break;
 		case 'warbandterrainitem':
-			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
+			$('#warbandterrainitem').attr('data-title', htmlEncode(warbands['id_'+selectedWarbandID].name));
 			if ($(tappedElement).attr('id') == 'add') {
 				
 				break;
@@ -351,6 +350,27 @@ function changeContentView(tappedElement) {
 		});
 		$(tappedElement).addClass('active');
 	}
+}
+
+function populateWarbandCharacterSuggestions(search) {
+	var html = '';
+	$.each(data.factions, function(factionIndex, faction) {
+		if (warbands['id_'+selectedWarbandID].faction == faction.id) {
+			$.each(faction.characters, function(factionCharacterIndex, factionCharacter) {
+				if (search.length == 0 || (factionCharacter.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
+					html += '<li class="table-view-cell">';
+						html += '<a class="select-character" data-character-id="'+factionCharacter.id+'">';
+							html += '<span class="badge">'+factionCharacter.rice+'</span>';
+							html += '<span class="name">'+htmlEncode(factionCharacter.name)+'</span>';
+						html += '</a>';
+					html += '</li>';
+				}
+			});
+		}
+	});
+	$('#warbandcharacter').find('.table-view').empty().append(html).find('.select-character').click(function() {
+		//$(this).attr('data-character-id')
+	});
 }
 
 function swapContentView(visibleContentViewID, newContentViewID, direction) {
