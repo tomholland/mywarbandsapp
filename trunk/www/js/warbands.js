@@ -9,7 +9,7 @@ function loadWarbands(callback) {
 				for (var prop in record.data) {
 					warband[prop] = record.data[prop];
 				}
-				warbands['id_'+warband.id] = warband;
+				warbands[warband.id] = warband;
 			});
 		});
 	});
@@ -21,16 +21,42 @@ function Warband() {
 	this.name = null;
 	this.faction = null;
 	this.rice = null;
-	this.characters = [];
+	this.characters = {};
+	this.events = {};
+	this.terrain = {};
 	this.lastModified = null;
 }
 
-Warband.prototype.addCharacter = function(character) {
-	this.characters.push(character);
+Warband.prototype.addCharacter = function(factionCharacterID) {
+	this.characters[generateUUID()] = {'factionCharacterID': factionCharacterID, 'enhancements': {}};
 }
 
-Warband.prototype.removeCharacter = function(characterIndex) {
-	this.characters.splice(characterIndex, 1);
+Warband.prototype.removeCharacter = function(warbandCharacterID) {
+	delete this.characters[warbandCharacterID];
+}
+
+Warband.prototype.addCharacterEnhancement = function(warbandCharacterID, name, rice) {
+	this.characters[warbandCharacterID].enhancements[generateUUID()] = {'name': name, 'rice': rice};
+}
+
+Warband.prototype.removeCharacterEnhancement = function(warbandCharacterID, warbandCharacterEnhancementID) {
+	delete this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID];
+}
+
+Warband.prototype.addEvent = function(name, rice) {
+	this.events[generateUUID()] = {'name': name, 'rice': rice};
+}
+
+Warband.prototype.removeEvent = function(warbandEventID) {
+	delete this.events[warbandEventID];
+}
+
+Warband.prototype.addTerrainItem = function(name, rice) {
+	this.terrain[generateUUID()] = {'name': name, 'rice': rice};
+}
+
+Warband.prototype.removeTerrainItem = function(warbandTerrainItemID) {
+	delete this.terrain[warbandTerrainItemID];
 }
 
 Warband.prototype.save = function(callback) {
