@@ -307,7 +307,7 @@ function changeContentView(tappedElement) {
 			if ($(tappedElement).attr('id') == 'add') {
 				var html = '<div class="heading">';
 					html += 'Add a character to Warband';
-					html += '<form><input id="warbandcharactersearch" type="search" placeholder="Search"></form>';
+					html += '<form><input id="warbandcharactersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>';
 				html += '</div>';
 				html += '<ul class="table-view"></ul>';
 				$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
