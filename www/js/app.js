@@ -315,7 +315,7 @@ function changeContentView(tappedElement) {
 			if ($(tappedElement).attr('id') == 'add') {
 				var html = '<div class="heading">';
 					html += 'Add a character to Warband';
-					html += '<form><input id="warbandcharactersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>';
+					html += '<form onsubmit="return false;"><input id="warbandcharactersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>';
 				html += '</div>';
 				html += '<ul class="content-items-list"></ul>';
 				$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
@@ -367,9 +367,10 @@ function populateWarbandCharacterSuggestions(search) {
 		if (search.length == 0 || (staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
 				html += '<a class="listing-block select-character" data-character-id="'+factionCharacterID+'">';
-				html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
-				html += '<span class="cell rice"><span class="badge">'+staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice+'</span></span>';
-				html += '</a>';
+					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
+					html += '<span class="cell rice"><span class="badge">'+staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice+'</span></span>';
+					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '</a>';
 			html += '</li>';
 		}
 	}
@@ -378,6 +379,7 @@ function populateWarbandCharacterSuggestions(search) {
 		warbands[selectedWarbandID].save(function() {
 			drawWarbands();
 			drawWarbandCharacters();
+			$('#add').show();
 			swapContentView('warbandcharacter', 'warbandcharacters', 'left');
 		});
 	});
@@ -420,6 +422,7 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 }
 
 function setupWarbandSwipeableListing(id) {
+	var actionBlockWidth = 50;
 	$('#'+id).find('.swipe-wrapper').swipeLeft(function() {
 		$(this).addClass('offset');
 	}).swipeRight(function() {
@@ -428,21 +431,29 @@ function setupWarbandSwipeableListing(id) {
 	$('#'+id).find('.change-content-view').tap(function() {
 		changeContentView(this);
 	});
-	$('#'+id).find('.edit').css('margin-left', contentViewWidth+'px');
-	$('#'+id).find('.delete').css('margin-left', (contentViewWidth + 70)+'px');
+	if ($('#'+id).find('.swipe-wrapper').hasClass('actions-3')) {
+		$('#'+id).find('.share').css('margin-left', contentViewWidth+'px');
+		$('#'+id).find('.edit').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
+		$('#'+id).find('.delete').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
+	} else {
+		$('#'+id).find('.edit').css('margin-left', contentViewWidth+'px');
+		$('#'+id).find('.delete').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
+	}
 }
 
 function drawWarbands() {
 	var html = '';
 	for (var warbandID in warbands) {
+		var warbandRice = warbands[warbandID].rice();
 		html += '<li>';
-			html += '<div class="swipe-wrapper">';
+			html += '<div class="swipe-wrapper actions-3">';
+				html += '<a class="action-block share" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbandID+'">';
 					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warbandID].faction].image+'"></span>';
 					html += '<span class="cell name">'+htmlEncode(warbands[warbandID].name)+'</span>';
-					html += '<span class="cell rice warband"><span class="badge">'+warbands[warbandID].rice()+'/'+warbands[warbandID].riceLimit+'</span></span>';
+					html += '<span class="cell rice warband"><span class="badge'+((warbandRice > warbands[warbandID].riceLimit) ? ' error':'')+'">'+warbandRice+'/'+warbands[warbandID].riceLimit+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 				html += '</a>';
 			html += '</div>';
@@ -450,9 +461,32 @@ function drawWarbands() {
 	}
 	$('#warbands').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbands');
+	$('#warbands').find('.share').tap(function() {
+		composeWarbandEmail($(this).attr('data-warband-id'));
+	});
 	$('#warbands').find('.delete').tap(function() {
 		deleteWarband($(this).attr('data-warband-id'));
 	});
+}
+
+function composeWarbandEmail(warbandID) {
+	var emailComposer = cordova.require('emailcomposer.EmailComposer');
+	emailComposer.show({ 
+		subject: 'Warband: '+warbands[warbandID].name,
+		body: populateWarbandEmailTemplate(warbandID),
+		isHtml: true,
+		onSuccess: function(winParam) {
+			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
+		},
+		onError: function(error) {
+			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
+		}
+	});	
+}
+
+function populateWarbandEmailTemplate(warbandID) {
+	//var warbandEmailMustache = staticData.warbandEmailMustache;
+	return '<b>HTML</b> here!';
 }
 
 function setWarbandContentScreenTitleAndSubNavSelection(id) {
@@ -468,7 +502,7 @@ function drawWarbandCharacters() {
 	var html = '';
 	for (var warbandCharacterID in warbands[selectedWarbandID].characters) {
 		html += '<li>';
-			html += '<div class="swipe-wrapper">';
+			html += '<div class="swipe-wrapper actions-2">';
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID+'-cards">';
@@ -495,7 +529,7 @@ function drawWarbandEvents() {
 	var html = '';
 	for (var warbandEventID in warbands[selectedWarbandID].events) {
 		html += '<li>';
-			html += '<div class="swipe-wrapper">';
+			html += '<div class="swipe-wrapper actions-2">';
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandevent" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block">';
@@ -517,7 +551,7 @@ function drawWarbandTerrain() {
 	var html = '';
 	for (var warbandTerrainItemID in warbands[selectedWarbandID].terrain) {
 		html += '<li>';
-			html += '<div class="swipe-wrapper">';
+			html += '<div class="swipe-wrapper actions-2">';
 				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandterrainitem" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block delete" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block">';
