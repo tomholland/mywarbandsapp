@@ -1,0 +1,32 @@
+{{#characters.length}}
+---------------------------
+Models:
+---------------------------
+{{#characters}}
+
+* {{name}} ({{rice}}){{#enhancements}}
++ {{name}} ({{rice}}){{/enhancements}}
+{{/characters}}
+{{/characters.length}}
+{{#events.length}}
+
+---------------------------
+Event Special cards:
+---------------------------
+
+{{#events}}
+* {{name}} ({{rice}}){{/events}}
+{{/events.length}}
+{{#terrain.length}}
+
+---------------------------
+Terrain Special cards:
+---------------------------
+
+{{#terrain}}
+* {{name}} ({{rice}}){{/terrain}}
+{{/terrain.length}}
+
+---------------------------
+Total: {{total}}
+---------------------------
