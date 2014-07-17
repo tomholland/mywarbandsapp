@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8">
+		<title>Mustache test</title>
+	</head>
+	<body>
+		<pre></pre>
+  		<script src="zepto.min.js"></script>
+		<script src="mustache.js"></script>
+		<script>
+			var data = {
+				'characters': [
+					{'name': 'Dave', 'rice': '10 (8+2e)', 'enhancements': [{'name': 'foo', 'rice': 2}]},
+					{'name': 'Tom', 'rice': 5, 'enhancements': [{'name': 'bar', 'rice': 5}, {'name': 'cats', 'rice': 7}]},
+				],
+				'events': [{'name':'foo','rice':10}],
+				'terrain': [{'name':'foo1','rice':11}],
+				'total': 100
+			};
+			$(document).ready(function() {
+				$.get('warband-html-email-template.mst', function(template) {
+					$(document.body).append(Mustache.render(template, data));
+				});
+				$.get('warband-text-email-template.mst', function(template) {
+					$('pre').append(Mustache.render(template, data));
+				});
+			});
+		</script>
+	</body>
+</html>
