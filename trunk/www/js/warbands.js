@@ -20,15 +20,41 @@ function Warband() {
 	this.id = null;
 	this.name = null;
 	this.faction = null;
-	this.rice = null;
+	this.riceLimit = null;
 	this.characters = {};
 	this.events = {};
 	this.terrain = {};
 	this.lastModified = null;
 }
 
+Warband.prototype.rice = function() {
+	var rice = 0;
+	for (var warbandCharacterID in this.characters) {
+		rice += staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice;
+		for (var warbandCharacterEnhancementID in this.characters[warbandCharacterID].enhancements) {
+			rice += this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].rice;
+		}
+	}
+	for (var warbandEventID in this.events) {
+		rice += this.events[warbandEventID].rice;
+	}
+	for (var warbandTerrainItemID in this.terrain) {
+		rice += this.terrain[warbandTerrainItemID].rice;
+	}
+	return rice;
+}
+
 Warband.prototype.addCharacter = function(factionCharacterID) {
 	this.characters[generateUUID()] = {'factionCharacterID': factionCharacterID, 'enhancements': {}};
+}
+
+Warband.prototype.characterRiceDetail = function(warbandCharacterID) {
+	var enhancementsRiceTotal = 0;
+	for (var warbandCharacterEnhancementID in this.characters[warbandCharacterID].enhancements) {
+		enhancementsRiceTotal += this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].rice;
+	}
+	if (enhancementsRiceTotal == 0) return staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice;
+	return (staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice + enhancementsRiceTotal)+' ('+staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice+'+'+enhancementsRiceTotal+'e)';
 }
 
 Warband.prototype.removeCharacter = function(warbandCharacterID) {
