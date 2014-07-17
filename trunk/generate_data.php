@@ -936,7 +936,7 @@ $data = array(
 			'characters' => array(
 				'7C7EAF0B-68F1-0184-668C-A647702DA174' => array(
 					'name' => 'Bakemono Horde',
-					'rice' => '-',
+					'rice' => 0,
 					'cards' => array(
 						'100-1.jpg',
 						'100-2.jpg'
