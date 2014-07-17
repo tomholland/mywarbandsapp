@@ -59,7 +59,7 @@
 					<form onsubmit="return false;">
 						<select id="warbandfaction"></select>
 						<input id="warbandname" type="text" placeholder="Name (upto 28 characters)" maxlength="28" autocorrect="off" autocapitalize="off">
-						<input id="warbandrice" type="number" placeholder="Rice limit (0-999)" autocorrect="off" autocapitalize="off">
+						<input id="warbandrice" type="number" placeholder="Rice limit (0-99)" autocorrect="off" autocapitalize="off">
 						<a class="btn btn-block btn-positive" id="savewarband">Save Warband</a>
 					</form>
 				</div>
@@ -121,6 +121,7 @@
 						<li>
 							<a class="listing-block pdf" data-url="pdfs/tournament_pack.pdf">
 								<span class="cell name">Tournament Pack</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
 						<li>
@@ -215,6 +216,12 @@
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq10">
+								<span class="cell name">Can I search or bookmark pages in the guides?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -270,6 +277,13 @@
 			<div class="content-view content-padded" id="faq9" data-title="Syncing Warbands between devices" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>You cannot sync Warbands between different devices currently - but this is something we are working on as part of a future update.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq10" data-title="Navigating the guide documents" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>The guide documents included in the app are PDFs.</p>
+					<p>Selecting a guide from the app will open it in a basic PDF reader.</p>
+					<p>If you need more advanced features (such as bookmarking or text search), you can open a guide document in a different PDF reader (such as iBooks) by clicking the share icon at the top right of the basic PDF reader.</p>
 				</div>
 			</div>
 		</div>

@@ -28,7 +28,7 @@ document.addEventListener('deviceready', function() {
 					contentHTMLAdditions += '<li>';
 						contentHTMLAdditions += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+factionCharacterID+'-cards">';
 							contentHTMLAdditions += '<span class="cell name">'+htmlEncode(staticData.factions[factionID].characters[factionCharacterID].name)+'</span>';
-							contentHTMLAdditions += '<span class="cell rice"><span class="badge">'+staticData.factions[factionID].characters[factionCharacterID].rice+'</span></span>';
+							contentHTMLAdditions += '<span class="cell rice"><span class="badge">'+((staticData.factions[factionID].characters[factionCharacterID].rice == 0) ? '-':staticData.factions[factionID].characters[factionCharacterID].rice)+'</span></span>';
 							contentHTMLAdditions += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 						contentHTMLAdditions += '</a>';
 					contentHTMLAdditions += '</li>';
@@ -174,9 +174,9 @@ document.addEventListener('deviceready', function() {
 			);
 			return;
 		}
-		if (!warbandRice.match(/^[0-9]{1,3}$/)) {
+		if (!warbandRice.match(/^[0-9]{1,2}$/)) {
 			navigator.notification.alert(
-				'Please enter a rice limit between 0 and 999',
+				'Please enter a rice limit between 0 and 99',
 				function() {
 					$('#warbandrice').focus();
 				}
@@ -209,7 +209,7 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('a.pdf').tap(function() {
-		PDFReader.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
+		cordova.plugins.bridge.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
 	});
 	
 	$('a.external').tap(function() {
@@ -368,7 +368,7 @@ function populateWarbandCharacterSuggestions(search) {
 			html += '<li>';
 				html += '<a class="listing-block select-character" data-character-id="'+factionCharacterID+'">';
 					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice+'</span></span>';
+					html += '<span class="cell rice"><span class="badge">'+((staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice == 0) ? '-':staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice)+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
 					html += '</a>';
 			html += '</li>';
