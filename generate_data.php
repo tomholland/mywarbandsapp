@@ -3,7 +3,7 @@
 $data = array(
 	'factions' => array(
 		'F7837986-F2BC-36A7-75C8-0428A245DD46' => array(
-			'name' => 'Silvermoon Syndicate',
+			'name' => 'Silvermoon Trade Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
 				'0E479335-79C7-551F-CB35-74DA6D6AB2A9' => array(
@@ -1433,12 +1433,19 @@ $data = array(
 	)
 );
 
+uasort(
+	$data['factions'],
+	function($faction_a, $faction_b) {
+		return strcmp(str_replace('The ', '', $faction_a['name']), str_replace('The ', '', $faction_b['name']));
+	}
+);
+
 $faction_ids = array_keys($data['factions']);
 foreach ($faction_ids as $faction_id) {
 	uasort(
 		$data['factions'][$faction_id]['characters'],
 		function($character_a, $character_b) {
-			return strcmp($character_a['name'], $character_b['name']);
+			return strcmp(str_replace('The ', '', $character_a['name']), str_replace('The ', '', $character_b['name']));
 		}
 	);
 }
@@ -1446,8 +1453,8 @@ foreach ($faction_ids as $faction_id) {
 usort(
 	$data['scenarios'],
 	function($scenario_a, $scenario_b) {
-		return strcmp($scenario_a['name'], $scenario_b['name']);
+		return strcmp(str_replace('The ', '', $scenario_a['name']), str_replace('The ', '', $scenario_b['name']));
 	}
 );
 
-file_put_contents('data.js', 'var data = '.json_encode($data).';');
+file_put_contents('static-data.js', 'var staticData = '.json_encode($data).';');

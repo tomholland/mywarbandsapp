@@ -46,7 +46,7 @@
 			<div class="content-view" id="scenarios" data-title="Scenarios">
 				<div class="content-view-scroll-wrapper">
 					<a class="btn btn-block" id="randomscenario">Random scenario</a>
-					<ul class="table-view"></ul>
+					<ul class="content-items-list"></ul>
 				</div>
 			</div>
 			<div class="content-view" id="warbands" data-title="Warbands">
@@ -105,11 +105,30 @@
 			</div>
 			<div class="content-view" id="guides" data-title="Guides">
 				<div class="content-view-scroll-wrapper">					
-					<ul class="table-view">
-						<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/new_dawn_rules.pdf">New Dawn Rules</a></li>
-						<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/errata_24-05-2014.pdf">Rules Update and Errata (24/05/20114)</a></li>
-						<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/tournament_pack.pdf">Tournament Pack</a></li>
-						<li class="table-view-cell"><a class="navigate-right pdf" data-url="pdfs/silvermoon_players_guide.pdf">Silvermoon Player's Guide</a></li>
+					<ul class="content-items-list">
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/new_dawn_rules.pdf">
+								<span class="cell name">New Dawn Rules</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/errata_24-05-2014.pdf">
+								<span class="cell name">Rules Update and Errata (24/05/20114)</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/tournament_pack.pdf">
+								<span class="cell name">Tournament Pack</span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/silvermoon_players_guide.pdf">
+								<span class="cell name">Silvermoon Player's Guide</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -126,7 +145,7 @@
 		<script src="js/libs/zepto.min.js"></script>
 		<script src="js/libs/ratchet.min.js"></script>
 		<script src="js/libs/lawnchair-0.6.1.min.js"></script>
-		<script src="js/data.js"></script>
+		<script src="js/static-data.js"></script>
 		<script src="js/warbands.js"></script>
 		<script src="js/app.js"></script>
 	</body>
