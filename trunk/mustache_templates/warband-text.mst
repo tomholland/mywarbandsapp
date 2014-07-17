@@ -1,16 +1,16 @@
+{{faction}}
 {{#characters.length}}
----------------------------
+
 Models:
 ---------------------------
 {{#characters}}
 
-* {{name}} ({{rice}}){{#enhancements}}
+* {{name}} ({{baseRice}}){{#enhancements}}
 + {{name}} ({{rice}}){{/enhancements}}
 {{/characters}}
 {{/characters.length}}
 {{#events.length}}
 
----------------------------
 Event Special cards:
 ---------------------------
 
@@ -19,7 +19,6 @@ Event Special cards:
 {{/events.length}}
 {{#terrain.length}}
 
----------------------------
 Terrain Special cards:
 ---------------------------
 
