@@ -137,6 +137,11 @@
 	margin-bottom: 4px;
 }
 
+.content-items-list .listing-block .cell.rice .badge.error {
+	color: #fff;
+	background: #ff3b30;
+}
+
 .content-items-list .listing-block .cell.icon {
 	color: #bbb;
 	width: 30px;
@@ -167,16 +172,25 @@
 	transition: -webkit-transform .2s ease-in-out;
 }
 
-.content-items-list .swipe-wrapper.offset {
-	-webkit-transform: translateX(-140px);
+.content-items-list .swipe-wrapper.actions-2.offset {
+	-webkit-transform: translateX(-100px);
+}
+
+.content-items-list .swipe-wrapper.actions-3.offset {
+	-webkit-transform: translateX(-150px);
 }
 
 .content-items-list .action-block {
 	display: block;
 	position: absolute;
 	height: 100%;
-	width: 70px;
+	width: 50px;
 	-webkit-transition: opacity .3s;
+}
+
+.content-items-list .action-block.share {
+	color: #fff;
+	background: #4cd964;
 }
 
 .content-items-list .action-block.edit {
@@ -202,9 +216,20 @@
 .content-items-list .action-block .icon {
 	display: table-cell;
 	height: 100%;
-	font-size: 30px;
 	vertical-align: middle;
 	text-align: center;
+}
+
+.content-items-list .action-block .icon-share {
+	font-size: 20px;
+}
+
+.content-items-list .action-block .icon-edit {
+	font-size: 30px;
+}
+
+.content-items-list .action-block .icon-trash {
+	font-size: 25px;
 }
 
 #warbandcharacter {
