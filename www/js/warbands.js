@@ -44,6 +44,40 @@ Warband.prototype.rice = function() {
 	return rice;
 }
 
+Warband.prototype.mustacheData = function() {
+	var mustacheData = {
+		'faction': staticData.factions[this.faction].name,
+		'characters': [],
+		'events': [],
+		'terrain': [],
+		'total': 0
+	};
+	for (var warbandCharacterID in this.characters) {
+		var warbandCharacter = {
+			'name': staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].name,
+			'baseRice': staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice,
+			'rice': 0,
+			'enhancements': []
+		};
+		warbandCharacter.rice += warbandCharacter.baseRice;
+		for (var warbandCharacterEnhancementID in this.characters[warbandCharacterID].enhancements) {
+			warbandCharacter.enhancements.push(this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID]);
+			warbandCharacter.rice += this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].rice
+		}
+		mustacheData.characters.push(warbandCharacter);
+		mustacheData.total += warbandCharacter.rice;
+	}
+	for (var warbandEventID in this.events) {
+		mustacheData.events.push(this.events[warbandEventID]);
+		mustacheData.total += this.events[warbandEventID].rice;
+	}
+	for (var warbandTerrainItemID in this.terrain) {
+		mustacheData.terrain.push(this.terrain[warbandTerrainItemID]);
+		mustacheData.total += this.terrain[warbandTerrainItemID].rice;
+	}
+	return mustacheData;
+}
+
 Warband.prototype.addCharacter = function(factionCharacterID) {
 	this.characters[generateUUID()] = {'factionCharacterID': factionCharacterID, 'enhancements': {}};
 }

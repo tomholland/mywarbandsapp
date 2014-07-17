@@ -1,6 +1,10 @@
 <?php
 
 $data = array(
+	'templates' => array(
+		'text' => file_get_contents('mustache_templates/warband-text.mst'),
+		'html' => file_get_contents('mustache_templates/warband-html.mst')
+	),
 	'factions' => array(
 		'F7837986-F2BC-36A7-75C8-0428A245DD46' => array(
 			'name' => 'Silvermoon Trade Syndicate',

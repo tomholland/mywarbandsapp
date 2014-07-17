@@ -470,23 +470,18 @@ function drawWarbands() {
 }
 
 function composeWarbandEmail(warbandID) {
-	var emailComposer = cordova.require('emailcomposer.EmailComposer');
-	emailComposer.show({ 
-		subject: 'Warband: '+warbands[warbandID].name,
-		body: populateWarbandEmailTemplate(warbandID),
-		isHtml: true,
-		onSuccess: function(winParam) {
+	var params = {
+		'subject': 'Bushido Warband: '+warbands[warbandID].name,
+		'onSuccess': function() {
 			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
 		},
-		onError: function(error) {
+		'onError': function() {
 			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
 		}
-	});	
-}
-
-function populateWarbandEmailTemplate(warbandID) {
-	//var warbandEmailMustache = staticData.warbandEmailMustache;
-	return '<b>HTML</b> here!';
+	};
+	params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData()),
+	params.isHtml = true;
+	cordova.require('emailcomposer.EmailComposer').show(params);
 }
 
 function setWarbandContentScreenTitleAndSubNavSelection(id) {
