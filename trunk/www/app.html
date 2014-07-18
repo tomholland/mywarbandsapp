@@ -144,13 +144,6 @@
 							</a>
 						</li>
 						<li>
-							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="about">
-								<span class="cell icon left"><span class="icon icon-info"></span></span>
-								<span class="cell name">About</span>
-								<span class="cell icon"><span class="icon icon-right"></span></span>
-							</a>
-						</li>
-						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faqs">
 								<span class="cell icon left"><span class="icon icon-info"></span></span>
 								<span class="cell name">FAQs</span>
@@ -167,21 +160,13 @@
 							<span class="listing-block">
 								<span class="cell name">Create HTML emails</span>
 								<span class="cell control">
-									<div class="toggle" id="htmlemailsetting">
+									<div class="toggle" id="htmlemailsetting" data-default="enabled">
 										<div class="toggle-handle"></div>
 									</div>
 								</span>
 							</span>
 						</li>
 					</ul>
-				</div>
-			</div>
-			<div class="content-view content-padded" id="about" data-title="About" data-back-content-view-id="misc">
-				<div class="content-view-scroll-wrapper">
-					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission).</p>
-					<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
-					<p>Only freely downloadable content is included.</p>
-					<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a>, <a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a>, <a class="external" data-url="https://github.com/janl/mustache.js/">mustache.js</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
 				</div>
 			</div>
 			<div class="content-view" id="faqs" data-title="FAQs" data-back-content-view-id="misc">
@@ -250,6 +235,12 @@
 						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq11">
 								<span class="cell name">Can I search or bookmark pages in the guides?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq12">
+								<span class="cell name">Can I send you feedback / suggestions / abuse?</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
@@ -322,6 +313,22 @@
 					<p>The guide documents included in the app are PDFs.</p>
 					<p>Selecting a guide from the app will open it in a basic PDF reader.</p>
 					<p>If you need more advanced features (such as bookmarking or text search), you can open a guide document in a different PDF reader (such as iBooks) by clicking the share icon at the top right of the basic PDF reader.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq12" data-title="Giving app feedback / suggestions / abuse" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission). Only freely downloadable content is included.</p>
+					<p>The app is free and is built and maintained by a team of two in our spare time.</p>
+					<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
+					<p>If you think the app is rubbish, then we suggested you <a class="external" data-url="https://developer.apple.com/register">Register as an Apple Developer</a> (it costs $99 per year) and get building ;)</p>
+					<p>These are the open-source technologies we used:</p>
+					<ul>
+						<li><a class="external" data-url="http://cordova.apache.org">Apache Cordova</a></li>
+						<li><a class="external" data-url="http://zeptojs.com">Zepto.js</a></li>
+						<li><a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a></li>
+						<li><a class="external" data-url="https://github.com/janl/mustache.js/">mustache.js</a></li>
+						<li><a class="external" data-url="http://goratchet.com">Ratchet</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
