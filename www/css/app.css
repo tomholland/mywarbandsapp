@@ -188,6 +188,10 @@
 	transition: -webkit-transform .2s ease-in-out;
 }
 
+.content-items-list .swipe-wrapper.actions-1.offset {
+	-webkit-transform: translateX(-50px);
+}
+
 .content-items-list .swipe-wrapper.actions-2.offset {
 	-webkit-transform: translateX(-100px);
 }
@@ -248,18 +252,30 @@
 	font-size: 25px;
 }
 
-#warbandcharacter {
-	padding-top: 6px;
+input[type=search] {
+	text-align: left;
 }
 
-#warbandcharacter .heading {
-	margin: 0 5px;
+.horizontally-padded-wrapper {
+	margin: 0 10px;
+}
+
+.subtitle {
+	display: block;
+	margin: 10px 0 15px 0;
 	text-align: center;
 }
 
-#warbandcharacter input[type=search] {
-	text-align: left;
-	margin: 6px 0;
+.field-topping-content-view {
+	margin-top: 10px;
+}
+
+.list-preamble {
+	display: block;
+	margin-bottom: 10px;
+	border-top: 1px solid #c8c7cc;
+	padding-top: 6px;
+	text-align: center;
 }
 
 /* Scenarios */
@@ -297,4 +313,15 @@
 .scenario-image {
 	width: 100%;
 	border: 1px solid #ccc;
+}
+
+/* FAQs */
+
+#faqs li {
+	font-size: 15px;
+	line-height: 19px;
+}
+
+#faqs li .cell.icon {
+	width: 40px;
 }

@@ -3,6 +3,7 @@ var contentViewWidth = 0;
 var currentContentViewID = null;
 var backContentViewID = null;
 var selectedWarbandID = null;
+var selectedWarbandCharacterID = null;
 
 document.addEventListener('deviceready', function() {
 
@@ -126,6 +127,8 @@ document.addEventListener('deviceready', function() {
 		});
 	});
 	
+	loadCharacterEnhancements();
+	
 	$('#back').tap(function() {
 		if (animating) return;
 		$('input,select').blur();
@@ -142,6 +145,9 @@ document.addEventListener('deviceready', function() {
 			break;
 			case 'warbandterrain':
 				$('#add').attr('data-target-content-view-id', 'warbandterrainitem').show();
+			break;
+			case 'warbandcharacter':
+				if (currentContentViewID == 'warbandcharacteraddenhancement') $('#add').attr('data-target-content-view-id', 'warbandcharacteraddenhancement').show();
 			break;
 		}
 		$('#'+currentContentViewID).find('.swipe-wrapper.offset').removeClass('offset');
@@ -189,6 +195,7 @@ document.addEventListener('deviceready', function() {
 			);
 			return;
 		}
+		warbandRice = parseInt(warbandRice);
 		if ($(this).attr('data-mode') == 'edit') {
 			warbands[selectedWarbandID].name = warbandName;
 			warbands[selectedWarbandID].riceLimit = warbandRice;
@@ -206,6 +213,58 @@ document.addEventListener('deviceready', function() {
 			drawWarbandCharacters();
 			$('#add').attr('data-target-content-view-id', 'warbandcharacter').show();
 			swapContentView('warband', 'warbandcharacters', null);
+		});
+	});
+	
+	$('#warbandcharacterenhancementname').focus(function() {
+		$('#warbandcharacteraddenhancement').find('.content-view-scroll-wrapper').scroll(function() {
+			$('#warbandcharacterenhancementname').blur();
+		});
+	}).keyup(function() {
+		populateWarbandCharacterEnhancementSuggestions($(this).val());
+	}).blur(function() {
+		$('#warbandcharacteraddenhancement').find('.content-view-scroll-wrapper').off();
+	});
+	
+	$('#warbandcharacterenhancementrice').focus(function() {
+		$('#warbandcharacteraddenhancement').find('.content-view-scroll-wrapper').scroll(function() {
+			$('#warbandcharacterenhancementrice').blur();
+		});
+	}).blur(function() {
+		$('#warbandcharacteraddenhancement').find('.content-view-scroll-wrapper').off();
+	});
+	
+	$('#warbandcharactersaveenhancement').tap(function() {
+		$('input').blur();
+		var characterEnhancementName = $('#warbandcharacterenhancementname').val().trim();
+		var characterEnhancementRice = $('#warbandcharacterenhancementrice').val().trim();
+		if (!characterEnhancementName.length) {
+			navigator.notification.alert(
+				'Please enter an enhancement name',
+				function() {
+					$('#warbandcharacterenhancementname').focus();
+				}
+			);
+			return;
+		}
+		if (!characterEnhancementRice.match(/^[0-9]{1,2}$/)) {
+			navigator.notification.alert(
+				'Please enter a rice cost',
+				function() {
+					$('#warbandcharacterenhancementrice').focus();
+				}
+			);
+			return;
+		}
+		characterEnhancementRice = parseInt(characterEnhancementRice);
+		saveCharacterEnhancementIfNew(characterEnhancementName, characterEnhancementRice, function() {
+			warbands[selectedWarbandID].addCharacterEnhancement(selectedWarbandCharacterID, characterEnhancementName, characterEnhancementRice);
+			warbands[selectedWarbandID].save(function() {
+				drawWarbands();
+				drawWarbandCharacters();
+				drawEditWarbandCharacter();
+				swapContentView('warbandcharacteraddenhancement', 'warbandcharacter', null);
+			});
 		});
 	});
 	
@@ -283,6 +342,7 @@ function changeContentView(tappedElement) {
 	var targetContentViewID = $(tappedElement).attr('data-target-content-view-id');
 	if (targetContentViewID == currentContentViewID) return;
 	if ($(tappedElement).attr('data-warband-id')) selectedWarbandID = $(tappedElement).attr('data-warband-id');
+	if ($(tappedElement).attr('data-warband-character-id')) selectedWarbandCharacterID = $(tappedElement).attr('data-warband-character-id');
 	$('#add').hide();
 	switch (targetContentViewID) {
 		case 'warbands':
@@ -308,23 +368,20 @@ function changeContentView(tappedElement) {
 		case 'warbandcharacters':
 			drawWarbandCharacters();
 			$('#add').attr('data-target-content-view-id', 'warbandcharacter').show();
-			
 		break;
 		case 'warbandevents':
 			drawWarbandEvents();
 			$('#add').attr('data-target-content-view-id', 'warbandevent').show();
-			
 		break;
 		case 'warbandterrain':
 			drawWarbandTerrain();
 			$('#add').attr('data-target-content-view-id', 'warbandterrainitem').show();
-			
 		break;
 		case 'warbandcharacter':
-			$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
 			if ($(tappedElement).attr('id') == 'add') {
-				var html = '<div class="heading">';
-					html += 'Add a character to Warband';
+				$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
+				var html = '<div class="horizontally-padded-wrapper">';
+					html += '<span class="subtitle">Add a character to Warband</span>';
 					html += '<form onsubmit="return false;"><input id="warbandcharactersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>';
 				html += '</div>';
 				html += '<ul class="content-items-list"></ul>';
@@ -341,7 +398,15 @@ function changeContentView(tappedElement) {
 				});
 				break;
 			}
-			
+			drawEditWarbandCharacter();
+		break;
+		case 'warbandcharacteraddenhancement':
+			$('#warbandcharacteraddenhancement').attr('data-title', htmlEncode(warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+': enhancements'));
+			$('#warbandcharacterenhancementname').val('');
+			$('#warbandcharacterenhancementrice').val('');
+			if (!characterEnhancements.length) $('#warbandcharacteraddenhancement').find('.list-preamble').hide();
+			else $('#warbandcharacteraddenhancement').find('.list-preamble').show();
+			populateWarbandCharacterEnhancementSuggestions('');
 		break;
 		case 'warbandevent':
 			$('#warbandevent').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
@@ -376,7 +441,7 @@ function populateWarbandCharacterSuggestions(search) {
 	for (var factionCharacterID in staticData.factions[warbands[selectedWarbandID].faction].characters) {
 		if (search.length == 0 || (staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
-				html += '<a class="listing-block select-character" data-character-id="'+factionCharacterID+'">';
+				html += '<a class="listing-block" data-character-id="'+factionCharacterID+'">';
 					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+((staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice == 0) ? '-':staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice)+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
@@ -384,7 +449,7 @@ function populateWarbandCharacterSuggestions(search) {
 			html += '</li>';
 		}
 	}
-	$('#warbandcharacter').find('.content-items-list').empty().append(html).find('.select-character').click(function() {
+	$('#warbandcharacter').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
 		warbands[selectedWarbandID].addCharacter($(this).attr('data-character-id'));
 		warbands[selectedWarbandID].save(function() {
 			drawWarbands();
@@ -392,6 +457,26 @@ function populateWarbandCharacterSuggestions(search) {
 			$('#add').show();
 			swapContentView('warbandcharacter', 'warbandcharacters', 'left');
 		});
+	});
+}
+
+function populateWarbandCharacterEnhancementSuggestions(search) {
+	var html = '';
+	$.each(characterEnhancements, function(index, characterEnhancement) {
+		if (search.length == 0 || (characterEnhancement.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
+			html += '<li>';
+				html += '<a class="listing-block" data-rice="'+characterEnhancement.rice+'">';
+					html += '<span class="cell name">'+htmlEncode(characterEnhancement.name)+'</span>';
+					html += '<span class="cell rice"><span class="badge">'+((characterEnhancement.rice == 0) ? '-':characterEnhancement.rice)+'</span></span>';
+					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '</a>';
+			html += '</li>';
+		}
+	});
+	$('#warbandcharacteraddenhancement').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
+		$('#warbandcharacterenhancementname').val(htmlEncode($(this).find('.cell.name').text()));
+		$('#warbandcharacterenhancementrice').val($(this).attr('data-rice'));
+		$('#warbandcharactersaveenhancement').trigger('tap');
 	});
 }
 
@@ -441,14 +526,9 @@ function setupWarbandSwipeableListing(id) {
 	$('#'+id).find('.change-content-view').tap(function() {
 		changeContentView(this);
 	});
-	if ($('#'+id).find('.swipe-wrapper').hasClass('actions-3')) {
-		$('#'+id).find('.share').css('margin-left', contentViewWidth+'px');
-		$('#'+id).find('.edit').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
-		$('#'+id).find('.delete').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
-	} else {
-		$('#'+id).find('.edit').css('margin-left', contentViewWidth+'px');
-		$('#'+id).find('.delete').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
-	}
+	$('#'+id).find('.action-1').css('margin-left', contentViewWidth+'px');
+	$('#'+id).find('.action-2').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
+	$('#'+id).find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
 }
 
 function drawWarbands() {
@@ -457,9 +537,9 @@ function drawWarbands() {
 		var warbandRice = warbands[warbandID].rice();
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-3">';
-				html += '<a class="action-block share" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
-				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block delete" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="action-block action-1 share" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
+				html += '<a class="action-block action-2 edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-3 delete" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbandID+'">';
 					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warbandID].faction].image+'"></span>';
 					html += '<span class="cell name">'+htmlEncode(warbands[warbandID].name)+'</span>';
@@ -472,28 +552,25 @@ function drawWarbands() {
 	$('#warbands').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbands');
 	$('#warbands').find('.share').tap(function() {
-		composeWarbandEmail($(this).attr('data-warband-id'));
+		var warbandID = $(this).attr('data-warband-id');
+		var params = {
+			'subject': 'Bushido Warband: '+warbands[warbandID].name,
+			'onSuccess': function() {
+				$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
+			},
+			'onError': function() {
+				$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
+			}
+		};
+		if (settingIsEnabled('htmlemailsetting')) {
+			params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData());
+			params.isHtml = true;
+		} else params.body = Mustache.render(staticData.templates.text, warbands[warbandID].mustacheData());
+		cordova.require('emailcomposer.EmailComposer').show(params);
 	});
 	$('#warbands').find('.delete').tap(function() {
 		deleteWarband($(this).attr('data-warband-id'));
 	});
-}
-
-function composeWarbandEmail(warbandID) {
-	var params = {
-		'subject': 'Bushido Warband: '+warbands[warbandID].name,
-		'onSuccess': function() {
-			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
-		},
-		'onError': function() {
-			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
-		}
-	};
-	if (settingIsEnabled('htmlemailsetting')) {
-		params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData());
-		params.isHtml = true;
-	} else params.body = Mustache.render(staticData.templates.text, warbands[warbandID].mustacheData());
-	cordova.require('emailcomposer.EmailComposer').show(params);
 }
 
 function setWarbandContentScreenTitleAndSubNavSelection(id) {
@@ -510,10 +587,10 @@ function drawWarbandCharacters() {
 	for (var warbandCharacterID in warbands[selectedWarbandID].characters) {
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-2">';
-				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block delete" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID+'-cards">';
-					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID].name)+'</span>';
+				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-2 delete" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacterID)+'-cards">';
+					html += '<span class="cell name">'+htmlEncode(warbands[selectedWarbandID].getCharacterName(warbandCharacterID))+'</span>';
 					html += '<span class="cell rice warband-character"><span class="badge">'+warbands[selectedWarbandID].characterRiceDetail(warbandCharacterID)+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 				html += '</a>';
@@ -527,8 +604,28 @@ function drawWarbandCharacters() {
 	});
 }
 
-function drawWarbandCharacterEnhancements() {
-	
+function drawEditWarbandCharacter() {
+	$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+': enhancements'));
+	$('#add').attr('data-target-content-view-id', 'warbandcharacteraddenhancement').show();
+	var html = '<ul class="content-items-list">';
+	for (var warbandCharacterEnhancementID in warbands[selectedWarbandID].characters[selectedWarbandCharacterID].enhancements) {
+		var warbandCharacterEnhancement = warbands[selectedWarbandID].getCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID);
+		html += '<li>';
+			html += '<div class="swipe-wrapper actions-1">';
+				html += '<a class="action-block action-1 delete" data-warband-character-enhancement-id="'+warbandCharacterEnhancementID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<span class="listing-block">';
+					html += '<span class="cell name">'+htmlEncode(warbandCharacterEnhancement.name)+'</span>';
+					html += '<span class="cell rice"><span class="badge">'+warbandCharacterEnhancement.rice+'</span></span>';
+				html += '</span>';
+			html += '</div>';
+		html += '</li>';
+	}
+	html += '</ul>';
+	$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
+	setupWarbandSwipeableListing('warbandcharacter');
+	$('#warbandcharacter').find('.delete').tap(function() {
+		deleteWarbandCharacterEnhancement($(this).attr('data-warband-character-enhancement-id'));
+	});
 }
 
 function drawWarbandEvents() {
@@ -537,8 +634,8 @@ function drawWarbandEvents() {
 	for (var warbandEventID in warbands[selectedWarbandID].events) {
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-2">';
-				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandevent" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block delete" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandevent" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-2 delete" data-warband-event-id="'+warbandEventID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block">';
 					html += '<span class="cell name">'+htmlEncode(warbandEventID)+'</span>';
 					
@@ -559,8 +656,8 @@ function drawWarbandTerrain() {
 	for (var warbandTerrainItemID in warbands[selectedWarbandID].terrain) {
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-2">';
-				html += '<a class="action-block edit change-content-view appear-from-right" data-target-content-view-id="warbandterrainitem" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block delete" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandterrainitem" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-2 delete" data-warband-terrain-item-id="'+warbandTerrainItemID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<a class="listing-block">';
 					html += '<span class="cell name">'+htmlEncode(warbandTerrainItemID)+'</span>';
 					
@@ -592,7 +689,7 @@ function deleteWarband(warbandID) {
 
 function deleteWarbandCharacter(warbandCharacterID) {
 	navigator.notification.confirm(
-		'Are you sure you want to delete '+staticData.factions[warbands[selectedWarbandID].faction].characters[warbands[selectedWarbandID].characters[warbandCharacterID].factionCharacterID].name+' from your Warband "'+warbands[selectedWarbandID].name+'"?',
+		'Are you sure you want to delete '+warbands[selectedWarbandID].getCharacterName(warbandCharacterID)+' from your Warband "'+warbands[selectedWarbandID].name+'"?',
 		function(button) {
 			if (button != 2) return;
 			warbands[selectedWarbandID].removeCharacter(warbandCharacterID);
@@ -606,16 +703,16 @@ function deleteWarbandCharacter(warbandCharacterID) {
 	);
 }
 
-function deleteWarbandCharacterEnhancement(warbandCharacterID, warbandCharacterEnhancementID) {
+function deleteWarbandCharacterEnhancement(warbandCharacterEnhancementID) {
 	navigator.notification.confirm(
-		'Are you sure you want to delete the enhancement "'+warbands[selectedWarbandID].characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].name+'" from '+warbandCharacterID+' in your Warband "'+warbands[selectedWarbandID].name+'"?',
+		'Are you sure you want to delete the enhancement "'+warbands[selectedWarbandID].getCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID).name+'" from '+warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+' in your Warband "'+warbands[selectedWarbandID].name+'"?',
 		function(button) {
 			if (button != 2) return;
-			warbands[selectedWarbandID].removeCharacterEnhancement(warbandCharacterEnhancementID);
+			warbands[selectedWarbandID].removeCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID);
 			warbands[selectedWarbandID].save(function() {
 				drawWarbands();
 				drawWarbandCharacters();
-				drawWarbandCharacterEnhancements();
+				drawEditWarbandCharacter();
 			});
 		},
 		'Delete Warband character',
@@ -625,7 +722,7 @@ function deleteWarbandCharacterEnhancement(warbandCharacterID, warbandCharacterE
 
 function deleteWarbandEvent(warbandEventID) {
 	navigator.notification.confirm(
-		'Are you sure you want to delete the event "'+warbands[selectedWarbandID].events[warbandEventID].name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
+		'Are you sure you want to delete the event "'+warbands[selectedWarbandID].getEvent(warbandEventID).name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
 		function(button) {
 			if (button != 2) return;
 			warbands[selectedWarbandID].removeEvent(warbandEventID);
@@ -641,7 +738,7 @@ function deleteWarbandEvent(warbandEventID) {
 
 function deleteWarbandTerrain(warbandTerrainItemID) {
 	navigator.notification.confirm(
-		'Are you sure you want to delete the terrain item "'+warbands[selectedWarbandID].terrain[warbandTerrainItemID].name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
+		'Are you sure you want to delete the terrain item "'+warbands[selectedWarbandID].getTerrainItem(warbandTerrainItemID).name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
 		function(button) {
 			if (button != 2) return;
 			warbands[selectedWarbandID].removeTerrainItem(warbandTerrainItemID);
