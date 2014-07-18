@@ -148,6 +148,15 @@
 	text-align: right;
 }
 
+.content-items-list .listing-block .cell.icon.left {
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.control {
+	width: 67px;
+	padding-left: 20px;
+}
+
 /* Factions */
 
 .faction-cards.slider,
