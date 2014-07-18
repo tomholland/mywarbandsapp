@@ -1,4 +1,5 @@
 var settings = {};
+var settingsLawnchair;
 
 function loadSettings(callback) {
 	settingsLawnchair = new Lawnchair({adapter:'dom', name:'settings'}, function(store) {

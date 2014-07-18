@@ -74,6 +74,22 @@
 					<ul class="content-items-list"></ul>
 				</div>
 			</div>
+			<div class="content-view" id="warbandcharacter" data-back-content-view-id="warbandcharacters">
+				<div class="content-view-scroll-wrapper"></div>
+			</div>
+			<div class="content-view" id="warbandcharacteraddenhancement" data-back-content-view-id="warbandcharacter">
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandcharacterenhancementname" type="search" placeholder="Enhancement name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandcharacterenhancementrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="warbandcharactersaveenhancement">Add enhancement</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used enhancements:</span>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
 			<div class="content-view" id="warbandevents" data-back-content-view-id="warbands">
 				<div class="content-view-scroll-wrapper">
 					<div class="segmented-control">
@@ -84,6 +100,9 @@
 					<ul class="content-items-list"></ul>
 				</div>
 			</div>
+			<div class="content-view content-padded" id="warbandevent" data-back-content-view-id="warbandevents">
+				<div class="content-view-scroll-wrapper"></div>
+			</div>
 			<div class="content-view" id="warbandterrain" data-back-content-view-id="warbands">
 				<div class="content-view-scroll-wrapper">
 					<div class="segmented-control">
@@ -93,12 +112,6 @@
 					</div>
 					<ul class="content-items-list"></ul>
 				</div>
-			</div>
-			<div class="content-view" id="warbandcharacter" data-back-content-view-id="warbandcharacters">
-				<div class="content-view-scroll-wrapper"></div>
-			</div>
-			<div class="content-view content-padded" id="warbandevent" data-back-content-view-id="warbandevents">
-				<div class="content-view-scroll-wrapper"></div>
 			</div>
 			<div class="content-view content-padded" id="warbandterrainitem" data-back-content-view-id="warbandterrain">
 				<div class="content-view-scroll-wrapper"></div>
@@ -317,7 +330,7 @@
 			</div>
 			<div class="content-view content-padded" id="faq12" data-title="Giving app feedback / suggestions / abuse" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
-					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission). Only freely downloadable content is included.</p>
+					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission).</p>
 					<p>The app is free and is built and maintained by a team of two in our spare time.</p>
 					<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
 					<p>If you think the app is rubbish, then we suggested you <a class="external" data-url="https://developer.apple.com/register">Register as an Apple Developer</a> (it costs $99 per year) and get building ;)</p>
@@ -339,6 +352,7 @@
 		<script src="js/libs/mustache.js"></script>
 		<script src="js/static-data.js"></script>
 		<script src="js/warbands.js"></script>
+		<script src="js/character-enhancements.js"></script>
 		<script src="js/settings.js"></script>
 		<script src="js/app.js"></script>
 	</body>
