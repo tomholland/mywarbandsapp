@@ -137,16 +137,41 @@
 				<div class="content-view-scroll-wrapper">
 					<ul class="content-items-list">
 						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="settings">
+								<span class="cell icon left"><span class="icon icon-gear"></span></span>
+								<span class="cell name">Settings</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="about">
+								<span class="cell icon left"><span class="icon icon-info"></span></span>
 								<span class="cell name">About</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
 						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faqs">
+								<span class="cell icon left"><span class="icon icon-info"></span></span>
 								<span class="cell name">FAQs</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-view" id="settings" data-title="Settings" data-back-content-view-id="misc">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list">
+						<li>
+							<span class="listing-block">
+								<span class="cell name">Create HTML emails</span>
+								<span class="cell control">
+									<div class="toggle" id="htmlemailsetting">
+										<div class="toggle-handle"></div>
+									</div>
+								</span>
+							</span>
 						</li>
 					</ul>
 				</div>
@@ -156,7 +181,7 @@
 					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission).</p>
 					<p>Please direct any support or feature requests to <a class="twitter" data-username="bushidocardsapp">@bushidocardsapp</a></p>
 					<p>Only freely downloadable content is included.</p>
-					<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a>, <a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
+					<p>Built with <a class="external" data-url="http://cordova.apache.org">Apache Cordova</a>, <a class="external" data-url="http://zeptojs.com">Zepto.js</a>, <a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a>, <a class="external" data-url="https://github.com/janl/mustache.js/">mustache.js</a> and <a class="external" data-url="http://goratchet.com">Ratchet</a>.</p>
 				</div>
 			</div>
 			<div class="content-view" id="faqs" data-title="FAQs" data-back-content-view-id="misc">
@@ -206,18 +231,24 @@
 						</li>
 						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq8">
-								<span class="cell name">How can I export a Warband from the app?</span>
+								<span class="cell name">How can I share a Warband from the app?</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
 						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq9">
-								<span class="cell name">Can I sync my Warbands between devices?</span>
+								<span class="cell name">Can I turn off HTML emails for Warband sharing?</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
 						</li>
 						<li>
 							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq10">
+								<span class="cell name">Can I sync my Warbands between devices?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq11">
 								<span class="cell name">Can I search or bookmark pages in the guides?</span>
 								<span class="cell icon"><span class="icon icon-right"></span></span>
 							</a>
@@ -258,28 +289,35 @@
 			<div class="content-view content-padded" id="faq6" data-title="Using the app offline" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>All the card images, scenario plans and guides are included within the app itself; you do not need to have an Internet connection to use the app.</p>
-					<p>If you wish to <a class="change-content-view appear-from-right" data-target-content-view-id="faq8">export a Warband</a>, you will need to have an Internet connection to send the email.</p>
+					<p>If you wish to <a class="change-content-view appear-from-right" data-target-content-view-id="faq8">share a Warband</a>, you will need to have an Internet connection to send the email.</p>
 				</div>
 			</div>
 			<div class="content-view content-padded" id="faq7" data-title="Deleting the app - your Warbands" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>Your Warbands are stored within the app; they remain when you close the app or turn off your device.</p>
 					<p>If you delete the app, all data associated with the app is also deleted (including your Warbands).</p>
-					<p>Related FAQ: <a class="change-content-view appear-from-right" data-target-content-view-id="faq8">How can I export a Warband from the app?</a></p>
+					<p>Related FAQ: <a class="change-content-view appear-from-right" data-target-content-view-id="faq8">How can I share a Warband from the app?</a></p>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="faq8" data-title="Exporting a Warband" data-back-content-view-id="faqs">
+			<div class="content-view content-padded" id="faq8" data-title="Sharing a Warband" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>On the Warbands screen, swipe left on a Warband's name and tap on the share icon (in the green block).</p>
 					<p>This will open a compose email screen with the Warband's details in; you'll need to have an Internet connection to send the email.</p>
+					<p>Related FAQ: <a class="change-content-view appear-from-right" data-target-content-view-id="faq9">Can I turn off HTML emails for Warband sharing?</a></p>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="faq9" data-title="Syncing Warbands between devices" data-back-content-view-id="faqs">
+			<div class="content-view content-padded" id="faq9" data-title="Changing email format" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>In the Misc. section, tap on Settings.</p>
+					<p>Toggling the "Create HTML emails" setting off will generate plain text emails when sharing a Warband.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq10" data-title="Syncing Warbands between devices" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>You cannot sync Warbands between different devices currently - but this is something we are working on as part of a future update.</p>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="faq10" data-title="Navigating the guide documents" data-back-content-view-id="faqs">
+			<div class="content-view content-padded" id="faq11" data-title="Navigating the guide documents" data-back-content-view-id="faqs">
 				<div class="content-view-scroll-wrapper">
 					<p>The guide documents included in the app are PDFs.</p>
 					<p>Selecting a guide from the app will open it in a basic PDF reader.</p>
@@ -294,6 +332,7 @@
 		<script src="js/libs/mustache.js"></script>
 		<script src="js/static-data.js"></script>
 		<script src="js/warbands.js"></script>
+		<script src="js/settings.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 </html>

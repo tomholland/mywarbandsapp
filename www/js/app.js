@@ -120,6 +120,10 @@ document.addEventListener('deviceready', function() {
 		drawWarbands();
 	});
 	
+	loadSettings(function() {
+		if (settingIsEnabled('htmlemailsetting', true)) $('#htmlemailsetting').addClass('active');
+	});
+	
 	$('#back').tap(function() {
 		if (animating) return;
 		$('input,select').blur();
@@ -206,6 +210,10 @@ document.addEventListener('deviceready', function() {
 	$('#randomscenario').tap(function() {
 		if (animating) return;
 		swapContentView('scenarios', 'scenario'+randomIntFromInterval(0, staticData.scenarios.length - 1), 'right');
+	});
+	
+	$('#htmlemailsetting').on('toggle', function(toggleEvent) {
+		settings['htmlemailsetting'].save(toggleEvent.detail.isActive);
 	});
 	
 	$('a.pdf').tap(function() {
@@ -479,8 +487,10 @@ function composeWarbandEmail(warbandID) {
 			$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
 		}
 	};
-	params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData()),
-	params.isHtml = true;
+	if (settingIsEnabled('htmlemailsetting', true)) {
+		params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData());
+		params.isHtml = true;
+	} else params.body = Mustache.render(staticData.templates.text, warbands[warbandID].mustacheData());
 	cordova.require('emailcomposer.EmailComposer').show(params);
 }
 
