@@ -25,6 +25,7 @@ function saveCharacterEnhancementIfNew(characterEnhancementName, characterEnhanc
 		characterEnhancement,
 		function(record) {
 			characterEnhancements.push(characterEnhancement);
+			characterEnhancements.sort(sortObjectArrayByObjectNameProperty);
 			callback();
 		}
 	);

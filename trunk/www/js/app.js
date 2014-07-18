@@ -117,14 +117,14 @@ document.addEventListener('deviceready', function() {
 		changeContentView(this);
 	});
 	
-	loadWarbands(function() {
-		drawWarbands();
-	});
-	
 	loadSettings(function() {
 		$('#settings').find('.toggle').each(function(index) {
 			if (settingIsEnabled($(this).attr('id'))) $(this).addClass('active');
 		});
+	});
+	
+	loadWarbands(function() {
+		drawWarbands();
 	});
 	
 	loadCharacterEnhancements();
@@ -274,7 +274,9 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('#settings').find('.toggle').on('toggle', function(toggleEvent) {
-		settings[$(this).attr('id')].save(toggleEvent.detail.isActive);
+		settings[$(this).attr('id')].save(toggleEvent.detail.isActive, function(record) {
+			if (record.key == 'lexicographicalsort') drawWarbands();
+		});
 	});
 	
 	$('a.pdf').tap(function() {
@@ -531,24 +533,38 @@ function setupWarbandSwipeableListing(id) {
 	$('#'+id).find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
 }
 
+function sortObjectArrayByObjectNameProperty(objA, objB) {
+	if (objA.name < objB.name) return -1;
+	if (objA.name > objB.name) return 1;
+	return 0;
+}
+
 function drawWarbands() {
-	var html = '';
+	var warbandsSortArray = [];
 	for (var warbandID in warbands) {
-		var warbandRice = warbands[warbandID].rice();
+		warbandsSortArray.push({
+			id: warbandID,
+			name: warbands[warbandID].name
+		});
+	}
+	if (settingIsEnabled('lexicographicalsort')) warbandsSortArray.sort(sortObjectArrayByObjectNameProperty);
+	var html = '';
+	$.each(warbandsSortArray, function(index, warband) {
+		var warbandRice = warbands[warband.id].rice();
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-3">';
-				html += '<a class="action-block action-1 share" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
-				html += '<a class="action-block action-2 edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block action-3 delete" data-warband-id="'+warbandID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warbandID+'">';
-					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warbandID].faction].image+'"></span>';
-					html += '<span class="cell name">'+htmlEncode(warbands[warbandID].name)+'</span>';
-					html += '<span class="cell rice warband"><span class="badge'+((warbandRice > warbands[warbandID].riceLimit) ? ' error':'')+'">'+warbandRice+'/'+warbands[warbandID].riceLimit+'</span></span>';
+				html += '<a class="action-block action-1 share" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
+				html += '<a class="action-block action-2 edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-3 delete" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warband.id+'">';
+					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warband.id].faction].image+'"></span>';
+					html += '<span class="cell name">'+htmlEncode(warband.name)+'</span>';
+					html += '<span class="cell rice warband"><span class="badge'+((warbandRice > warbands[warband.id].riceLimit) ? ' error':((warbandRice == warbands[warband.id].riceLimit) ? ' match':''))+'">'+warbandRice+'/'+warbands[warband.id].riceLimit+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 				html += '</a>';
 			html += '</div>';
 		html += '</li>';
-	}
+	});
 	$('#warbands').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbands');
 	$('#warbands').find('.share').tap(function() {
@@ -583,20 +599,28 @@ function setWarbandContentScreenTitleAndSubNavSelection(id) {
 
 function drawWarbandCharacters() {
 	setWarbandContentScreenTitleAndSubNavSelection('warbandcharacters');
-	var html = '';
+	var warbandCharactersSortArray = [];
 	for (var warbandCharacterID in warbands[selectedWarbandID].characters) {
+		warbandCharactersSortArray.push({
+			id: warbandCharacterID,
+			name: warbands[selectedWarbandID].getCharacterName(warbandCharacterID)
+		});
+	}
+	if (settingIsEnabled('lexicographicalsort')) warbandCharactersSortArray.sort(sortObjectArrayByObjectNameProperty);
+	var html = '';
+	$.each(warbandCharactersSortArray, function(index, warbandCharacter) {
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-2">';
-				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block action-2 delete" data-warband-character-id="'+warbandCharacterID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacterID)+'-cards">';
-					html += '<span class="cell name">'+htmlEncode(warbands[selectedWarbandID].getCharacterName(warbandCharacterID))+'</span>';
-					html += '<span class="cell rice warband-character"><span class="badge">'+warbands[selectedWarbandID].characterRiceDetail(warbandCharacterID)+'</span></span>';
+				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
+				html += '<a class="action-block action-2 delete" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacter.id)+'-cards">';
+					html += '<span class="cell name">'+htmlEncode(warbandCharacter.name)+'</span>';
+					html += '<span class="cell rice warband-character"><span class="badge">'+warbands[selectedWarbandID].characterRiceDetail(warbandCharacter.id)+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 				html += '</a>';
 			html += '</div>';
 		html += '</li>';
-	}
+	});
 	$('#warbandcharacters').find('.content-items-list').empty().append(html);
 	setupWarbandSwipeableListing('warbandcharacters');
 	$('#warbandcharacters').find('.delete').tap(function() {
@@ -607,19 +631,28 @@ function drawWarbandCharacters() {
 function drawEditWarbandCharacter() {
 	$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+': enhancements'));
 	$('#add').attr('data-target-content-view-id', 'warbandcharacteraddenhancement').show();
-	var html = '<ul class="content-items-list">';
+	var warbandCharacterEnhancementsSortArray = [];
 	for (var warbandCharacterEnhancementID in warbands[selectedWarbandID].characters[selectedWarbandCharacterID].enhancements) {
 		var warbandCharacterEnhancement = warbands[selectedWarbandID].getCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID);
+		warbandCharacterEnhancementsSortArray.push({
+			id: warbandCharacterEnhancementID,
+			name: warbandCharacterEnhancement.name,
+			rice: warbandCharacterEnhancement.rice
+		});
+	}
+	if (settingIsEnabled('lexicographicalsort')) warbandCharacterEnhancementsSortArray.sort(sortObjectArrayByObjectNameProperty);
+	var html = '<ul class="content-items-list">';
+	$.each(warbandCharacterEnhancementsSortArray, function(index, warbandCharacterEnhancement) {
 		html += '<li>';
 			html += '<div class="swipe-wrapper actions-1">';
-				html += '<a class="action-block action-1 delete" data-warband-character-enhancement-id="'+warbandCharacterEnhancementID+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
+				html += '<a class="action-block action-1 delete" data-warband-character-enhancement-id="'+warbandCharacterEnhancement.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
 				html += '<span class="listing-block">';
 					html += '<span class="cell name">'+htmlEncode(warbandCharacterEnhancement.name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+warbandCharacterEnhancement.rice+'</span></span>';
 				html += '</span>';
 			html += '</div>';
 		html += '</li>';
-	}
+	});
 	html += '</ul>';
 	$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
 	setupWarbandSwipeableListing('warbandcharacter');
