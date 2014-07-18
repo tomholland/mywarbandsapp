@@ -149,6 +149,11 @@
 	background: #ff3b30;
 }
 
+.content-items-list .listing-block .cell.rice .badge.match {
+	color: #fff;
+	background: #4cd964;
+}
+
 .content-items-list .listing-block .cell.icon {
 	color: #bbb;
 	width: 30px;
@@ -313,6 +318,13 @@ input[type=search] {
 .scenario-image {
 	width: 100%;
 	border: 1px solid #ccc;
+}
+
+/* Settings */
+
+#settings li {
+	font-size: 15px;
+	line-height: 19px;
 }
 
 /* FAQs */

@@ -22,7 +22,9 @@ function settingIsEnabled(id) {
 	return settings[id].enabled;
 }
 
-Setting.prototype.save = function(enabled) {
+Setting.prototype.save = function(enabled, callback) {
 	this.enabled = enabled;
-	settingsLawnchair.save({key: this.id, value: this.enabled});
+	settingsLawnchair.save({key: this.id, value: this.enabled}, function(record) {
+		callback(record);
+	});
 }
