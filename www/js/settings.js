@@ -18,7 +18,9 @@ function Setting(id, enabled) {
 }
 
 function settingIsEnabled(id) {
-	if (!settings.hasOwnProperty(id)) settings[id] = new Setting(id, ($('#'+id).attr('data-default') === 'enabled'));
+	if (!settings.hasOwnProperty(id)) {
+		settings[id] = new Setting(id, ($('#'+id).attr('data-default') === 'enabled'));
+	}
 	return settings[id].enabled;
 }
 
