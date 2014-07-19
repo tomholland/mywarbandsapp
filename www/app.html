@@ -77,13 +77,13 @@
 			<div class="content-view" id="warbandcharacter" data-back-content-view-id="warbandcharacters">
 				<div class="content-view-scroll-wrapper"></div>
 			</div>
-			<div class="content-view" id="warbandcharacteraddenhancement" data-back-content-view-id="warbandcharacter">
+			<div class="content-view" id="warbandcharacterenhancement" data-back-content-view-id="warbandcharacter">
 				<div class="content-view-scroll-wrapper">
 					<div class="horizontally-padded-wrapper">
 						<form onsubmit="return false;">
 							<input id="warbandcharacterenhancementname" type="search" placeholder="Enhancement name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
 							<input id="warbandcharacterenhancementrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
-							<a class="btn btn-block btn-positive" id="warbandcharactersaveenhancement">Add enhancement</a>
+							<a class="btn btn-block btn-positive" id="savewarbandcharacterenhancement">Add enhancement</a>
 						</form>
 					</div>
 					<span class="list-preamble">Previously used enhancements:</span>
@@ -100,8 +100,18 @@
 					<ul class="content-items-list"></ul>
 				</div>
 			</div>
-			<div class="content-view content-padded" id="warbandevent" data-back-content-view-id="warbandevents">
-				<div class="content-view-scroll-wrapper"></div>
+			<div class="content-view" id="warbandevent" data-back-content-view-id="warbandevents">
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandeventname" type="search" placeholder="Event name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandeventrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="savewarbandevent">Add event</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used events:</span>
+					<ul class="content-items-list"></ul>
+				</div>
 			</div>
 			<div class="content-view" id="warbandterrain" data-back-content-view-id="warbands">
 				<div class="content-view-scroll-wrapper">
@@ -114,7 +124,17 @@
 				</div>
 			</div>
 			<div class="content-view content-padded" id="warbandterrainitem" data-back-content-view-id="warbandterrain">
-				<div class="content-view-scroll-wrapper"></div>
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandterrainitemname" type="search" placeholder="Terrain item name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandterrainitemrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="savewarbandterrainitem">Add terrain item</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used terrain items:</span>
+					<ul class="content-items-list"></ul>
+				</div>
 			</div>
 			<div class="content-view" id="guides" data-title="Guides">
 				<div class="content-view-scroll-wrapper">					
@@ -361,9 +381,11 @@
 		<script src="js/libs/lawnchair-0.6.1.min.js"></script>
 		<script src="js/libs/mustache.js"></script>
 		<script src="js/static-data.js"></script>
-		<script src="js/warbands.js"></script>
-		<script src="js/character-enhancements.js"></script>
 		<script src="js/settings.js"></script>
+		<script src="js/warbands.js"></script>
+		<script src="js/warbands-character-enhancements.js"></script>
+		<script src="js/warbands-events.js"></script>
+		<script src="js/warbands-terrain.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 </html>
