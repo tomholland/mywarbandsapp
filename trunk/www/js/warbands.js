@@ -67,6 +67,7 @@ Warband.prototype.mustacheData = function() {
 		mustacheData.characters.push(warbandCharacter);
 		mustacheData.total += warbandCharacter.rice;
 	}
+	
 	for (var warbandEventID in this.events) {
 		mustacheData.events.push(this.events[warbandEventID]);
 		mustacheData.total += this.events[warbandEventID].rice;
@@ -74,6 +75,14 @@ Warband.prototype.mustacheData = function() {
 	for (var warbandTerrainItemID in this.terrain) {
 		mustacheData.terrain.push(this.terrain[warbandTerrainItemID]);
 		mustacheData.total += this.terrain[warbandTerrainItemID].rice;
+	}
+	if (settingIsEnabled('lexicographicalsort')) {
+		mustacheData.characters.sort(sortObjectArrayByObjectNameProperty);
+		$.each(mustacheData.characters, function(index) {
+			mustacheData.characters[index].enhancements.sort(sortObjectArrayByObjectNameProperty);
+		});
+		mustacheData.events.sort(sortObjectArrayByObjectNameProperty);
+		mustacheData.terrain.sort(sortObjectArrayByObjectNameProperty);
 	}
 	return mustacheData;
 }
