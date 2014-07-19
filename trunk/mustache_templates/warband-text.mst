@@ -15,7 +15,8 @@ Event Special cards:
 ---------------------------
 
 {{#events}}
-* {{name}} ({{rice}}){{/events}}
+* {{name}} ({{rice}})
+{{/events}}
 {{/events.length}}
 {{#terrain.length}}
 
@@ -23,7 +24,8 @@ Terrain Special cards:
 ---------------------------
 
 {{#terrain}}
-* {{name}} ({{rice}}){{/terrain}}
+* {{name}} ({{rice}})
+{{/terrain}}
 {{/terrain.length}}
 
 ---------------------------
