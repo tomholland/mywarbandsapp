@@ -14,7 +14,7 @@ document.addEventListener('deviceready', function() {
 	for (var factionID in staticData.factions) {
 		$('#warbandfaction').append('<option value="'+factionID+'">'+htmlEncode(staticData.factions[factionID].name)+'</option>');
 		var factionContentItemsListHTML = '<li>';
-			factionContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-'+factionID+'">';
+			factionContentItemsListHTML += '<a class="listing-block tappable change-content-view appear-from-right" data-target-content-view-id="faction-'+factionID+'">';
 				factionContentItemsListHTML += '<span class="cell image"><img src="images/factions/'+staticData.factions[factionID].image+'"></span>';
 				factionContentItemsListHTML += '<span class="cell name">'+htmlEncode(staticData.factions[factionID].name)+'</span>';
 				factionContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span>';
@@ -27,7 +27,7 @@ document.addEventListener('deviceready', function() {
 				contentHTMLAdditions += '<ul class="content-items-list">';
 				for (var factionCharacterID in staticData.factions[factionID].characters) {
 					contentHTMLAdditions += '<li>';
-						contentHTMLAdditions += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+factionCharacterID+'-cards">';
+						contentHTMLAdditions += '<a class="listing-block tappable change-content-view appear-from-right" data-target-content-view-id="faction-character-'+factionCharacterID+'-cards">';
 							contentHTMLAdditions += '<span class="cell name">'+htmlEncode(staticData.factions[factionID].characters[factionCharacterID].name)+'</span>';
 							contentHTMLAdditions += '<span class="cell rice"><span class="badge">'+((staticData.factions[factionID].characters[factionCharacterID].rice === 0) ? '-':staticData.factions[factionID].characters[factionCharacterID].rice)+'</span></span>';
 							contentHTMLAdditions += '<span class="cell icon"><span class="icon icon-right"></span></span>';
@@ -51,7 +51,7 @@ document.addEventListener('deviceready', function() {
 	
 	$.each(staticData.scenarios, function(scenarioIndex, scenario) {
 		var scenariosContentItemsListHTML = '<li>';
-			scenariosContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">';
+			scenariosContentItemsListHTML += '<a class="listing-block tappable change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioIndex+'">';
 				scenariosContentItemsListHTML += '<span class="cell name">'+htmlEncode(scenario.name)+'</span>';
 				scenariosContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span>';
 			scenariosContentItemsListHTML += '</a>';
@@ -572,7 +572,7 @@ function drawWarbands() {
 				html += '<a class="action-block action-1 share" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
 				html += '<a class="action-block action-2 edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
 				html += '<a class="action-block action-3 delete" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warband.id+'">';
+				html += '<a class="listing-block tappable change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warband.id+'">';
 					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warband.id].faction].image+'"></span>';
 					html += '<span class="cell name">'+htmlEncode(warband.name)+'</span>';
 					html += '<span class="cell rice warband"><span class="badge'+((warbandRice > warbands[warband.id].riceLimit) ? ' error':((warbandRice == warbands[warband.id].riceLimit) ? ' match':''))+'">'+warbandRice+'/'+warbands[warband.id].riceLimit+'</span></span>';
@@ -644,7 +644,7 @@ function drawWarbandCharacters() {
 			html += '<div class="swipe-wrapper actions-2">';
 				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>';
 				html += '<a class="action-block action-2 delete" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacter.id)+'-cards">';
+				html += '<a class="listing-block tappable change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacter.id)+'-cards">';
 					html += '<span class="cell name">'+htmlEncode(warbandCharacter.name)+'</span>';
 					html += '<span class="cell rice warband-character"><span class="badge">'+warbands[selectedWarbandID].characterRiceDetail(warbandCharacter.id)+'</span></span>';
 					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
@@ -664,10 +664,10 @@ function populateWarbandCharacterSuggestions(search) {
 	for (var factionCharacterID in staticData.factions[warbands[selectedWarbandID].faction].characters) {
 		if (search.length === 0 || (staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
-				html += '<a class="listing-block" data-character-id="'+factionCharacterID+'">';
+				html += '<a class="listing-block tappable" data-character-id="'+factionCharacterID+'">';
 					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+((staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice === 0) ? '-':staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice)+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
 					html += '</a>';
 			html += '</li>';
 		}
@@ -738,10 +738,10 @@ function populateWarbandCharacterEnhancementSuggestions(search) {
 	$.each(warbandsCharacterEnhancements, function(index, warbandsCharacterEnhancement) {
 		if (search.length === 0 || (warbandsCharacterEnhancement.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandsCharacterEnhancement.rice+'">';
+				html += '<a class="listing-block tappable" data-rice="'+warbandsCharacterEnhancement.rice+'">';
 					html += '<span class="cell name">'+htmlEncode(warbandsCharacterEnhancement.name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+((warbandsCharacterEnhancement.rice === 0) ? '-':warbandsCharacterEnhancement.rice)+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
 					html += '</a>';
 			html += '</li>';
 		}
@@ -808,10 +808,10 @@ function populateWarbandEventSuggestions(search) {
 	$.each(warbandsEvents, function(index, warbandEvent) {
 		if (search.length === 0 || (warbandEvent.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandEvent.rice+'">';
+				html += '<a class="listing-block tappable" data-rice="'+warbandEvent.rice+'">';
 					html += '<span class="cell name">'+htmlEncode(warbandEvent.name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+((warbandEvent.rice === 0) ? '-':warbandEvent.rice)+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
 					html += '</a>';
 			html += '</li>';
 		}
@@ -877,10 +877,10 @@ function populateWarbandTerrainItemSuggestions(search) {
 	$.each(warbandsTerrain, function(index, warbandTerrainItem) {
 		if (search.length === 0 || (warbandTerrainItem.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
 			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandTerrainItem.rice+'">';
+				html += '<a class="listing-block tappable" data-rice="'+warbandTerrainItem.rice+'">';
 					html += '<span class="cell name">'+htmlEncode(warbandTerrainItem.name)+'</span>';
 					html += '<span class="cell rice"><span class="badge">'+((warbandTerrainItem.rice === 0) ? '-':warbandTerrainItem.rice)+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-plus"></span></span>';
+					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
 					html += '</a>';
 			html += '</li>';
 		}

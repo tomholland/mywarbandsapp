@@ -98,10 +98,13 @@
 	display: table;
 	width: 100%;
 	padding: 10px;
+}
+
+.content-items-list .listing-block.tappable {
 	-webkit-transition: opacity .3s;
 }
 
-.content-items-list .listing-block:active {
+.content-items-list .listing-block.tappable:active {
 	opacity: .4;
 }
 
@@ -281,6 +284,17 @@ input[type=search] {
 	border-top: 1px solid #c8c7cc;
 	padding-top: 6px;
 	text-align: center;
+}
+
+.listing-block .cell.icon.large {
+	width: 40px;
+}
+
+.listing-block .icon-plus {
+	background: #4cd964;
+	border-radius: 3px;
+	padding: 2px;
+	color: #fff;
 }
 
 /* Scenarios */
