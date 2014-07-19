@@ -11,20 +11,22 @@ function loadWarbandsEvents() {
 	});
 }
 
-function saveWarbandsEventIfNew(warbandsEventsName, warbandsEventsRice, callback) {
+function saveWarbandsEventIfNew(warbandsEventName, warbandsEventRice, callback) {
 	var found = false;
-	$.each(warbandsEvents, function(index, warbandsEvents) {
-		if (warbandsEvents.name.toLowerCase() == warbandsEventsName.toLowerCase() && warbandsEvents.rice == warbandsEventsRice) found = true;
+	$.each(warbandsEvents, function(index, warbandsEvent) {
+		if (warbandsEvent.name.toLowerCase() == warbandsEventName.toLowerCase() && warbandsEvent.rice == warbandsEventRice) {
+			found = true;
+		}
 	});
 	if (found) {
 		callback();
 		return;
 	}
-	var warbandsEvents = {name: warbandsEventsName, rice: warbandsEventsRice};
+	var warbandsEvent = {name: warbandsEventName, rice: warbandsEventRice};
 	warbandsEventsLawnchair.save(
-		warbandsEvents,
+		warbandsEvent,
 		function(record) {
-			warbandsEvents.push(warbandsEvents);
+			warbandsEvents.push(warbandsEvent);
 			warbandsEvents.sort(sortObjectArrayByObjectNameProperty);
 			callback();
 		}

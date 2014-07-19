@@ -120,7 +120,7 @@ Warband.prototype.addEvent = function(name, rice) {
 }
 
 Warband.prototype.getEvent = function(warbandEventID) {
-	return this.event[warbandEventID];
+	return this.events[warbandEventID];
 }
 
 Warband.prototype.removeEvent = function(warbandEventID) {
