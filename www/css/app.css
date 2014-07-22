@@ -5,8 +5,12 @@
 }
 
 .bar-nav .icon {
-	display: none;
+	-webkit-transform: translateY(-44px);
 	padding: 10px;
+}
+
+.bar-nav .icon.shown {
+	-webkit-transform: translateY(0) !important;
 }
 
 .title {
@@ -30,9 +34,12 @@
 #scrollingcover {
 	position: absolute;
 	z-index: 1000;
-	display: none;
 	background: red;
 	opacity: .5;
+}
+
+#scrollingcover.placed {
+	-webkit-transform: translateX(0) !important;
 }
 
 .bar-nav~.content,
@@ -55,6 +62,10 @@
 	display: none;
 	background: #fff;
 	overflow: hidden;
+}
+
+.content-view * {
+	-webkit-transform: translateZ(0);
 }
 
 .content-padded {
@@ -287,6 +298,11 @@ input[type=search] {
 	border-top: 1px solid #c8c7cc;
 	padding-top: 6px;
 	text-align: center;
+	visibility: hidden;
+}
+
+.list-preamble.shown {
+	visibility: visible;
 }
 
 .listing-block .cell.icon.large {
