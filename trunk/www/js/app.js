@@ -4,6 +4,7 @@ var currentContentViewID = null;
 var backContentViewID = null;
 var selectedWarbandID = null;
 var selectedWarbandCharacterID = null;
+var iScroller = null;
 
 document.addEventListener('deviceready', function() {
 
@@ -103,8 +104,10 @@ document.addEventListener('deviceready', function() {
 		$('.content').append(html);
 	});
 	
-	$('.content-view .content-view-scroll-wrapper').css('height', $('.content').height()+'px');
 	contentViewWidth = $('.content').width();
+	var contentHeight = $('.content').height();
+	$('.content-view').css({ width: contentViewWidth+'px', height: contentHeight+'px' });
+	$('#scrollingcover').css({ width: contentViewWidth+'px', height: contentHeight+'px' });
 	
 	$('#title').html(htmlEncode($('.content .content-view.default').attr('data-title')));
 	$('.content .content-view.default').show();
@@ -402,7 +405,9 @@ function htmlEncode(value){
 }
 
 function changeContentView(tappedElement) {
-	if (animating) return;
+	if (animating) {
+		return;
+	}
 	window.plugin.statusbarOverlay.isHidden(function(isHidden) {
 		if (!isHidden) window.plugin.statusbarOverlay.hide();
 	});
@@ -511,11 +516,9 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 	var newContentViewScrollWapper = newContentView.find('.content-view-scroll-wrapper');
 	if (direction === null) {
 		newContentView.show();
-		if (newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
 		visibleContentView.hide();
 	} else {
 		newContentView.css({'left': ((direction == 'left') ? '-'+contentViewWidth+'px':contentViewWidth+'px')}).addClass('animatable').show().addClass('animation');
-		if (direction == 'right' && newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
 		setTimeout(function() { // workaround transition not firing when edited directly
 			newContentView.css('left', 0);
 		}, 1);
@@ -533,6 +536,21 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 		$('#back').hide();
 	}
 	currentContentViewID = newContentViewID;
+	if (iScroller != null) {
+		iScroller.destroy();
+	}
+	if (newContentViewScrollWapper.length) {
+		iScroller = new IScroll('#'+newContentViewID);
+		iScroller.on('scrollStart', function() {
+			$('#scrollingcover').show();
+		});
+		iScroller.on('scrollEnd', function() {
+			$('#scrollingcover').hide();
+		});
+	} else {
+		$('#scrollingcover').hide();
+		iScroller = null;
+	}
 	animating = false;
 }
 

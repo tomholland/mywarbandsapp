@@ -27,6 +27,14 @@
 
 /* Content */
 
+#scrollingcover {
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	background: red;
+	opacity: .5;
+}
+
 .bar-nav~.content,
 .bar-tab~.content {
 	padding: 0;
@@ -35,7 +43,7 @@
 .content {
 	margin: 44px 0 50px 0;
 	overflow: hidden !important;
-	-webkit-overflow-scrolling: none;
+	-webkit-overflow-scrolling: auto;
 }
 
 .content > * {
@@ -46,16 +54,11 @@
 .content-view {
 	display: none;
 	background: #fff;
+	overflow: hidden;
 }
 
 .content-padded {
 	margin: 0;
-}
-
-.content-view .content-view-scroll-wrapper {
-	overflow-x: hidden;
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
 }
 
 .content-view.content-padded .content-view-scroll-wrapper {
