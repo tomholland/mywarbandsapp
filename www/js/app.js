@@ -112,9 +112,9 @@ document.addEventListener('deviceready', function() {
 	$('.content-view').css({ width: contentViewWidth+'px', height: contentHeight+'px' });
 	$('#scrollingcover').css({ width: contentViewWidth+'px', height: contentHeight+'px', '-webkit-transform': 'translateX('+contentViewWidth+'px)'});
 	
-	$('#title').html(htmlEncode($('.content .content-view.default').attr('data-title')));
-	$('.content .content-view.default').show();
-	currentContentViewID = $('.content .content-view.default').attr('id');
+	$('#title').html(htmlEncode($('.content-view.default').attr('data-title')));
+	$('.content-view.default').css('-webkit-transform', 'translateX(0)');
+	currentContentViewID = $('.content-view.default').attr('id');
 	$('nav a').each(function(index) {
 		if ($(this).attr('data-target-content-view-id') == currentContentViewID) {
 			$(this).addClass('active');
@@ -250,6 +250,7 @@ document.addEventListener('deviceready', function() {
 	
 	$('#warbandcharacterenhancementname').keyup(function() {
 		populateWarbandCharacterEnhancementSuggestions($(this).val());
+		iScroller.refresh();
 	});
 	
 	$('#savewarbandcharacterenhancement').tap(function(tapEvent) {
@@ -293,6 +294,7 @@ document.addEventListener('deviceready', function() {
 	
 	$('#warbandeventname').keyup(function() {
 		populateWarbandEventSuggestions($(this).val());
+		iScroller.refresh();
 	});
 	
 	$('#savewarbandevent').tap(function(tapEvent) {
@@ -335,6 +337,7 @@ document.addEventListener('deviceready', function() {
 	
 	$('#warbandterrainitemname').keyup(function() {
 		populateWarbandTerrainItemSuggestions($(this).val());
+		iScroller.refresh();
 	});
 	
 	$('#savewarbandterrainitem').tap(function(tapEvent) {
@@ -518,6 +521,7 @@ function changeContentView(tappedElement) {
 				populateWarbandCharacterSuggestions('');
 				$('#warbandcharactersearch').keyup(function() {
 					populateWarbandCharacterSuggestions($(this).val());
+					iScroller.refresh();
 				});
 				break;
 			}
@@ -579,35 +583,11 @@ function changeContentView(tappedElement) {
 
 function swapContentView(visibleContentViewID, newContentViewID, direction) {
 	animating = true;
-	$('.content-view').each(function(index) {
-		if ($(this).css('display') != 'none' && $(this).attr('id') != visibleContentViewID) {
-			$(this).hide().removeClass('animation').removeClass('animatable');
-		}
-	});
 	var visibleContentView = $('#'+visibleContentViewID);
 	var newContentView = $('#'+newContentViewID);
 	if (newContentView.hasClass('slider')) {
 		newContentView.find('.slide-group').css('-webkit-transform', 'translateX(0)');
 	}
-	if (direction === null) {
-		newContentView.show();
-		visibleContentView.hide();
-		previousContentViewYScrolls.length = 0;
-	} else {
-		newContentView.css({'left': ((direction == 'left') ? '-'+contentViewWidth+'px':contentViewWidth+'px')}).addClass('animatable').show().addClass('animation');
-		if (direction == 'right' && iScroller !== null) {
-			previousContentViewYScrolls.push(iScroller.y);
-		}
-		setTimeout(function() { // workaround transition not firing when edited directly
-			newContentView.css('left', 0);
-		}, 1);
-		setTimeout(function() {
-			visibleContentView.hide();
-			newContentView.removeClass('animation').removeClass('animatable');
-			animating = false;
-		}, 301);
-	}
-	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
 	if (newContentView.attr('data-back-content-view-id')) {
 		backContentViewID = newContentView.attr('data-back-content-view-id');
 		$('#back').addClass('shown');
@@ -615,12 +595,42 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 		backContentViewID = null;
 		$('#back').removeClass('shown');
 	}
+	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
+	if (direction === null) {
+		newContentView.css('-webkit-transform', 'translateX(0)');
+		visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
+		previousContentViewYScrolls.length = 0;
+		setupContentViewScrolling(newContentViewID, direction);
+	} else {
+		if (direction == 'right') {
+			if (iScroller !== null) {
+				previousContentViewYScrolls.push(iScroller.y);
+			}
+			setupContentViewScrolling(newContentViewID, direction);
+			newContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)').addClass('animataes-on-transform').css('-webkit-transform', 'translateX(0)');
+			setTimeout(function() {
+				visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
+				newContentView.removeClass('animataes-on-transform');
+			}, 300);
+		} else {
+			setupContentViewScrolling(newContentViewID, direction);
+			visibleContentView.addClass('animataes-on-transform');
+			newContentView.css('-webkit-transform', 'translateX(0)');
+			visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
+			setTimeout(function() {
+				visibleContentView.removeClass('animataes-on-transform');
+			}, 300);
+		}
+	}
 	currentContentViewID = newContentViewID;
+}
+
+function setupContentViewScrolling(contentViewID, swapContentViewDirection) {
 	if (iScroller !== null) {
 		iScroller.destroy();
 	}
-	if (newContentView.find('.content-view-scroll-wrapper').length) {
-		iScroller = new IScroll('#'+newContentViewID);
+	if ($('#'+contentViewID).find('.content-view-scroll-wrapper').length) {
+		iScroller = new IScroll('#'+contentViewID);
 		iScroller.on('scrollStart', function() {
 			$('#scrollingcover').addClass('placed');
 			$('input,select').blur();
@@ -628,23 +638,23 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 		iScroller.on('scrollEnd', function() {
 			$('#scrollingcover').removeClass('placed');
 		});
-		if (direction == 'left' && previousContentViewYScrolls.length) {
+		if (swapContentViewDirection == 'left' && previousContentViewYScrolls.length) {
 			iScroller.scrollTo(0, previousContentViewYScrolls.pop());
 		}
 	} else {
 		$('#scrollingcover').removeClass('placed');
 		iScroller = null;
 	}
-	if (direction === null) {
-		animating = false;
-	}
+	animating = false;
 }
 
 function setupWarbandSwipeableListing(id) {
 	var actionBlockWidth = 50;
 	$('#'+id).find('.swipe-wrapper').swipeLeft(function() {
+		$('#scrollingcover').removeClass('placed');
 		$(this).addClass('offset');
 	}).swipeRight(function() {
+		$('#scrollingcover').removeClass('placed');
 		$(this).removeClass('offset');
 	});
 	$('#'+id).find('.change-content-view').tap(function(tapEvent) {
@@ -738,6 +748,7 @@ function deleteWarband(warbandID) {
 			warbands[warbandID].delete(function() {
 				delete warbands[warbandID];
 				drawWarbands();
+				iScroller.refresh();
 			});
 		},
 		'Delete Warband',
@@ -754,6 +765,19 @@ function setWarbandContentScreenTitleAndSubNavSelection(id) {
 			$(this).removeClass('active');
 		}
 	});
+	var warbandRice = warbands[selectedWarbandID].rice();
+	var warbandRiceBadge = $('#'+id).find('.warband-tabs-rice-wrapper .rice .badge');
+	warbandRiceBadge.text(warbandRice+'/'+warbands[selectedWarbandID].riceLimit);
+	if (warbandRice > warbands[selectedWarbandID].riceLimit) {
+		warbandRiceBadge.addClass('error');
+		warbandRiceBadge.removeClass('match');
+	} else if (warbandRice == warbands[selectedWarbandID].riceLimit) {
+		warbandRiceBadge.addClass('match');
+		warbandRiceBadge.removeClass('error');
+	} else {
+		warbandRiceBadge.removeClass('match');
+		warbandRiceBadge.removeClass('error');
+	}
 }
 
 function drawWarbandCharacters() {
@@ -835,6 +859,7 @@ function deleteWarbandCharacter(warbandCharacterID) {
 			warbands[selectedWarbandID].save(function() {
 				drawWarbands();
 				drawWarbandCharacters();
+				iScroller.refresh();
 			});
 		},
 		'Delete Warband character',
@@ -920,6 +945,7 @@ function deleteWarbandCharacterEnhancement(warbandCharacterEnhancementID) {
 				drawWarbands();
 				drawWarbandCharacters();
 				drawEditWarbandCharacter();
+				iScroller.refresh();
 			});
 		},
 		'Delete Warband character',
@@ -1003,6 +1029,7 @@ function deleteWarbandEvent(warbandEventID) {
 			warbands[selectedWarbandID].save(function() {
 				drawWarbands();
 				drawWarbandEvents();
+				iScroller.refresh();
 			});
 		},
 		'Delete Warband event',
@@ -1086,6 +1113,7 @@ function deleteWarbandTerrainItem(warbandTerrainItemID) {
 			warbands[selectedWarbandID].save(function() {
 				drawWarbands();
 				drawWarbandTerrain();
+				iScroller.refresh();
 			});
 		},
 		'Delete Warband terrain item',

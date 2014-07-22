@@ -33,9 +33,7 @@
 
 #scrollingcover {
 	position: absolute;
-	z-index: 1000;
-	background: red;
-	opacity: .5;
+	z-index: 3;
 }
 
 #scrollingcover.placed {
@@ -58,18 +56,21 @@
 	transform: none;
 }
 
-.content-view {
-	display: none;
-	background: #fff;
-	overflow: hidden;
-}
-
-.content-view * {
-	-webkit-transform: translateZ(0);
-}
-
 .content-padded {
 	margin: 0;
+}
+
+.content-view {
+	background: #fff;
+	overflow: hidden;
+	position: absolute;
+	z-index: 1;
+	-webkit-transform: translateX(1536px);
+}
+
+.content-view.animataes-on-transform {
+	z-index: 2;
+	-webkit-transition: -webkit-transform .3s ease-in-out;
 }
 
 .content-view.content-padded .content-view-scroll-wrapper {
@@ -81,17 +82,6 @@
 	padding: 0 0 0 25px;
 	font-size: 14px;
 	color: #8f8f94;
-}
-
-.content-view.animatable {
-	position: absolute;
-	top: 0;
-	z-index: 1;
-	width: 100%;
-}
-
-.content-view.animation {
-	-webkit-transition: left .3s ease-in-out;
 }
 
 .content-items-list {
@@ -161,12 +151,12 @@
 	margin-bottom: 4px;
 }
 
-.content-items-list .listing-block .cell.rice .badge.error {
+.badge.error {
 	color: #fff;
 	background: #ff3b30;
 }
 
-.content-items-list .listing-block .cell.rice .badge.match {
+.badge.match {
 	color: #fff;
 	background: #4cd964;
 }
@@ -202,8 +192,23 @@
 
 /* Warbands */
 
-.segmented-control {
+.warband-tabs-rice-wrapper {
+	height: 1%;
+	overflow: hidden;
 	margin: 5px;
+}
+
+.warband-tabs-rice-wrapper .segmented-control {
+	margin: 0;
+	width: 80%;
+	float: left;
+}
+
+.warband-tabs-rice-wrapper .rice {
+	display: inline-block;
+	width: 20%;
+	float: right;
+	text-align: center;
 }
 
 .content-items-list .swipe-wrapper {
