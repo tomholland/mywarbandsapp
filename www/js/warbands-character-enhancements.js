@@ -13,8 +13,8 @@ function loadWarbandsCharacterEnhancements() {
 
 function saveWarbandsCharacterEnhancementIfNew(warbandsCharacterEnhancementName, warbandsCharacterEnhancementRice, callback) {
 	var found = false;
-	$.each(warbandsCharacterEnhancements, function(index, warbandsCharacterEnhancement) {
-		if (warbandsCharacterEnhancement.name.toLowerCase() == warbandsCharacterEnhancementName.toLowerCase() && warbandsCharacterEnhancement.rice == warbandsCharacterEnhancementRice) {
+	warbandsCharacterEnhancements.forEach(function(warbandsCharacterEnhancement) {
+		if (warbandsCharacterEnhancement.name.toLowerCase() === warbandsCharacterEnhancementName.toLowerCase() && warbandsCharacterEnhancement.rice === warbandsCharacterEnhancementRice) {
 			found = true;
 		}
 	});
