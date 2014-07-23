@@ -1126,7 +1126,7 @@ $data = array(
 		)
 	),
 	'scenarios' => array(
-		array(
+		'1' => array(
 			'name' => 'The Idols',
 			'story' => array(
 				'Hanso sat by Hiro’s side as he contemplated their search. For weeks they had trawled through the undergrowth, setting up camp in boggy conditions. The men were restless and agitated by their fruitless search. When they had first departed Ryu they had found many sacred sites and left Shugenja there to effectively channel the residual power. This had taken practise, initial attempts had reduced them to rubble. These nodes were proving incredibly useful to the Takashi clan and Hanso was happy to be serving Hiro in the field again.',
@@ -1155,7 +1155,7 @@ $data = array(
 			),
 			'image' => 'idols-seigyo-omaju.svg'
 		),
-		array(
+		'2' => array(
 			'name' => 'Keii',
 			'story' => array(
 				'As Kame Sam, slowly and methodically rolled forward towards the grove, Master Ekusa sat motionless except for the bobbing motion of Kame Sam’s awkward gait. Eyes shut, his face a mask. As Riku watched the Master he knew that although Ekusa’s body sat atop his old friend and companion, his mind was somewhere, a place Riku could only guess at. When he was younger had had asked the Master where he would go in moments like this, the old monk had answered in his characteristically confusing way “I go everywhere, for we are always here and nowhere,” punctuated with a satisfied little chuckle at the look of bafflement on the young boy’s face, before affectionately rustling his hair with a heavy wrinkled hand and walking away.',
@@ -1184,7 +1184,7 @@ $data = array(
 			),
 			'image' => 'keii-ninki-depletion.svg'
 		),
-		array(
+		'3' => array(
 			'name' => 'The Messenger',
 			'story' => array(
 				'He stood looking down at the city of Jyoto, the city stood resoloutely here in the mountains. He had assembled a Warband of soldiers that he knew he could trust to aid him on his most important of undertakings. That he was chosen by the Old Bear to lead this force and complete this mission was the proudest moment of his life.',
@@ -1209,7 +1209,7 @@ $data = array(
 			),
 			'image' => 'messenger-envoy.svg'
 		),
-		array(
+		'4' => array(
 			'name' => 'Ryodo',
 			'story' => array(
 				'Position was the key to winning a battle. Yashushi’s teachings of battlefield positioning and outmanoeuvring were amongst the first lessons taught in the Koryu School in Okyo. Kaihime could clearly remember old sensei Goryu drawing the shapes in the sand with his ivory cane. Inviting the students to plan their avenues of attack before clearly and cleanly dissecting the flaws in their tactics, brushing the sand clean and starting again. Hours would seem like minutes to the whole class, captivated by the old man’s wisdom.',
@@ -1232,7 +1232,7 @@ $data = array(
 			),
 			'image' => 'ryodo.svg'
 		),
-		array(
+		'5' => array(
 			'name' => 'Reikan',
 			'story' => array(
 				'His heavy leather cloak offered some protection from the raging winds licking at his face like a pack of hungry dogs. The thick Yak’s wool trim dancing in the strong winds, the long beads which usually hung gently from the bleached goat skull and sat atop his gnarled staff, marking him as Shinia of his tribe snapped and cracked loudly. “You look nervous,” stated the tall and elegant Tengu standing behind the Shinia. “No my lord, I do not fear for myself only my tribe” replied the Shinia, his fist clenching around his staff, trying to insert a tone of strength into his voice to reassure himself more than the winged ally who stood beside him. “These are wild, evil things. We have faced the Minimoto and fought them, but they are men. These Demons of nightmare cannot be killed,” said the Shinia, whilst turning to face the Tengu. Hoping he could judge the validity of his words in the avian eyes which now met his own. “Courage is not found in those that fight without fear, it is shown by those that fight in spite of it,” came the reply after what seemed an age.',
@@ -1253,7 +1253,7 @@ $data = array(
 			),
 			'image' => 'reikan.svg'
 		),
-		array(
+		'6' => array(
 			'name' => 'Seigyo',
 			'story' => array(
 				'Harukichi wiped the noodle juice trickling down his chin with a neatly folded and beautifully embroidered silk napkin. His brow furrowed as he listened to the report from the young Shatei knelt before him, head bowed in respect. Karukichi wasn’t a Lord, but to his gumi he was the undisputed leader and he made the decisions.',
@@ -1278,7 +1278,7 @@ $data = array(
 			),
 			'image' => 'idols-seigyo-omaju.svg'
 		),
-		array(
+		'7' => array(
 			'name' => 'Ichi no Riten',
 			'story' => array(
 				'His hair flowed out behind him snakes writhing angrily in the forceful wind. He stood silently, somewhat stoically in sheet after sheet of pouring rain that had already forced his companions to retreat to the shelter of the nearby tree line. He stood alone, apart now, as he always had. An outsider although in truth he had never cared for the company of others and was well aware of his capability to draw people to him when he needed or wanted something from them. From the darkness of the forest they watched him, his lean form silhouetted by the bright flash of lightning, his shadow danced in time to the jarring rumble of thunder at odds to his still form. A tree to their left splintered under the intense heat and force of a single lightning strike, its trunk screamed like a banshee as sap driven instantaneously to boiling point hissed and raged in its bid to leave its wooden cage, this sound made all the worse by the chorus of cries coming from the two temple bushi here to support their mission and yet now of no use to anyone, their bodies mere human pin cushions, their lingering voices sure enough to rise the dead... literally. He had known from the start not to heed the caution of the Shisai, if he hadn’t their bushi may still be alive. He would take the positional advantage of this place from these cultists and be done with it. Itsunagi slowly but surely removed his Kimono revealing his sculpted torso, with great care he drew his swords before striding forward, with the assuredness only supreme confidence can provide, towards his enemies, not a single glance back.',
@@ -1299,7 +1299,7 @@ $data = array(
 			),
 			'image' => 'ichi-no-riten.svg'
 		),
-		array(
+		'8' => array(
 			'name' => 'Ninki',
 			'story' => array(
 				'Yoshio ducked and rolled, the blood smeared tetsubo of the tainted samurai passing a hairs length from the top of his head. As he dropped to one knee and raised his yari in preparation for the next assault, he again took stock of the battlefield as he had been taught.',
@@ -1326,7 +1326,7 @@ $data = array(
 			),
 			'image' => 'keii-ninki-depletion.svg'
 		),
-		array(
+		'9' => array(
 			'name' => 'Botoku',
 			'story' => array(
 				'“Hard left, watch the rocks, I’ll not lose her to your clumsiness,” barked Yuki, as the young Samurai leapt and wound her way through the crew like a cat prowling the jungle. Her comfort at sea was not uncommon for the Fujiwaro; a people born of the ocean. It was joked that if you cut a Fujiwaro you would see water not blood.',
@@ -1353,7 +1353,7 @@ $data = array(
 			),
 			'image' => 'botoku.svg'
 		),
-		array(
+		'10' => array(
 			'name' => 'The Envoy',
 			'story' => array(
 				'Ito Itsunagi bowed low to his father and the assembled advisors and left the briefing room. He was to lead a small Warband through the Shimogamo jungles to the true Temple of Orochi hidden in its depths.',
@@ -1375,7 +1375,7 @@ $data = array(
 			),
 			'image' => 'messenger-envoy.svg'
 		),
-		array(
+		'11' => array(
 			'name' => 'Omaju',
 			'story' => array(
 				'Hanso glanced over at Isamu with an amused smirk spreading across his lips, the young ashigaru stood with his back to the Gunso oblivious to the reaction invoked by his naïve question. Isamu responded with a dry and condescending tone.',
@@ -1406,7 +1406,7 @@ $data = array(
 			),
 			'image' => 'idols-seigyo-omaju.svg'
 		),
-		array(
+		'12' => array(
 			'name' => 'Depletion',
 			'story' => array(
 				'She could feel the life drain from the small child locked in her motherly embrace, inhaling the last vapours of Ki from the innocent as they escaped its corpse, the tendrils of life energising the witch. Kato thought that Ikiryo almost looked at peace. The tall, elegant abomination relaxed her grip allowing the lifeless body of the girl they had happened upon to slip limply to the dusty earth.',

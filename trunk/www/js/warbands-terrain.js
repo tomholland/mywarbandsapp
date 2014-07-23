@@ -13,8 +13,8 @@ function loadWarbandsTerrain() {
 
 function saveWarbandsTerrainItemIfNew(warbandsTerrainItemName, warbandsTerrainItemRice, callback) {
 	var found = false;
-	$.each(warbandsTerrain, function(index, warbandsTerrainItem) {
-		if (warbandsTerrainItem.name.toLowerCase() == warbandsTerrainItemName.toLowerCase() && warbandsTerrainItem.rice == warbandsTerrainItemRice) {
+	warbandsTerrain.forEach(function(warbandsTerrainItem) {
+		if (warbandsTerrainItem.name.toLowerCase() === warbandsTerrainItemName.toLowerCase() && warbandsTerrainItem.rice === warbandsTerrainItemRice) {
 			found = true;
 		}
 	});

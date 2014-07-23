@@ -13,8 +13,8 @@ function loadWarbandsEvents() {
 
 function saveWarbandsEventIfNew(warbandsEventName, warbandsEventRice, callback) {
 	var found = false;
-	$.each(warbandsEvents, function(index, warbandsEvent) {
-		if (warbandsEvent.name.toLowerCase() == warbandsEventName.toLowerCase() && warbandsEvent.rice == warbandsEventRice) {
+	warbandsEvents.forEach(function(warbandsEvent) {
+		if (warbandsEvent.name.toLowerCase() === warbandsEventName.toLowerCase() && warbandsEvent.rice === warbandsEventRice) {
 			found = true;
 		}
 	});
