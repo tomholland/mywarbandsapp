@@ -454,9 +454,8 @@ function swapContentView(visibleContentViewID, newContentViewID, direction) {
 				newContentView.removeClass('animataes-on-transform');
 			}, 300);
 		} else {
-			visibleContentView.addClass('animataes-on-transform');
 			newContentView.css('-webkit-transform', 'translateX(0)');
-			visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
+			visibleContentView.addClass('animataes-on-transform').css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
 			setTimeout(function() {
 				visibleContentView.removeClass('animataes-on-transform');
 			}, 300);
@@ -693,6 +692,12 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
+	$('#title').tap(function() {
+		if ($('#'+currentContentViewID).find('.content-view-scroll-wrapper').length) {
+			$('#'+currentContentViewID).find('.content-view-scroll-wrapper')[0].scrollTop = 0;
+		}
+	});
+	
 	$('.change-content-view').tap(function() {
 		changeContentView(this);
 	});
@@ -918,7 +923,7 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('#randomscenario').tap(function() {
-		swapContentView('scenarios', 'scenario'+randomIntFromInterval(1, staticData.scenarios.length), 'right');
+		swapContentView('scenarios', 'scenario'+randomIntFromInterval(1, Object.keys(staticData.scenarios).length), 'right');
 	});
 	
 	$('#settings').find('.toggle').on('toggle', function(toggleEvent) {
