@@ -1454,7 +1454,7 @@ foreach ($faction_ids as $faction_id) {
 	);
 }
 
-usort(
+uasort(
 	$data['scenarios'],
 	function($scenario_a, $scenario_b) {
 		return strcmp(str_replace('The ', '', $scenario_a['name']), str_replace('The ', '', $scenario_b['name']));
