@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="uk.tomholland.bushidocards" version="1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Bushido Cards</name>
-    <description>Unofficial Bushido cards app for iOS</description>
-    <author email="bushidocardsapp@gmail.com" href="https://twitter.com/bushidocardsapp">Bushido Cards app support</author>
+<widget id="uk.tomholland.mywarbands" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MyWarbands</name>
+    <description>Unofficial Bushido Warbands app for iOS</description>
+    <author email="mywarbandsapp@gmail.com" href="https://twitter.com/mywarbandsapp">MyWarbands app support</author>
     <content src="app.html" />
     <preference name="DisallowOverscroll" value="true" />
 </widget>
