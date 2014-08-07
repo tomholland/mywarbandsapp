@@ -1169,7 +1169,7 @@ $data = array(
 				'2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Prayer (5) (Simple)'
 			),
 			'victory_conditions' => array(
@@ -1266,7 +1266,7 @@ $data = array(
 				'3 Scenario Objectives (Small) all Neutral'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Influence (Simple)'
 			),
 			'victory_conditions' => array(
@@ -1313,7 +1313,7 @@ $data = array(
 				'2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Influence (Simple)',
 				'Prayer (5) (Simple)'
 			),
@@ -1341,7 +1341,7 @@ $data = array(
 				'One Zone 4” Diameter (Neutral)'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Prayer (6) (Simple)'
 			),
 			'victory_conditions' => array(
@@ -1390,7 +1390,7 @@ $data = array(
 				'3 Scenario Objectives (Small) all Neutral'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Influence (Simple)',
 				'Worship (Complex)'
 			),
@@ -1419,7 +1419,7 @@ $data = array(
 				'6 Scenario Objectives (Small) 2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
-			'senario_objective_interaction' => array(
+			'objective_interaction' => array(
 				'Prayer (5) (Simple)'
 			),
 			'victory_conditions' => array(
