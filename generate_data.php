@@ -10,6 +10,14 @@ $data = array(
 			'name' => 'Silvermoon Trade Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
+				'A8A4100E-F853-4711-8D18-1E82119299A7' => array(
+					'name' => 'Hanami',
+					'rice' => 11,
+					'cards' => array(
+						'142-1.jpg',
+						'142-2.jpg'
+					)
+				),
 				'0E479335-79C7-551F-CB35-74DA6D6AB2A9' => array(
 					'name' => 'Wakasu Akuma',
 					'rice' => 1,
@@ -162,6 +170,14 @@ $data = array(
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
+				'5FBCD3BC-C58A-B7E2-9237-D1D3430768A6' => array(
+					'name' => 'Satsuki',
+					'rice' => 7,
+					'cards' => array(
+						'141-1.jpg',
+						'141-2.jpg'
+					)
+				),
 				'B8E0DE17-E17E-8AF7-BECC-9CA7170758F4' => array(
 					'name' => 'Kazuhiko',
 					'rice' => 4,
@@ -314,6 +330,14 @@ $data = array(
 			'name' => 'Temple of Ro-Kan',
 			'image' => 'symbolmonk.jpg',
 			'characters' => array(
+				'57880D12-9048-189C-0930-A9C36F60B5ED' => array(
+					'name' => 'Ashinaga Tenaga',
+					'rice' => 8,
+					'cards' => array(
+						'137-1.jpg',
+						'137-2.jpg'
+					)
+				),
 				'C5992C23-652C-F5ED-B82E-C6A1E3C58F84' => array(
 					'name' => 'Koji\'s Pack',
 					'rice' => 1,
@@ -709,7 +733,7 @@ $data = array(
 					)
 				),
 				'2F785396-4BA0-57DB-27D0-68C51E78E58D' => array(
-					'name' => 'Airo Takashi',
+					'name' => 'Aiko Takashi',
 					'rice' => 11,
 					'cards' => array(
 						'29-1.jpg',
@@ -738,6 +762,22 @@ $data = array(
 			'name' => 'The Cult of Yurei',
 			'image' => 'symbolyoma.jpg',
 			'characters' => array(
+				'BBB7465F-1132-676C-ADFC-D94E086CBD4E' => array(
+					'name' => 'Penanggalan',
+					'rice' => 7,
+					'cards' => array(
+						'138-1.jpg',
+						'138-2.jpg'
+					)
+				),
+				'BA865881-4E0A-8D80-A6C8-EB571B353045' => array(
+					'name' => 'Taisho Tenbatsu',
+					'rice' => 12,
+					'cards' => array(
+						'139-1.jpg',
+						'139-2.jpg'
+					)
+				),
 				'2458065A-9A63-DA09-8C01-891287291647' => array(
 					'name' => 'Rat Swarm',
 					'rice' => 1,
@@ -938,6 +978,14 @@ $data = array(
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
+				'CDE76EDA-9094-127E-2E8C-C72A3DEAEAC5' => array(
+					'name' => 'Taisho Tenbatsu',
+					'rice' => 12,
+					'cards' => array(
+						'140-1.jpg',
+						'140-2.jpg'
+					)
+				),
 				'7C7EAF0B-68F1-0184-668C-A647702DA174' => array(
 					'name' => 'Bakemono Horde',
 					'rice' => 0,
