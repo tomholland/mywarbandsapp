@@ -1,0 +1,9 @@
+For initial setup, run the following commands from inside the project's root directory:
+
+mkdir {hooks,merges,platforms,plugins}
+
+cordova platform add ios
+
+cp icons_backup/* platforms/ios/MyWarbands/Resources/icons/ && cp splash_backup/* platforms/ios/MyWarbands/Resources/splash/
+
+cordova plugins add com.ben2.cordova.keyboard https://github.com/ohh2ahh/AppAvailability.git de.appplant.cordova.plugin.hidden-statusbar-overlay org.apache.cordova.file org.apache.cordova.inappbrowser org.apache.cordova.dialogs emailcomposer com.bridge.open

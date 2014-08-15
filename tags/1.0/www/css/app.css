@@ -1,0 +1,368 @@
+/* Header */
+
+.bar-nav {
+	padding: 0;
+}
+
+.bar-nav .icon {
+	-webkit-transform: translateY(-44px);
+	padding: 10px;
+}
+
+.bar-nav .icon.shown {
+	-webkit-transform: translateY(0) !important;
+}
+
+.title {
+	display: table;
+	table-layout: fixed;
+	padding: 0 50px;
+	margin: 0;
+	line-height: 17px;
+	white-space: normal;
+}
+
+#title {
+	display: table-cell;
+	height: 44px;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+/* Content */
+
+.bar-nav~.content,
+.bar-tab~.content {
+	padding: 0;
+}
+
+.content {
+	margin: 44px 0 50px 0;
+	overflow: hidden !important;
+	-webkit-overflow-scrolling: auto;
+}
+
+.content > * {
+	-webkit-transform: none;
+	transform: none;
+}
+
+.content-padded {
+	margin: 0;
+}
+
+.content-view {
+	background: #fff;
+	overflow: hidden;
+	position: absolute;
+	z-index: 1;
+	-webkit-transform: translateX(1536px);
+}
+
+.content-view.animataes-on-transform {
+	z-index: 2;
+	-webkit-transition: -webkit-transform .3s ease-in-out;
+}
+
+.content-view-scroll-wrapper {
+	overflow-y: auto;
+}
+
+.content-view.content-padded .content-view-scroll-wrapper {
+	padding: 10px;
+}
+
+.content-view.content-padded ul {
+	margin: 0 0 10px 0;
+	padding: 0 0 0 25px;
+	font-size: 14px;
+	color: #8f8f94;
+}
+
+.content-items-list {
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #c8c7cc;
+}
+
+.content-items-list li {
+	list-style: none;
+	display: block;
+	border-top: 1px solid #c8c7cc;
+	width: 100%;
+	overflow: hidden;
+}
+
+.content-items-list .listing-block {
+	display: table;
+	width: 100%;
+	padding: 10px;
+}
+
+.content-items-list .listing-block .cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.content-items-list .listing-block .cell.image {
+	width: 52px;
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.image img {
+	display: block;
+	width: 42px;
+	height: 42px;
+}
+
+.content-items-list .listing-block .cell.name {
+	color: #000;
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.rice {
+	width: 50px;
+	text-align: right;
+}
+
+.content-items-list .listing-block .cell.rice.warband {
+	width: 60px;
+}
+
+.content-items-list .listing-block .cell.rice.warband-character {
+	width: 85px;
+}
+
+.content-items-list .listing-block .cell.rice .badge {
+	line-height: 1.1;
+	margin-bottom: 4px;
+}
+
+.badge.error {
+	color: #fff;
+	background: #ff3b30;
+}
+
+.badge.match {
+	color: #fff;
+	background: #4cd964;
+}
+
+.content-items-list .listing-block .cell.icon {
+	color: #bbb;
+	width: 30px;
+	text-align: right;
+}
+
+.content-items-list .listing-block .cell.icon.left {
+	text-align: left;
+}
+
+.content-items-list .listing-block .cell.control {
+	width: 67px;
+	padding-left: 20px;
+}
+
+/* Factions */
+
+.faction-cards.slider,
+.faction-cards.slider .slide-group {
+	height: 100%;
+	background: #000;
+}
+
+.faction-cards.slider .slide {
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+/* Warbands */
+
+.warband-tabs-rice-wrapper {
+	height: 37px;
+	padding: 5px 5px 0 5px;
+}
+
+.warband-tabs-rice-wrapper .segmented-control {
+	margin: 0;
+	float: left;
+}
+
+.segmented-control .control-item.active {
+	color: #929292;
+	background: #fff;
+}
+
+.segmented-control .control-item.selected {
+	color: #fff;
+	background: #929292;
+}
+
+.warband-tabs-rice-wrapper .rice {
+	display: inline-block;
+	width: 60px;
+	float: right;
+	text-align: center;
+}
+
+.content-items-list .swipe-wrapper {
+	transition: -webkit-transform .2s ease-in-out;
+}
+
+.content-items-list .swipe-wrapper.actions-1.offset {
+	-webkit-transform: translateX(-50px);
+}
+
+.content-items-list .swipe-wrapper.actions-2.offset {
+	-webkit-transform: translateX(-100px);
+}
+
+.content-items-list .swipe-wrapper.actions-3.offset {
+	-webkit-transform: translateX(-150px);
+}
+
+.content-items-list .action-block {
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 50px;
+	-webkit-transition: opacity .3s;
+}
+
+.content-items-list .action-block.share {
+	color: #fff;
+	background: #4cd964;
+}
+
+.content-items-list .action-block.edit {
+	color: #fff;
+	background: #007aff;
+}
+
+.content-items-list .action-block.delete {
+	color: #fff;
+	background: #ff3b30;
+}
+
+.content-items-list .action-block .icon-wrapper {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.content-items-list .action-block .icon {
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.content-items-list .action-block .icon-share {
+	font-size: 20px;
+}
+
+.content-items-list .action-block .icon-edit {
+	font-size: 30px;
+}
+
+.content-items-list .action-block .icon-trash {
+	font-size: 25px;
+}
+
+input[type=search] {
+	text-align: left;
+}
+
+.horizontally-padded-wrapper {
+	margin: 0 10px;
+}
+
+.subtitle {
+	display: block;
+	margin: 10px 0 15px 0;
+	text-align: center;
+}
+
+.field-topping-content-view {
+	margin-top: 10px;
+}
+
+.list-preamble {
+	display: block;
+	margin-bottom: 10px;
+	border-top: 1px solid #c8c7cc;
+	padding-top: 6px;
+	text-align: center;
+	visibility: hidden;
+}
+
+.list-preamble.shown {
+	visibility: visible;
+}
+
+.listing-block .cell.icon.large {
+	width: 40px;
+}
+
+.listing-block .icon-plus {
+	background: #4cd964;
+	border-radius: 3px;
+	padding: 2px;
+	color: #fff;
+}
+
+/* Scenarios */
+
+#scenarios {
+	padding-top: 6px;
+}
+
+#randomscenario {
+	width: auto;
+	margin: 0 5px 6px 5px;
+	padding: 12px 0;
+	font-size: 15px;
+}
+
+.scenario h5 {
+	border-bottom: 1px solid #999;
+	padding: 5px 0;
+	font-weight: bold;
+}
+
+.scenario .victory-conditions .points {
+	width: 15%;
+	vertical-align: top;
+}
+
+.scenario .victory-conditions .condition {
+	width: 85%;
+}
+
+.btn.scenario-plan {
+	margin-bottom: 10px;
+}
+
+.scenario-image {
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+/* Settings */
+
+#settings li {
+	font-size: 15px;
+	line-height: 19px;
+}
+
+/* FAQs */
+
+#faqs li {
+	font-size: 15px;
+	line-height: 19px;
+}
+
+#faqs li .cell.icon {
+	width: 40px;
+}
