@@ -318,7 +318,7 @@ $data = array(
 				),
 				'BAA50485-C511-5EE6-7BFB-71B34F580CE5' => array(
 					'name' => 'Saburo',
-					'rice' => 14,
+					'rice' => 7,
 					'cards' => array(
 						'105-1.jpg',
 						'105-2.jpg'
@@ -733,7 +733,7 @@ $data = array(
 					)
 				),
 				'2F785396-4BA0-57DB-27D0-68C51E78E58D' => array(
-					'name' => 'Aiko Takashi',
+					'name' => 'Hiro Takashi',
 					'rice' => 11,
 					'cards' => array(
 						'29-1.jpg',
