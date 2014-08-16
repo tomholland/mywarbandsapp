@@ -170,6 +170,14 @@ $data = array(
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
+				'1DC9B05B-CA05-133F-0608-41853A481D55' => array(
+					'name' => 'Itsunagi Ito',
+					'rice' => 13,
+					'cards' => array(
+						'143-1.jpg',
+						'143-2.jpg'
+					)
+				),
 				'5FBCD3BC-C58A-B7E2-9237-D1D3430768A6' => array(
 					'name' => 'Satsuki',
 					'rice' => 7,
@@ -562,6 +570,14 @@ $data = array(
 			'name' => 'Prefecture of Ryu',
 			'image' => 'symbolsamurai.jpg',
 			'characters' => array(
+				'60818D55-776D-E538-9190-05B6AB8C6E7E' => array(
+					'name' => 'Akio Takashi',
+					'rice' => 13,
+					'cards' => array(
+						'144-1.jpg',
+						'144-2.jpg'
+					)
+				),
 				'AFDB4562-CE72-42E1-C78B-30404D0885A2' => array(
 					'name' => 'Guardsman of Ryu',
 					'rice' => 4,
@@ -741,7 +757,7 @@ $data = array(
 					)
 				),
 				'CFC977E2-DFA2-C92F-727C-187BDFB3F189' => array(
-					'name' => 'Karsumoto Takashi',
+					'name' => 'Katsumoto Takashi',
 					'rice' => 12,
 					'cards' => array(
 						'12-1.jpg',
