@@ -942,6 +942,13 @@ document.addEventListener('deviceready', function() {
 		window.open(encodeURI($(this).attr('data-url')), '_system');
 	});
 	
+	$('a.email').tap(function() {
+		cordova.require('emailcomposer.EmailComposer').show({
+			to: $(this).attr('data-email'),
+			subject: $(this).attr('data-subject')
+		});
+	});
+	
 	$('a.twitter').tap(function() {
 		var username = $(this).attr('data-username');
 		appAvailability.check(
