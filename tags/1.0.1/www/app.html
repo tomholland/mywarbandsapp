@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="format-detection" content="telephone=no">
+		<title>MyWarbands</title>
+		<link href="css/libs/ratchet.min.css" rel="stylesheet">
+		<link href="css/libs/ratchet-theme-ios.min.css" rel="stylesheet">
+		<link href="css/app.css" rel="stylesheet">
+	</head>
+	<body>
+		<header class="bar bar-nav">
+			<a class="icon icon-left-nav pull-left" id="back"></a>
+			<a class="icon icon-plus pull-right change-content-view appear-from-right" id="add"></a>
+			<h1 class="title"><span id="title"></span></h1>
+		</header>
+		<nav class="bar bar-tab">
+			<a class="tab-item change-content-view" data-target-content-view-id="factions">
+				<span class="icon icon-person"></span>
+				<span class="tab-label">Factions</span>
+			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="warbands">
+				<span class="icon icon-list"></span>
+				<span class="tab-label">Warbands</span>
+			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="scenarios">
+				<span class="icon icon-play"></span>
+				<span class="tab-label">Scenarios</span>
+			</a>
+			<a class="tab-item change-content-view" data-target-content-view-id="guides">
+				<span class="icon icon-pages"></span>
+				<span class="tab-label">Guides</span>
+			</a>			
+			<a class="tab-item change-content-view" data-target-content-view-id="misc">
+				<span class="icon icon-more"></span>
+				<span class="tab-label">Misc.</span>
+			</a>
+		</nav>
+		<div class="content">
+			<div class="content-view default" id="factions" data-title="Factions">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="scenarios" data-title="Scenarios">
+				<div class="content-view-scroll-wrapper">
+					<a class="btn btn-block" id="randomscenario">Random scenario</a>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbands" data-title="Warbands">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="warband" data-back-content-view-id="warbands">
+				<div class="content-view-scroll-wrapper">
+					<form onsubmit="return false;">
+						<select id="warbandfaction"></select>
+						<input id="warbandname" type="text" placeholder="Name (up to 28 characters)" maxlength="28" autocorrect="off" autocapitalize="off">
+						<input id="warbandrice" type="number" placeholder="Rice limit (0-99)" autocorrect="off" autocapitalize="off">
+						<a class="btn btn-block btn-positive" id="savewarband">Save Warband</a>
+					</form>
+				</div>
+			</div>
+			<div class="content-view" id="warbandcharacters" data-back-content-view-id="warbands">
+				<div class="content-view-scroll-wrapper">
+					<div class="warband-tabs-rice-wrapper">
+						<div class="segmented-control">
+							<a class="control-item change-content-view selected" data-target-content-view-id="warbandcharacters">Characters</a>
+							<a class="control-item change-content-view" data-target-content-view-id="warbandevents">Events</a>
+							<a class="control-item change-content-view" data-target-content-view-id="warbandterrain">Terrain</a>
+						</div>
+						<span class="rice"><span class="badge"></span></span>
+					</div>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbandcharacter" data-back-content-view-id="warbandcharacters">
+				<div class="content-view-scroll-wrapper"></div>
+			</div>
+			<div class="content-view" id="warbandcharacterenhancement" data-back-content-view-id="warbandcharacter">
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandcharacterenhancementname" type="search" placeholder="Enhancement name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandcharacterenhancementrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="savewarbandcharacterenhancement">Add enhancement</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used enhancements:</span>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbandevents" data-back-content-view-id="warbands">
+				<div class="content-view-scroll-wrapper">
+					<div class="warband-tabs-rice-wrapper">
+						<div class="segmented-control">
+							<a class="control-item change-content-view" data-target-content-view-id="warbandcharacters">Characters</a>
+							<a class="control-item change-content-view selected" data-target-content-view-id="warbandevents">Events</a>
+							<a class="control-item change-content-view" data-target-content-view-id="warbandterrain">Terrain</a>
+						</div>
+						<span class="rice"><span class="badge"></span></span>
+					</div>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbandevent" data-back-content-view-id="warbandevents">
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandeventname" type="search" placeholder="Event name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandeventrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="savewarbandevent">Add event</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used events:</span>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbandterrain" data-back-content-view-id="warbands">
+				<div class="content-view-scroll-wrapper">
+					<div class="warband-tabs-rice-wrapper">
+						<div class="segmented-control">
+							<a class="control-item change-content-view" data-target-content-view-id="warbandcharacters">Characters</a>
+							<a class="control-item change-content-view" data-target-content-view-id="warbandevents">Events</a>
+							<a class="control-item change-content-view selected" data-target-content-view-id="warbandterrain">Terrain</a>
+						</div>
+						<span class="rice"><span class="badge"></span></span>
+					</div>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="warbandterrainitem" data-back-content-view-id="warbandterrain">
+				<div class="content-view-scroll-wrapper">
+					<div class="horizontally-padded-wrapper">
+						<form onsubmit="return false;">
+							<input id="warbandterrainitemname" type="search" placeholder="Terrain item name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+							<input id="warbandterrainitemrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+							<a class="btn btn-block btn-positive" id="savewarbandterrainitem">Add terrain item</a>
+						</form>
+					</div>
+					<span class="list-preamble">Previously used terrain items:</span>
+					<ul class="content-items-list"></ul>
+				</div>
+			</div>
+			<div class="content-view" id="guides" data-title="Guides">
+				<div class="content-view-scroll-wrapper">					
+					<ul class="content-items-list">
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/new_dawn_rules.pdf">
+								<span class="cell name">New Dawn Rules</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/errata_24-05-2014.pdf">
+								<span class="cell name">Rules Update and Errata (24/05/2014)</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/silvermoon_players_guide.pdf">
+								<span class="cell name">Silvermoon Player's Guide</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block pdf" data-url="pdfs/tournament_pack.pdf">
+								<span class="cell name">Tournament Pack</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-view" id="misc" data-title="Misc.">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list">
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="settings">
+								<span class="cell icon left"><span class="icon icon-gear"></span></span>
+								<span class="cell name">Settings</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faqs">
+								<span class="cell icon left"><span class="icon icon-info"></span></span>
+								<span class="cell name">FAQs</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-view" id="settings" data-title="Settings" data-back-content-view-id="misc">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list">
+						<li>
+							<span class="listing-block">
+								<span class="cell name">Create HTML emails when sharing Warbands</span>
+								<span class="cell control">
+									<div class="toggle" id="htmlemailsetting" data-default="enabled">
+										<div class="toggle-handle"></div>
+									</div>
+								</span>
+							</span>
+						</li>
+						<li>
+							<span class="listing-block">
+								<span class="cell name">Sort all items in Warband lists alphabetically</span>
+								<span class="cell control">
+									<div class="toggle" id="lexicographicalsort">
+										<div class="toggle-handle"></div>
+									</div>
+								</span>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-view" id="faqs" data-title="FAQs" data-back-content-view-id="misc">
+				<div class="content-view-scroll-wrapper">
+					<ul class="content-items-list">
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq1">
+								<span class="cell name">How do I rename a Warband or change its rice limit?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq2">
+								<span class="cell name">How do I delete a Warband?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq3">
+								<span class="cell name">How do I add enhancements to a Warband character?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq4">
+								<span class="cell name">How do I remove a character from a Warband?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq5">
+								<span class="cell name">Where are all the other cards?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq6">
+								<span class="cell name">Can I use the app offline?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq7">
+								<span class="cell name">What happens to my Warbands if I delete the app?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq8">
+								<span class="cell name">Can I share a Warband from the app?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq9">
+								<span class="cell name">I hate HTML emails!</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq10">
+								<span class="cell name">Can I sync my Warbands between devices?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq11">
+								<span class="cell name">Can I search or bookmark pages in the guides?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+						<li>
+							<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faq12">
+								<span class="cell name">Can I send you feedback / suggestions / abuse?</span>
+								<span class="cell icon"><span class="icon icon-right"></span></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq1" data-title="Editing a Warband" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>On the Warbands screen, swipe left on a Warband's name and tap on the pencil icon (in the blue block).</p>
+					<p>You can rename the Warband or changes its rice limit - but you cannot change its faction.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq2" data-title="Deleting a Warband" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>On the Warbands screen, swipe left on a Warband's name and tap on the trash icon (in the red block).</p>
+					<p>Tap the &quot;Delete&quot; option in the confirmation dialogue box that appears.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq3" data-title="Adding enhancements to a Warband character" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>On the Warband Characters screen, swipe left on a character's name and tap on the more (...) icon (in the blue block).</p>
+					<p>Enter the name and the rice cost of the enhancement; previously used enhancements are listed and can be selected from.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq4" data-title="Deleting a Warband character" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>On the Warband Characters screen, swipe left on a character's name and tap on the trash icon (in the red block).</p>
+					<p>Tap the &quot;Delete&quot; option in the confirmation dialogue box that appears.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq5" data-title="Cards in the app" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission).</p>
+					<p>Only freely downloadable content is included. Cards which need purchasing from GCT Studios are not included.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq6" data-title="Using the app offline" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>All the card images, scenario plans and guides are included within the app itself; you do not need to have an Internet connection to use the app.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq7" data-title="Deleting the app - your Warbands" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>Your Warbands are stored within the app; they remain when you close the app or turn off your device.</p>
+					<p>If you delete the app, all data associated with the app is also deleted (including your Warbands).</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq8" data-title="Sharing a Warband" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>On the Warbands screen, swipe left on a Warband's name and tap on the share icon (in the green block).</p>
+					<p>This will open a compose email screen with the Warband's details in; you'll need to have an Internet connection to send the email.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq9" data-title="Changing email format" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>In the Misc. section, tap on Settings.</p>
+					<p>Toggling the &quot;Create HTML emails when sharing Warbands&quot; setting off will generate plain text emails when sharing a Warband.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq10" data-title="Syncing Warbands between devices" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>You cannot sync Warbands between different devices currently - but this is something we are working on as part of a future update.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq11" data-title="Navigating the guide documents" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>The guide documents included in the app are PDFs.</p>
+					<p>Selecting a guide from the app will open it in a basic PDF reader.</p>
+					<p>If you need more advanced features (such as bookmarking or text search), you can open a guide document in a different PDF reader (such as iBooks) by clicking the share icon at the top right of the basic PDF reader.</p>
+				</div>
+			</div>
+			<div class="content-view content-padded" id="faq12" data-title="Giving app feedback / suggestions / abuse" data-back-content-view-id="faqs">
+				<div class="content-view-scroll-wrapper">
+					<p>This is an unofficial app, not built by GCT Studios (but with their kind permission).</p>
+					<p>The app is free and is built and maintained by a team of two in our spare time.</p>
+					<p>Please direct any support or feature requests to <a class="twitter" data-username="mywarbandsapp">@mywarbandsapp</a> on Twitter or email <a class="email" data-email="mywarbandsapp@gmail.com" data-subject="MyWarbands app">mywarbandsapp@gmail.com</a></p>
+					<p>If you think our app sucks, then we suggested you <a class="external" data-url="https://developer.apple.com/register">Register as an Apple Developer</a> (it costs $99 per year) and get building ;)</p>
+					<p>These are the tools we used:</p>
+					<ul>
+						<li><a class="external" data-url="http://cordova.apache.org">Apache Cordova</a></li>
+						<li><a class="external" data-url="http://zeptojs.com">Zepto.js</a></li>
+						<li><a class="external" data-url="http://brian.io/lawnchair/">Lawnchair</a></li>
+						<li><a class="external" data-url="https://github.com/janl/mustache.js/">mustache.js</a></li>
+						<li><a class="external" data-url="http://goratchet.com">Ratchet</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="cordova.js"></script>
+		<script src="js/libs/zepto.min.js"></script>
+		<script src="js/libs/ratchet.min.js"></script>
+		<script src="js/libs/lawnchair-0.6.1.min.js"></script>
+		<script src="js/libs/mustache.js"></script>
+		<script src="js/libs/alphanum.js"></script>
+		<script src="js/static-data.js"></script>
+		<script src="js/settings.js"></script>
+		<script src="js/warbands.js"></script>
+		<script src="js/warbands-character-enhancements.js"></script>
+		<script src="js/warbands-events.js"></script>
+		<script src="js/warbands-terrain.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
