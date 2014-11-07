@@ -10,6 +10,22 @@ $data = array(
 			'name' => 'Silvermoon Trade Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
+				'4B674B0E-2884-ABAB-4EF9-1B799A40D611' => array(
+					'name' => 'Sukoshi Kani',
+					'rice' => 3,
+					'cards' => array(
+						'150-1.jpg',
+						'150-2.jpg'
+					)
+				),
+				'90B855E8-B213-727F-0D01-0AA27A73ECA0' => array(
+					'name' => 'Nomi',
+					'rice' => 3,
+					'cards' => array(
+						'148-1.jpg',
+						'148-2.jpg'
+					)
+				),
 				'A8A4100E-F853-4711-8D18-1E82119299A7' => array(
 					'name' => 'Hanami',
 					'rice' => 11,
@@ -170,6 +186,14 @@ $data = array(
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
+				'4A16B35D-7043-91AD-DADB-10C78235339C' => array(
+					'name' => 'Mizuki Ito',
+					'rice' => 12,
+					'cards' => array(
+						'147-1.jpg',
+						'147-2.jpg'
+					)
+				),
 				'1DC9B05B-CA05-133F-0608-41853A481D55' => array(
 					'name' => 'Itsunagi Ito',
 					'rice' => 13,
@@ -338,6 +362,14 @@ $data = array(
 			'name' => 'Temple of Ro-Kan',
 			'image' => 'symbolmonk.jpg',
 			'characters' => array(
+				'9FD03F38-B7D3-C1E3-C8B1-225D23D6B70C' => array(
+					'name' => 'Master Akari',
+					'rice' => 11,
+					'cards' => array(
+						'146-1.jpg',
+						'146-2.jpg'
+					)
+				),
 				'57880D12-9048-189C-0930-A9C36F60B5ED' => array(
 					'name' => 'Ashinaga Tenaga',
 					'rice' => 8,
@@ -570,6 +602,14 @@ $data = array(
 			'name' => 'Prefecture of Ryu',
 			'image' => 'symbolsamurai.jpg',
 			'characters' => array(
+				'F8A703BF-F95C-235C-BFEE-9C5693334D89' => array(
+					'name' => 'Shuichi',
+					'rice' => 6,
+					'cards' => array(
+						'149-1.jpg',
+						'149-2.jpg'
+					)
+				),
 				'60818D55-776D-E538-9190-05B6AB8C6E7E' => array(
 					'name' => 'Akio Takashi',
 					'rice' => 13,
@@ -778,6 +818,14 @@ $data = array(
 			'name' => 'The Cult of Yurei',
 			'image' => 'symbolyoma.jpg',
 			'characters' => array(
+				'6907E42F-A096-8D97-176F-0CDE3C2BDCD8' => array(
+					'name' => 'Yugio',
+					'rice' => 5,
+					'cards' => array(
+						'151-1.jpg',
+						'151-2.jpg'
+					)
+				),
 				'BBB7465F-1132-676C-ADFC-D94E086CBD4E' => array(
 					'name' => 'Penanggalan',
 					'rice' => 7,
@@ -994,6 +1042,14 @@ $data = array(
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
+				'D0CF0E87-2CEF-3797-A18D-6CFDC211F644' => array(
+					'name' => 'Kaihei',
+					'rice' => 5,
+					'cards' => array(
+						'145-1.jpg',
+						'145-2.jpg'
+					)
+				),
 				'CDE76EDA-9094-127E-2E8C-C72A3DEAEAC5' => array(
 					'name' => 'Taisho Tenbatsu',
 					'rice' => 12,
