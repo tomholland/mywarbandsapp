@@ -1023,7 +1023,9 @@ $data = array(
 						'76a-1.jpg',
 						'76a-2.jpg',
 						'76b-1.jpg',
-						'76b-2.jpg'
+						'76b-2.jpg',
+						'77-1.jpg',
+						'77-2.jpg'
 					)
 				),
 				'9B574098-1E79-CE64-B14E-0666850BA2F3' => array(
@@ -1031,9 +1033,7 @@ $data = array(
 					'rice' => 12,
 					'cards' => array(
 						'65-1.jpg',
-						'65-2.jpg',
-						'77-1.jpg',
-						'77-2.jpg'
+						'65-2.jpg'
 					)
 				)
 			)
