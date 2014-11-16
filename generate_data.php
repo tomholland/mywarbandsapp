@@ -1042,6 +1042,14 @@ $data = array(
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
+				'FFF6D073-AF79-2845-B41B-2E7BDD4DC93B' => array(
+					'name' => 'Bakemono Bushi',
+					'rice' => 4,
+					'cards' => array(
+						'152-1.jpg',
+						'152-2.jpg'
+					)
+				),
 				'D0CF0E87-2CEF-3797-A18D-6CFDC211F644' => array(
 					'name' => 'Kaihei',
 					'rice' => 5,
