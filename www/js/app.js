@@ -935,7 +935,7 @@ document.addEventListener('deviceready', function() {
 	});
 	
 	$('a.pdf').tap(function() {
-		cordova.plugins.bridge.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
+		cordova.plugins.disusered.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
 	});
 	
 	$('a.external').tap(function() {
