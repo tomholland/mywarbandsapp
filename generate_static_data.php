@@ -10,6 +10,22 @@ $data = array(
 			'name' => 'Silvermoon Trade Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
+				'99C73B9F-C34A-0133-5343-72026EC0B016' => array(
+					'name' => 'Hakushi',
+					'rice' => 7,
+					'cards' => array(
+						'160-1.jpg',
+						'160-2.jpg'
+					)
+				),
+				'47EDF9B9-1111-C249-DA20-883AFE706C79' => array(
+					'name' => 'Honoko',
+					'rice' => 5,
+					'cards' => array(
+						'161-1.jpg',
+						'161-2.jpg'
+					)
+				),
 				'71C9258A-85F7-1318-08F8-BF625782AC04' => array(
 					'name' => 'Dafukaia',
 					'rice' => 10,
@@ -202,6 +218,14 @@ $data = array(
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
+				'55FC471C-E183-E078-5E81-76CC62D3F405' => array(
+					'name' => 'Yuui Ito',
+					'rice' => 7,
+					'cards' => array(
+						'166-1.jpg',
+						'166-2.jpg'
+					)
+				),
 				'F71C43CA-AC2E-FDCF-5BB8-9F3C2CCE0029' => array(
 					'name' => 'Shimogamo Viper',
 					'rice' => 3,
@@ -386,6 +410,14 @@ $data = array(
 			'name' => 'Temple of Ro-Kan',
 			'image' => 'symbolmonk.jpg',
 			'characters' => array(
+				'7D636F38-9129-E421-98FE-B59C5A048AC4' => array(
+					'name' => 'Kyuubi',
+					'rice' => 10,
+					'cards' => array(
+						'162-1.jpg',
+						'162-2.jpg'
+					)
+				),
 				'AE91C1E9-B4EC-807D-4C7C-4B45CBB7607E' => array(
 					'name' => 'Kaito',
 					'rice' => 5,
@@ -634,6 +666,14 @@ $data = array(
 			'name' => 'Prefecture of Ryu',
 			'image' => 'symbolsamurai.jpg',
 			'characters' => array(
+				'734090B7-26AC-D762-2375-15D113FD9D8C' => array(
+					'name' => 'Takashi, Ancestor',
+					'rice' => 8,
+					'cards' => array(
+						'164-1.jpg',
+						'164-2.jpg'
+					)
+				),
 				'EAD7CC0B-56C9-48CE-5C35-D71A7F948B49' => array(
 					'name' => 'Kioshi Madoko',
 					'rice' => 7,
@@ -858,6 +898,14 @@ $data = array(
 			'name' => 'The Cult of Yurei',
 			'image' => 'symbolyoma.jpg',
 			'characters' => array(
+				'F66D964E-49F7-7E48-83EB-8D68C9535565' => array(
+					'name' => 'Yama Uba',
+					'rice' => 9,
+					'cards' => array(
+						'165-1.jpg',
+						'165-2.jpg'
+					)
+				),
 				'2EFC0244-51BF-2C25-E359-54AA1091B029' => array(
 					'name' => 'Souta and Sloth',
 					'rice' => 8,
@@ -1090,6 +1138,14 @@ $data = array(
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
+				'221251C9-8844-7957-83FF-DEA3BFBF1995' => array(
+					'name' => 'Rinsho',
+					'rice' => 8,
+					'cards' => array(
+						'163-1.jpg',
+						'163-2.jpg'
+					)
+				),
 				'F13A7661-CB05-842C-0AFF-9B42538384AF' => array(
 					'name' => 'Rashka the Devastator',
 					'rice' => 14,
@@ -1645,4 +1701,4 @@ uasort(
 	}
 );
 
-file_put_contents('static-data.js', 'var staticData = '.json_encode($data).';');
+?>var staticData = <?php echo json_encode($data); ?>;
