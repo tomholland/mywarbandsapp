@@ -1,17 +1,18 @@
-{{faction}}
+{{warband_name}}
+{{faction_name}}
 {{#characters.length}}
 
 Models:
 ---------------------------
 {{#characters}}
 
-* {{name}} ({{baseRice}}){{#enhancements}}
+* {{name}} ({{base_rice}}){{#enhancements}}
 + {{name}} ({{rice}}){{/enhancements}}
 {{/characters}}
 {{/characters.length}}
 {{#events.length}}
 
-Event Special cards:
+Event special cards:
 ---------------------------
 
 {{#events}}
@@ -20,7 +21,7 @@ Event Special cards:
 {{/events.length}}
 {{#terrain.length}}
 
-Terrain Special cards:
+Terrain special cards:
 ---------------------------
 
 {{#terrain}}
@@ -29,7 +30,7 @@ Terrain Special cards:
 {{/terrain.length}}
 
 ---------------------------
-Total: {{total}}
+Total: {{total_rice}}
 ---------------------------
 
 Created with MyWarbands for iOS:

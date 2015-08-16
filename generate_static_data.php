@@ -1,10 +1,7 @@
 <?php
 
 $data = array(
-	'templates' => array(
-		'text' => file_get_contents('mustache_templates/warband-text.mst'),
-		'html' => file_get_contents('mustache_templates/warband-html.mst')
-	),
+	'templates' => array(), // dynamically populated
 	'factions' => array(
 		'F7837986-F2BC-36A7-75C8-0428A245DD46' => array(
 			'name' => 'Silvermoon Trade Syndicate',
@@ -1674,8 +1671,171 @@ $data = array(
 			),
 			'image' => 'keii-ninki-depletion.svg'
 		)
+	),
+	'guides' => array(
+		'5B99F01A-84D5-5FA0-32B1-44E5A08C0CF4' => array(
+			'name' => 'New Dawn Rules',
+			'filename' => 'new_dawn_rules.pdf'
+		),
+		'D61B5562-4145-970C-FEB6-6CA182AEB53F' => array(
+			'name' => 'Rules Update and Errata (24/02/2015)',
+			'filename' => 'errata_24-02-2015.pdf'
+		),
+		'D18AE127-D8F3-8869-53EA-BD361BAE7F2B' => array(
+			'name' => 'Silvermoon Player\'s Guide',
+			'filename' => 'silvermoon_players_guide.pdf'
+		),
+		'4127ADF0-1E3E-82B7-9911-E236F555FBD3' => array(
+			'name' => 'Tournament Pack',
+			'filename' => 'tournament_pack.pdf'
+		)
+	),
+	'settings' => array(
+		'htmlemailsetting' => array(
+			'title' => 'Create HTML emails when sharing Warbands',
+			'default' => 'enabled'
+		),
+		'lexicographicalsort' => array(
+			'title' => 'Sort all items in Warband lists alphabetically',
+			'default' => 'disabled'
+		)
+	),
+	'faqs' => array(
+		'9B86410A-B8AF-E69C-60E2-2A7574F9E845' => array(
+			'question' => 'How do I rename a Warband or change its rice limit?',
+			'title' => 'Editing a Warband',
+			'content' => array(
+				'On the Warbands screen, swipe left on a Warband\'s name and tap on the pencil icon (in the blue block).',
+				'You can rename the Warband or changes its rice limit - but you cannot change its faction.'
+			)
+		),		
+		'7EB5D207-9B22-3BDF-A348-F772E30527F3' => array(
+			'question' => 'How do I delete a Warband?',
+			'title' => 'Deleting a Warband',
+			'content' => array(
+				'On the Warbands screen, swipe left on a Warband\'s name and tap on the trash icon (in the red block).',
+				'Tap the &quot;Delete&quot; option in the confirmation dialogue box that appears.'
+			)
+		),
+		'009475D5-A79F-104B-DF54-F4A11F7DA9A5' => array(
+			'question' => 'How do I add enhancements to a Warband character',
+			'title' => 'Adding enhancements to a Warband character',
+			'content' => array(
+				'On the Warband Characters screen, swipe left on a character\'s name and tap on the more (...) icon (in the blue block).',
+				'Enter the name and the rice cost of the enhancement; previously used enhancements are listed and can be selected from.'
+			)
+		),
+		'D2F0C66E-D567-18CC-27E6-98973894F444' => array(
+			'question' => 'How do I remove a character from a Warband?',
+			'title' => 'Deleting a Warband character',
+			'content' => array(
+				'On the Warband Characters screen, swipe left on a character\'s name and tap on the trash icon (in the red block).',
+				'Tap the &quot;Delete&quot; option in the confirmation dialogue box that appears.'
+			)
+		),
+		'18332EF0-C85E-2698-5170-CC8E617BE639' => array(
+			'question' => 'Where are all the other cards?',
+			'title' => 'Cards in the app',
+			'content' => array(
+				'This is an unofficial app, not built by GCT Studios (but with their kind permission).',
+				'Only freely downloadable content is included. Cards which need purchasing from GCT Studios are not included.'
+			)
+		),
+		'4D6079F1-208A-14D9-560F-06984325EA8B' => array(
+			'question' => 'Can I use the app offline?',
+			'title' => 'Using the app offline',
+			'content' => array(
+				'All the card images, scenario plans and guides are included within the app itself; you do not need to have an Internet connection to use the app.'	
+			)
+		),
+		'8A4EC572-0259-5504-3A20-B67C8BD5946B' => array(
+			'question' => 'What happens to my Warbands if I delete the app?',
+			'title' => 'Deleting the app - your Warbands',
+			'content' => array(
+				'Your Warbands are stored within the app; they remain when you close the app or turn off your device.',
+				'If you delete the app, all data associated with the app is also deleted (including your Warbands).'
+			)
+		),
+		'90339474-4529-676D-12DB-DE7A318DC392' => array(
+			'question' => 'Can I share a Warband from the app?',
+			'title' => 'Sharing a Warband',
+			'content' => array(
+				'On the Warbands screen, swipe left on a Warband\'s name and tap on the share icon (in the green block).',
+				'This will open a compose email screen with the Warband\'s details in; you\'ll need to have an Internet connection to send the email.'		
+			)
+		),
+		'1EFFDA2B-2E9F-2F33-3EF3-2648C3B01290' => array(
+			'question' => 'I hate HTML emails!',
+			'title' => 'Changing email format',
+			'content' => array(
+				'In the Misc. section, tap on Settings.',
+				'Toggling the &quot;Create HTML emails when sharing Warbands&quot; setting off will generate plain text emails when sharing a Warband.'		
+			)
+		),
+		'963DE303-689D-3DC5-0CF8-4EC5E46A250B' => array(
+			'question' => 'Can I sync my Warbands between devices?',
+			'title' => 'Syncing Warbands between devices',
+			'content' => array(
+				'You cannot sync Warbands between different devices currently - but this is something we are working on as part of a future update.'		
+			)
+		),
+		'71A05C03-9253-8708-6E96-F8D00D90CE57' => array(
+			'question' => 'Can I search or bookmark pages in the guides?',
+			'title' => 'Navigating the guide documents',
+			'content' => array(
+				'The guide documents included in the app are PDFs.',
+				'Selecting a guide from the app will open it in a basic PDF reader.',
+				'If you need more advanced features (such as bookmarking or text search), you can open a guide document in a different PDF reader (such as iBooks) by clicking the share icon at the top right of the basic PDF reader.'		
+			)
+		),
+		'79F8EBDB-10CE-8C78-3719-634776CBCA4D' => array(
+			'question' => 'Can I send you feedback / suggestions?',
+			'title' => 'Giving app feedback / suggestions',
+			'content' => array(
+				'This is an unofficial app, not built by GCT Studios (but with their kind permission).',
+				'The app is free and is built and maintained by a team of two in our spare time.',
+				'Please direct any support or feature requests to <a class="twitter" data-username="mywarbandsapp">@mywarbandsapp</a> on Twitter or email <a class="email" data-email="mywarbandsapp@gmail.com" data-subject="MyWarbands app">mywarbandsapp@gmail.com</a>'			
+			)
+		)
 	)
 );
+
+if ($handle = opendir('templates')) {
+	while (false !== ($filename = readdir($handle))) {
+		if (mb_strpos($filename, '.') !== false && mb_substr($filename, mb_strrpos($filename, '.')) == '.mst') {
+			$data['templates'][str_replace('.', '_', mb_substr($filename, 0, mb_strrpos($filename, '.')))] = file_get_contents('templates/'.$filename);
+		}
+	}
+	closedir($handle);
+}
+
+$faction_ids = array_keys($data['factions']);
+
+foreach ($faction_ids as $faction_id) {
+	$data['factions'][$faction_id]['id'] = $faction_id;
+	$character_ids = array_keys($data['factions'][$faction_id]['characters']);
+	foreach ($character_ids as $character_id) {
+		$data['factions'][$faction_id]['characters'][$character_id]['id'] = $character_id;
+	}
+}
+
+$scenario_ids = array_keys($data['scenarios']);
+
+foreach ($scenario_ids as $scenario_id) {
+	$data['scenarios'][$scenario_id]['id'] = $scenario_id;
+}
+
+$setting_ids = array_keys($data['settings']);
+
+foreach ($setting_ids as $setting_id) {
+	$data['settings'][$setting_id]['id'] = $setting_id;
+}
+
+$faq_ids = array_keys($data['faqs']);
+
+foreach ($faq_ids as $faq_id) {
+	$data['faqs'][$faq_id]['id'] = $faq_id;
+}
 
 uasort(
 	$data['factions'],
@@ -1684,7 +1844,6 @@ uasort(
 	}
 );
 
-$faction_ids = array_keys($data['factions']);
 foreach ($faction_ids as $faction_id) {
 	uasort(
 		$data['factions'][$faction_id]['characters'],
@@ -1701,4 +1860,4 @@ uasort(
 	}
 );
 
-?>var staticData = <?php echo json_encode($data); ?>;
+file_put_contents('static-data.js', 'var staticData = '.json_encode($data).';');

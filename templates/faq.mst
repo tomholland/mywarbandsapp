@@ -1,0 +1,7 @@
+<div class="content-view content-padded">
+	<div class="content-view-scroll-wrapper">
+		{{#content}}
+		<p>{{{.}}}</p>
+		{{/content}}
+	</div>
+</div>

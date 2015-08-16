@@ -1,0 +1,14 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#guides}}
+			<li>
+				<a class="listing-block" data-url="pdfs/{{filename}}">
+					<span class="cell name">{{name}}</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/guides}}
+		</ul>
+	</div>
+</div>

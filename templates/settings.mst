@@ -1,0 +1,18 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#settings}}
+			<li>
+				<span class="listing-block">
+					<span class="cell name">{{title}}</span>
+					<span class="cell control">
+						<div class="toggle" data-setting-id="{{id}}" data-default="{{default}}">
+							<div class="toggle-handle"></div>
+						</div>
+					</span>
+				</span>
+			</li>
+			{{/settings}}
+		</ul>
+	</div>
+</div>

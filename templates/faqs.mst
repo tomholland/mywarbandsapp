@@ -1,0 +1,14 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#faqs}}
+			<li>
+				<a class="listing-block" data-faq-id="{{id}}">
+					<span class="cell name">{{question}}</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/faqs}}
+		</ul>
+	</div>
+</div>

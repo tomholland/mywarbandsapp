@@ -1,0 +1,20 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			<li>
+				<a class="listing-block" data-template-id="settings">
+					<span class="cell icon left"><span class="icon icon-gear"></span></span>
+					<span class="cell name">Settings</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			<li>
+				<a class="listing-block" data-template-id="faqs">
+					<span class="cell icon left"><span class="icon icon-info"></span></span>
+					<span class="cell name">FAQs</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
