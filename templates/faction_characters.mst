@@ -1,0 +1,15 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#characters}}
+			<li>
+				<a class="listing-block" data-character-id="{{id}}">
+					<span class="cell name">{{name}}</span>
+					<span class="cell rice"><span class="badge">{{rice}}</span></span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/characters}}
+		</ul>
+	</div>
+</div>

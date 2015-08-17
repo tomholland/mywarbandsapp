@@ -14,11 +14,11 @@
 	<tbody>
 		{{#characters}}
 			<tr>
-				<td style="border: 1px solid #000; padding: 7px; text-align: left; vertical-align: top;">{{{name}}}{{#enhancements.length}} ({{base_rice}}){{#enhancements}}<br>&nbsp;+ {{{name}}} ({{rice}}){{/enhancements}}{{/enhancements.length}}</td>
+				<td style="border: 1px solid #000; padding: 7px; text-align: left; vertical-align: top;">{{{name}}}{{#has_enhancements}} ({{base_rice}}){{#enhancements}}<br>&nbsp;+ {{{name}}} ({{rice}}){{/enhancements}}{{/has_enhancements}}</td>
 				<td style="border: 1px solid #000; padding: 7px; text-align: left; vertical-align: top;">{{rice}}</td>
 			</tr>
 		{{/characters}}
-		{{#events.length}}
+		{{#has_events}}
 			<tr>
 				<td style="border: 1px solid #000; padding: 7px; text-align: left; background: #000; color: #fff; font-weight: bold;">Event special cards</td>
 				<td style="border: 1px solid #000; padding: 7px;"></td>
@@ -29,8 +29,8 @@
 					<td style="border: 1px solid #000; padding: 7px; text-align: left; vertical-align: top;">{{rice}}</td>
 				</tr>
 			{{/events}}
-		{{/events.length}}
-		{{#terrain.length}}
+		{{/has_events}}
+		{{#has_terrain}}
 			<tr>
 				<td style="border: 1px solid #000; padding: 7px; text-align: left; background: #000; color: #fff; font-weight: bold;">Terrain special cards</td>
 				<td style="border: 1px solid #000; padding: 7px;"></td>
@@ -41,7 +41,7 @@
 					<td style="border: 1px solid #000; padding: 7px; text-align: left; vertical-align: top;">{{rice}}</td>
 				</tr>
 			{{/terrain}}
-		{{/terrain.length}}
+		{{/has_terrain}}
 		<tr>
 			<td style="border: 1px solid #000; padding: 7px; text-align: right; background: #000; color: #fff; font-weight: bold;">Total</td>
 			<td style="border: 1px solid #000; padding: 7px; text-align: left;">{{total_rice}}</td>

@@ -1,0 +1,9 @@
+{{#character_enhancements}}
+<li>
+	<a class="listing-block" data-name="{{name}}" data-rice="{{numeric_rice_cost}}">
+		<span class="cell name">{{name}}</span>
+		<span class="cell rice"><span class="badge">{{rice}}</span></span>
+		<span class="cell icon large"><span class="icon icon-plus"></span></span>
+	</a>
+</li>
+{{/character_enhancements}}

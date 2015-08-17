@@ -1,0 +1,27 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<div class="warband-tabs-rice-wrapper">
+			<div class="segmented-control">
+				<a class="control-item selected">Characters</a>
+				<a class="control-item events">Events</a>
+				<a class="control-item terrain">Terrain</a>
+			</div>
+			<span class="rice"><span class="badge">{{rice}}</span></span>
+		</div>
+		<ul class="content-items-list">
+			{{#characters}}
+			<li>
+				<div class="swipe-wrapper actions-1">
+					<a class="action-block action-1 delete" data-warband-character-id="{{warband_character_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block" data-faction-id="{{faction_id}}" data-character-id="{{id}}">
+						<span class="cell image"><img src="images/factions/{{faction_image}}"></span>
+						<span class="cell name">{{name}}</span>
+						<span class="cell rice warband-character"><span class="badge">{{rice_cost_detail}}</span></span>
+						<span class="cell icon"><span class="icon icon-right"></span></span>
+					</a>
+				</div>
+			</li>
+			{{/characters}}
+		</ul>
+	</div>
+</div>

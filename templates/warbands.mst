@@ -1,0 +1,21 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#warbands}}
+			<li>
+				<div class="swipe-wrapper actions-3">
+					<a class="action-block action-1 share" data-warband-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>
+					<a class="action-block action-2 edit" data-warband-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>
+					<a class="action-block action-3 delete" data-warband-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block" data-warband-id="{{id}}">
+						<span class="cell image"><img src="images/factions/{{image}}"></span>
+						<span class="cell name">{{name}}</span>
+						<span class="cell rice warband"><span class="badge{{^complete}} error{{/complete}}{{#complete}} match{{/complete}}">{{total_rice_cost}}/{{rice_limit}}</span></span>
+						<span class="cell icon"><span class="icon icon-right"></span></span>
+					</a>
+				</div>
+			</li>
+			{{/warbands}}
+		</ul>
+	</div>
+</div>

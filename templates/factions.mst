@@ -1,0 +1,15 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#factions}}
+			<li>
+				<a class="listing-block" data-faction-id="{{id}}">
+					<span class="cell image"><img src="images/factions/{{image}}"></span>
+					<span class="cell name">{{name}}</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/factions}}
+		</ul>
+	</div>
+</div>

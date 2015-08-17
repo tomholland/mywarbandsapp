@@ -1,0 +1,25 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<div class="warband-tabs-rice-wrapper">
+			<div class="segmented-control">
+				<a class="control-item characters">Characters</a>
+				<a class="control-item events">Events</a>
+				<a class="control-item selected">Terrain</a>
+			</div>
+			<span class="rice"><span class="badge">{{rice}}</span></span>
+		</div>
+		<ul class="content-items-list">
+			{{#terrain}}
+			<li>
+				<div class="swipe-wrapper actions-1">
+					<a class="action-block action-1 delete" data-warband-terrain-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block">
+						<span class="cell name">{{name}}</span>
+						<span class="cell rice"><span class="badge">{{rice}}</span></span>
+					</a>
+				</div>
+			</li>
+			{{/terrain}}
+		</ul>
+	</div>
+</div>

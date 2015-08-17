@@ -1,0 +1,7 @@
+<div class="content-view slider">
+	<div class="slide-group">
+		{{#cards}}
+		<div class="slide" style="background-image: url('images/cards/{{.}}');"></div>
+		{{/cards}}
+	</div>
+</div>

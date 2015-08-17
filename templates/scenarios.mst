@@ -1,0 +1,15 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<a class="btn btn-block" id="random-scenario">Random scenario</a>
+		<ul class="content-items-list">
+			{{#scenarios}}
+			<li>
+				<a class="listing-block" data-scenario-id="{{id}}">
+					<span class="cell name">{{name}}</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/scenarios}}
+		</ul>
+	</div>
+</div>

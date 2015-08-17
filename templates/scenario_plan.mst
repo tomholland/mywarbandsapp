@@ -1,0 +1,5 @@
+<div class="content-view scenario-image-view content-padded">
+	<div class="content-view-scroll-wrapper">
+		<img class="scenario-image" src="images/scenarios/{{image}}">
+	</div>
+</div>

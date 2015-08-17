@@ -1,6 +1,6 @@
 {{warband_name}}
 {{faction_name}}
-{{#characters.length}}
+{{#has_characters}}
 
 Models:
 ---------------------------
@@ -9,8 +9,8 @@ Models:
 * {{name}} ({{base_rice}}){{#enhancements}}
 + {{name}} ({{rice}}){{/enhancements}}
 {{/characters}}
-{{/characters.length}}
-{{#events.length}}
+{{/has_characters}}
+{{#has_events}}
 
 Event special cards:
 ---------------------------
@@ -18,8 +18,8 @@ Event special cards:
 {{#events}}
 * {{name}} ({{rice}})
 {{/events}}
-{{/events.length}}
-{{#terrain.length}}
+{{/has_events}}
+{{#has_terrain}}
 
 Terrain special cards:
 ---------------------------
@@ -27,7 +27,7 @@ Terrain special cards:
 {{#terrain}}
 * {{name}} ({{rice}})
 {{/terrain}}
-{{/terrain.length}}
+{{/has_terrain}}
 
 ---------------------------
 Total: {{total_rice}}
