@@ -1,13 +1,19 @@
-var warbandsEvents = [];
+var warbandsEvents = null;
 var warbandsEventsLawnchair;
 
-function loadWarbandsEvents() {
+function loadWarbandsEvents(callback) {
+	if (warbandsEvents !== null) {
+		callback();
+		return;
+	}
+	warbandsEvents = [];
 	warbandsEventsLawnchair = new Lawnchair({adapter:'dom', name:'warbandsevents'}, function(store) {
 		store.all(function(records) {
 			records.forEach(function(record) {
 				warbandsEvents.push({name: record.name, rice: record.rice});
 			});
 		});
+		callback();
 	});
 }
 

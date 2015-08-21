@@ -1,13 +1,19 @@
-var warbandsCharacterEnhancements = [];
+var warbandsCharacterEnhancements = null;
 var warbandsCharacterEnhancementsLawnchair;
 
-function loadWarbandsCharacterEnhancements() {
+function loadWarbandsCharacterEnhancements(callback) {
+	if (warbandsCharacterEnhancements !== null) {
+		callback();
+		return;
+	}
+	warbandsCharacterEnhancements = [];
 	warbandsCharacterEnhancementsLawnchair = new Lawnchair({adapter:'dom', name:'warbandscharacterenhancements'}, function(store) {
 		store.all(function(records) {
 			records.forEach(function(record) {
 				warbandsCharacterEnhancements.push({name: record.name, rice: record.rice});
 			});
 		});
+		callback();
 	});
 }
 
