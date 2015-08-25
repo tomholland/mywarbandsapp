@@ -1,13 +1,13 @@
-{{warband_name}}
-{{faction_name}}
+{{{warband_name}}}
+{{{faction_name}}}
 {{#has_characters}}
 
 Models:
 ---------------------------
 {{#characters}}
 
-* {{name}} ({{base_rice}}){{#enhancements}}
-+ {{name}} ({{rice}}){{/enhancements}}
+* {{{name}}} ({{base_rice}}){{#enhancements}}
++ {{{name}}} ({{rice}}){{/enhancements}}
 {{/characters}}
 {{/has_characters}}
 {{#has_events}}
@@ -16,7 +16,7 @@ Event special cards:
 ---------------------------
 
 {{#events}}
-* {{name}} ({{rice}})
+* {{{name}}} ({{rice}})
 {{/events}}
 {{/has_events}}
 {{#has_terrain}}
@@ -25,7 +25,7 @@ Terrain special cards:
 ---------------------------
 
 {{#terrain}}
-* {{name}} ({{rice}})
+* {{{name}}} ({{rice}})
 {{/terrain}}
 {{/has_terrain}}
 

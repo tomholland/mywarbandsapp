@@ -34,80 +34,80 @@ function Warband() {
 
 Warband.prototype.rice = function() {
 	var rice = 0;
-	for (var warbandCharacterID in this.characters) {
-		rice += staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice;
-		for (var warbandCharacterEnhancementID in this.characters[warbandCharacterID].enhancements) {
-			rice += this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].rice;
+	for (var warbandCharacterId in this.characters) {
+		rice += staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice;
+		for (var warbandCharacterEnhancementId in this.characters[warbandCharacterId].enhancements) {
+			rice += this.characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId].rice;
 		}
 	}
-	for (var warbandEventID in this.events) {
-		rice += this.events[warbandEventID].rice;
+	for (var warbandEventId in this.events) {
+		rice += this.events[warbandEventId].rice;
 	}
-	for (var warbandTerrainItemID in this.terrain) {
-		rice += this.terrain[warbandTerrainItemID].rice;
+	for (var warbandTerrainItemId in this.terrain) {
+		rice += this.terrain[warbandTerrainItemId].rice;
 	}
 	return rice;
 }
 
-Warband.prototype.addCharacter = function(factionCharacterID) {
-	this.characters[generateUUID()] = {'factionCharacterID': factionCharacterID, 'enhancements': {}};
+Warband.prototype.addCharacter = function(factionCharacterId) {
+	this.characters[generateUuid()] = {'factionCharacterID': factionCharacterId, 'enhancements': {}};
 }
 
-Warband.prototype.getCharacterID = function(warbandCharacterID) {
-	return this.characters[warbandCharacterID].factionCharacterID;
+Warband.prototype.getFactionCharacterId = function(warbandCharacterId) {
+	return this.characters[warbandCharacterId].factionCharacterID;
 }
 
-Warband.prototype.getCharacterName = function(warbandCharacterID) {
-	return staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].name;
+Warband.prototype.getCharacterName = function(warbandCharacterId) {
+	return staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].name;
 }
 
-Warband.prototype.characterRiceDetail = function(warbandCharacterID) {
+Warband.prototype.characterRiceDetail = function(warbandCharacterId) {
 	var enhancementsRiceTotal = 0;
-	for (var warbandCharacterEnhancementID in this.characters[warbandCharacterID].enhancements) {
-		enhancementsRiceTotal += this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID].rice;
+	for (var warbandCharacterEnhancementId in this.characters[warbandCharacterId].enhancements) {
+		enhancementsRiceTotal += this.characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId].rice;
 	}
-	if (enhancementsRiceTotal === 0) return ((staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice);
-	return (staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice + enhancementsRiceTotal)+' ('+((staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterID].factionCharacterID].rice)+'+'+enhancementsRiceTotal+'e)';
+	if (enhancementsRiceTotal === 0) return ((staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice);
+	return (staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice + enhancementsRiceTotal)+' ('+((staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice)+'+'+enhancementsRiceTotal+'e)';
 }
 
-Warband.prototype.removeCharacter = function(warbandCharacterID) {
-	delete this.characters[warbandCharacterID];
+Warband.prototype.removeCharacter = function(warbandCharacterId) {
+	delete this.characters[warbandCharacterId];
 }
 
-Warband.prototype.addCharacterEnhancement = function(warbandCharacterID, name, rice) {
-	this.characters[warbandCharacterID].enhancements[generateUUID()] = {'name': name, 'rice': rice};
+Warband.prototype.addCharacterEnhancement = function(warbandCharacterId, name, rice) {
+	this.characters[warbandCharacterId].enhancements[generateUuid()] = {'name': name, 'rice': rice};
 }
 
-Warband.prototype.getCharacterEnhancement = function(warbandCharacterID, warbandCharacterEnhancementID) {
-	return this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID];
+Warband.prototype.getCharacterEnhancement = function(warbandCharacterId, warbandCharacterEnhancementId) {
+	return this.characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId];
 }
 
-Warband.prototype.removeCharacterEnhancement = function(warbandCharacterID, warbandCharacterEnhancementID) {
-	delete this.characters[warbandCharacterID].enhancements[warbandCharacterEnhancementID];
+Warband.prototype.removeCharacterEnhancement = function(warbandCharacterId, warbandCharacterEnhancementId) {
+	delete this.characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId];
 }
 
 Warband.prototype.addEvent = function(name, rice) {
-	this.events[generateUUID()] = {'name': name, 'rice': rice};
+	this.events[generateUuid()] = {'name': name, 'rice': rice};
 }
 
-Warband.prototype.getEvent = function(warbandEventID) {
-	return this.events[warbandEventID];
+Warband.prototype.getEvent = function(warbandEventId) {
+	return this.events[warbandEventId];
 }
 
-Warband.prototype.removeEvent = function(warbandEventID) {
-	delete this.events[warbandEventID];
+Warband.prototype.removeEvent = function(warbandEventId) {
+	delete this.events[warbandEventId];
 }
 
 Warband.prototype.addTerrainItem = function(name, rice) {
-	this.terrain[generateUUID()] = {'name': name, 'rice': rice};
+	this.terrain[generateUuid()] = {'name': name, 'rice': rice};
 }
 
-Warband.prototype.getTerrainItem = function(warbandTerrainItemID) {
-	return this.terrain[warbandTerrainItemID];
+Warband.prototype.getTerrainItem = function(warbandTerrainItemId) {
+	return this.terrain[warbandTerrainItemId];
 }
 
-Warband.prototype.removeTerrainItem = function(warbandTerrainItemID) {
-	delete this.terrain[warbandTerrainItemID];
+Warband.prototype.removeTerrainItem = function(warbandTerrainItemId) {
+	delete this.terrain[warbandTerrainItemId];
 }
 
 Warband.prototype.save = function(callback) {

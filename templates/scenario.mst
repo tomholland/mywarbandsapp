@@ -1,10 +1,10 @@
 <div class="content-view content-padded scenario">
 	<div class="content-view-scroll-wrapper">
-		<a class="btn backstory" data-scenario-id="{{id}}"><span class="icon icon-right"></span> View backstory</a>
+		<a class="btn backstory"><span class="icon icon-right"></span> View backstory</a>
 		<h5>Type</h5>
 		<p>{{type}}</p>
 		<h5>Deployment</h5>
-		<a class="btn plan" data-scenario-id="{{id}}"><span class="icon icon-search"></span> View plan</a>
+		<a class="btn plan"><span class="icon icon-search"></span> View plan</a>
 		{{#deployment_items}}
 		<p>{{.}}</p>
 		{{/deployment_items}}

@@ -1,14 +1,16 @@
+var staticData = null;
 var contentViewWidth = 0;
-var currentContentViewID = null;
-var backContentViewID = null;
-var selectedWarbandID = null;
-var selectedWarbandCharacterID = null;
+var currentTemplateId = null;
+var selectedFactionId = null;
+var selectedWarbandId = null;
+var selectedWarbandCharacterId = null;
+var selectedScenarioId = null;
 
 function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function generateUUID() {
+function generateUuid() {
 	var d = new Date().getTime();
 	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = (d + Math.random()*16)%16 | 0;
@@ -18,564 +20,658 @@ function generateUUID() {
 	return uuid.toUpperCase();
 }
 
-function randomIntFromInterval(min, max) {
-	return Math.floor(Math.random()*(max-min+1)+min);
+function sortObjectArrayByNameProperty(objA, objB) {
+	return alphanumCase(objA.name, objB.name);
 }
 
-function setupWarbandSwipeableListing(id) {
+function cloneProperties(sourceObj, targetObj) {
+	for (var prop in sourceObj) {
+		if (sourceObj.hasOwnProperty(prop)) {
+			targetObj[prop] = sourceObj[prop];
+		}
+	}
+}
+
+function addWarbandRiceStatsToTemplateData(templateData) {
+	templateData.total_rice_cost = warbands[selectedWarbandId].rice();
+	templateData.rice_limit = parseInt(warbands[selectedWarbandId].riceLimit);
+	templateData.complete =(templateData.rice_limit === templateData.total_rice_cost);
+}
+
+function renderView(templateId, contentId) {
+	var templateData = {};
+	switch(templateId) {
+		case 'factions':
+			$('#title').html('Factions');
+			templateData.factions = [];
+			Object.keys(staticData.factions).forEach(function(factionId) {
+				templateData.factions.push(staticData.factions[factionId]);
+			});
+			$('#back').removeClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'faction_characters':
+			selectedFactionId = contentId;
+			$('#title').html(htmlEncode(staticData.factions[contentId].name));
+			templateData.characters = [];
+			Object.keys(staticData.factions[contentId].characters).forEach(function(characterId) {
+				templateData.players.push(staticData.factions[contentId].characters[characterId]);
+			});
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'character_cards':
+			$('#title').html(htmlEncode(staticData.factions[selectedFactionId].characters[contentId].name));
+			templateData = staticData.factions[selectedFactionId].characters[contentId];
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'warbands':
+			loadWarbands(function() {
+				$('#title').html('Warbands');
+				var warbandsSortArray = [];
+				Object.keys(warbands).forEach(function(warbandId) {
+					warbandsSortArray.push({
+						id: warbandId,
+						name: warbands[warbandId].name
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						warbandsSortArray.sort(sortObjectArrayByNameProperty);
+					}
+					templateData.warbands = [];
+					warbandsSortArray.forEach(function(warband) {
+						var warbandRiceTotal = warbands[warband.id].rice()
+						templateData.warbands.push({
+							id: warband.id,
+							image: staticData.factions[warbands[warband.id].faction].image,
+							name: warband.name,
+							total_rice_cost: warbandRiceTotal,
+							rice_limit: warbands[warband.id].riceLimit,
+							complete: (parseInt(warbands[warband.id].riceLimit) === warbandRiceTotal)
+						});
+					});
+					$('#back').removeClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
+			});
+		break;
+		case 'warband':
+			$('#title').html(((selectedWarbandId === null) ? 'Create':'Edit')+' warband');
+			templateData.edit = (selectedWarbandId !== null);
+			templateData.factions = [];
+			Object.keys(staticData.factions).forEach(function(factionId) {
+				templateData.factions.push({
+					id: factionId,
+					name: staticData.factions[factionId].name,
+					selected: (selectedWarbandId !== null && warbands[selectedWarbandId].faction == factionId)
+				});
+			});
+			templateData.name = ((selectedWarbandId !== null) ? warbands[selectedWarbandId].name:'');
+			templateData.rice = ((selectedWarbandId !== null) ? warbands[selectedWarbandId].riceLimit:'');
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'warband_characters':
+			loadWarbands(function() {
+				$('#title').html(htmlEncode(warbands[selectedWarbandId].name));
+				addWarbandRiceStatsToTemplateData(templateData);
+				Object.keys(warbands[selectedWarbandId].characters).forEach(function(warbandCharacterId) {
+					templateData.characters.push({
+						warband_character_id: warbandCharacterId,
+						id: warbands[selectedWarbandId].getFactionCharacterId(warbandCharacterId),
+						name: warbands[selectedWarbandId].getCharacterName(warbandCharacterId),
+						rice_cost_detail: warbands[selectedWarbandId].characterRiceDetail(warbandCharacterId)
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						templateData.players.sort(sortObjectArrayByNameProperty);
+					}
+					$('#back').addClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
+			});
+		break;
+		case 'warband_add_character':
+			loadWarbands(function() {
+				$('#title').html('Add character to warband');
+				$('#back').addClass('shown');
+				$('#add').removeClass('shown');
+				renderTemplate(templateId, templateData);
+			});
+		break;
+		case 'warband_character_enhancements':
+			loadWarbands(function() {
+				$('#title').html(htmlEncode(warbands[selectedWarbandId].getCharacterName(selectedWarbandCharacterId))+' enhancements');
+				addWarbandRiceStatsToTemplateData(templateData);
+				templateData.character_enhancements = [];
+				Object.keys(warbands[selectedWarbandId].characters[selectedWarbandCharacterId].enhancements).forEach(function(warbandCharacterEnhancementId) {
+					var warbandCharacterEnhancement = warbands[selectedWarbandId].getCharacterEnhancement(selectedWarbandCharacterId, warbandCharacterEnhancementId);
+					templateData.character_enhancements.push({
+						id: warbandCharacterEnhancementId,
+						name: warbandCharacterEnhancement.name,
+						rice: warbandCharacterEnhancement.rice
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						templateData.character_enhancements.sort(sortObjectArrayByNameProperty);
+					}
+					$('#back').addClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
+			});
+		break;
+		case 'warband_add_character_enhancement':
+			loadWarbandsCharacterEnhancements(function() {
+				$('#title').html('Add enhancement to character');
+				$('#back').addClass('shown');
+				$('#add').removeClass('shown');
+				renderTemplate(templateId, templateData);
+			});
+		break;
+		case 'warband_events':
+			loadWarbands(function() {
+				$('#title').html(htmlEncode(warbands[selectedWarbandId].name)+' events');
+				addWarbandRiceStatsToTemplateData(templateData);
+				templateData.events = [];
+				Object.keys(warbands[selectedWarbandId].events).forEach(function(warbandEventId) {
+					var warbandEvent = warbands[selectedWarbandId].getEvent(warbandEventId);
+					templateData.events.push({
+						id: warbandEventId,
+						name: warbandEvent.name,
+						rice: warbandEvent.rice
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						templateData.events.sort(sortObjectArrayByNameProperty);
+					}
+					$('#back').addClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
+			});
+		break;
+		case 'warband_add_event':
+			loadWarbandsEvents(function() {
+				$('#title').html('Add warband event');
+				$('#back').addClass('shown');
+				$('#add').removeClass('shown');
+				renderTemplate(templateId, templateData);
+			});
+		break;
+		case 'warband_terrain':
+			loadWarbands(function() {
+				$('#title').html(htmlEncode(warbands[selectedWarbandId].name)+' terrain');
+				addWarbandRiceStatsToTemplateData(templateData);
+				templateData.terrain = [];
+				Object.keys(warbands[selectedWarbandId].terrain).forEach(function(warbandTerrainItemId) {
+					var warbandTerrainItem = warbands[selectedWarbandId].getTerrainItem(warbandTerrainItemId);
+					templateData.terrain.push({
+						id: warbandTerrainItemId,
+						name: warbandTerrainItem.name,
+						rice: warbandTerrainItem.rice
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						templateData.terrain.sort(sortObjectArrayByNameProperty);
+					}
+					$('#back').addClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
+			});
+		break;
+		case 'warband_add_terrain':
+			loadWarbandsTerrain(function() {
+				$('#title').html('Add warband terrain');
+				$('#back').addClass('shown');
+				$('#add').removeClass('shown');
+				renderTemplate(templateId, templateData);
+			});
+		break;
+		case 'scenarios':
+			$('#title').html('Scenarios');
+			templateData.scenarios = [];
+			Object.keys(staticData.scenarios).forEach(function(scenarioId) {
+				templateData.scenarios.push(staticData.scenarios[scenarioId]);
+			});
+			$('#back').removeClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'scenario':
+			$('#title').html(htmlEncode(staticData.scenarios[contentId].name));
+			templateData = staticData.scenarios[contentId];
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'scenario_backstory':
+			$('#title').html(htmlEncode(staticData.scenarios[contentId].name));
+			templateData.content = staticData.scenarios[contentId];
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'scenario_plan':
+			$('#title').html(htmlEncode(staticData.scenarios[contentId].name)+': plan');
+			templateData.image = staticData.scenarios[contentId];
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'guides':
+			$('#title').html('Guides');
+			templateData.guides = [];
+			Object.keys(staticData.guides).forEach(function(guideId) {
+				templateData.guides.push(staticData.guides[guideId]);
+			});
+			$('#back').removeClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'misc':
+			$('#title').html('Misc.');
+			$('#back').removeClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'settings':
+			$('#title').html('Settings');
+			templateData.settings = [];
+			Object.keys(staticData.settings).forEach(function(settingId) {
+				templateData.settings.push(staticData.settings[settingId]);
+			});
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'faqs':
+			$('#title').html('FAQs');
+			templateData.faqs = [];
+			Object.keys(staticData.faqs).forEach(function(faqId) {
+				templateData.faqs.push(staticData.faqs[faqId]);
+			});
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+		case 'faq':
+			$('#title').html(htmlEncode(staticData.faqs[contentId].title));
+			templateData = staticData.faqs[contentId];
+			$('#back').addClass('shown');
+			$('#add').removeClass('shown');
+		break;
+	}
+	renderTemplate(templateId, templateData);
+}
+
+function renderTemplate(templateId, templateData) {
+	$('.content').empty().html(Mustache.render(staticData.templates[templateId], templateData));
+	setContentScrollViewWrapperDimensions();
+	currentTemplateId = templateId;
+	addEventsToRenderedView();
+}
+
+function setContentScrollViewWrapperDimensions() {
+	$('.content-view .content-view-scroll-wrapper').css({width: contentViewWidth+'px', height: $('.content').height()+'px'});
+}
+
+function setupSwipeableListing(parentalElement) {
 	var actionBlockWidth = 50;
-	$('#'+id).find('.swipe-wrapper').swipeLeft(function() {
+	parentalElement.find('.swipe-wrapper').swipeLeft(function() {
 		$(this).addClass('offset');
 	}).swipeRight(function() {
 		$(this).removeClass('offset');
 	});
-	$('#'+id).find('.change-content-view').tap(function() {
-		changeContentView(this);
+	parentalElement.find('.action-1').css('margin-left', contentViewWidth+'px');
+	parentalElement.find('.action-2').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
+	parentalElement.find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
+}
+
+/*
+function populatePlayerSuggestions(search) {
+	var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
+	var templateData = {
+		players: []
+	};
+	Object.keys(staticData.guilds[teams[selectedTeamId].guildId].players).forEach(function(playerId) {
+		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[playerId].id) < 0
+			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+			var player = {
+				guild_class: staticData.guilds[teams[selectedTeamId].guildId].name.toLowerCase(),
+				guild_id: teams[selectedTeamId].guildId,
+				guild_image: staticData.guilds[teams[selectedTeamId].guildId].image
+			};
+			cloneProperties(staticData.guilds[teams[selectedTeamId].guildId].players[playerId], player);
+			templateData.players.push(player);
+		}
 	});
-	$('#'+id).find('.action-1').css('margin-left', contentViewWidth+'px');
-	$('#'+id).find('.action-2').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
-	$('#'+id).find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
-}
-
-function sortObjectArrayByObjectNameProperty(objA, objB) {
-	return alphanumCase(objA.name, objB.name);
-}
-
-function deleteWarband(warbandID) {
-	navigator.notification.confirm(
-		'Are you sure you want to delete the Warband "'+warbands[warbandID].name+'"?',
-		function(button) {
-			if (button !== 2) {
-				return;
-			}
-			warbands[warbandID].delete(function() {
-				delete warbands[warbandID];
-				drawWarbands();
+	Object.keys(staticData.guilds).forEach(function(guildId) {
+		if (guildId !== teams[selectedTeamId].guildId
+			&& staticData.guilds[guildId].hasOwnProperty('has_shareable_players')) {
+			Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
+				if (staticData.guilds[guildId].players[playerId].hasOwnProperty('also_available_to')
+					&& staticData.guilds[guildId].players[playerId].also_available_to.indexOf(teams[selectedTeamId].guildId) >= 0
+					&& existingPlayerIdsInTeam.indexOf(staticData.guilds[guildId].players[playerId].id) < 0
+					&& (search.length === 0 || (staticData.guilds[guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+					var player = {
+						guild_class: staticData.guilds[guildId].name.toLowerCase(),
+						guild_id: guildId,
+						guild_image: staticData.guilds[guildId].image
+					};
+					cloneProperties(staticData.guilds[guildId].players[playerId], player);
+					templateData.players.push(player);
+				}
 			});
-		},
-		'Delete Warband',
-		['Cancel','Delete']
-	);
-}
-
-function drawWarbands() {
-	var warbandsSortArray = [];
-	Object.keys(warbands).forEach(function(warbandID) {
-		warbandsSortArray.push({
-			id: warbandID,
-			name: warbands[warbandID].name
+		}
+	});
+	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
+	setContentScrollViewWrapperDimensions();
+	$('.content-items-list').find('.listing-block').tap(function() {
+		$('#teamplayersearch').blur();
+		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
+		teams[selectedTeamId].save(function() {
+			renderView('team_players', null);
 		});
 	});
-	if (settingIsEnabled('lexicographicalsort')) {
-		warbandsSortArray.sort(sortObjectArrayByObjectNameProperty);
-	}
-	var html = '';
-	warbandsSortArray.forEach(function(warband) {
-		var warbandRice = warbands[warband.id].rice();
-		html += '<li>';
-			html += '<div class="swipe-wrapper actions-3">';
-				html += '<a class="action-block action-1 share" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-share"></span></span></a>';
-				html += '<a class="action-block action-2 edit change-content-view appear-from-right" data-target-content-view-id="warband" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>';
-				html += '<a class="action-block action-3 delete" data-warband-id="'+warband.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="warbandcharacters" data-warband-id="'+warband.id+'">';
-					html += '<span class="cell image"><img src="images/factions/'+staticData.factions[warbands[warband.id].faction].image+'"></span>';
-					html += '<span class="cell name">'+htmlEncode(warband.name)+'</span>';
-					html += '<span class="cell rice warband"><span class="badge'+((warbandRice > warbands[warband.id].riceLimit) ? ' error':((warbandRice === warbands[warband.id].riceLimit) ? ' match':''))+'">'+warbandRice+'/'+warbands[warband.id].riceLimit+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
-				html += '</a>';
-			html += '</div>';
-		html += '</li>';
-	});
-	$('#warbands').find('.content-items-list').empty().append(html);
-	setupWarbandSwipeableListing('warbands');
-	$('#warbands').find('.share').tap(function() {
-		var warbandID = $(this).attr('data-warband-id');
-		var params = {
-			'subject': 'Bushido Warband: '+warbands[warbandID].name,
-			'onSuccess': function() {
-				$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
-			},
-			'onError': function() {
-				$('#warbands').find('.swipe-wrapper.offset').removeClass('offset');
-			}
-		};
-		if (settingIsEnabled('htmlemailsetting')) {
-			params.body = Mustache.render(staticData.templates.html, warbands[warbandID].mustacheData());
-			params.isHtml = true;
-		} else {
-			params.body = Mustache.render(staticData.templates.text, warbands[warbandID].mustacheData());
-		}
-		cordova.require('emailcomposer.EmailComposer').show(params);
-	});
-	$('#warbands').find('.delete').tap(function() {
-		deleteWarband($(this).attr('data-warband-id'));
-	});
 }
+*/
 
-function setWarbandContentScreenTitleAndSubNavSelection(id) {
-	$('#'+id).attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
-	var warbandRice = warbands[selectedWarbandID].rice();
-	var warbandRiceBadge = $('#'+id).find('.warband-tabs-rice-wrapper .rice .badge');
-	warbandRiceBadge.text(warbandRice+'/'+warbands[selectedWarbandID].riceLimit);
-	if (warbandRice > warbands[selectedWarbandID].riceLimit) {
-		warbandRiceBadge.addClass('error');
-		warbandRiceBadge.removeClass('match');
-	} else if (warbandRice === warbands[selectedWarbandID].riceLimit) {
-		warbandRiceBadge.addClass('match');
-		warbandRiceBadge.removeClass('error');
-	} else {
-		warbandRiceBadge.removeClass('match');
-		warbandRiceBadge.removeClass('error');
-	}
-}
-
-function deleteWarbandCharacter(warbandCharacterID) {
-	navigator.notification.confirm(
-		'Are you sure you want to delete '+warbands[selectedWarbandID].getCharacterName(warbandCharacterID)+' from your Warband "'+warbands[selectedWarbandID].name+'"?',
-		function(button) {
-			if (button !== 2) {
-				return;
-			}
-			warbands[selectedWarbandID].removeCharacter(warbandCharacterID);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandCharacters();
+function addEventsToRenderedView() {
+	switch(currentTemplateId) {
+		case 'factions':
+			$('.content-items-list').find('a').tap(function() {
+				renderView('faction_characters', $(this).attr('data-faction-id'));
 			});
-		},
-		'Delete Warband character',
-		['Cancel','Delete']
-	);
-}
-
-function drawWarbandCharacters() {
-	setWarbandContentScreenTitleAndSubNavSelection('warbandcharacters');
-	var warbandCharactersSortArray = [];
-	Object.keys(warbands[selectedWarbandID].characters).forEach(function(warbandCharacterID) {
-		warbandCharactersSortArray.push({
-			id: warbandCharacterID,
-			name: warbands[selectedWarbandID].getCharacterName(warbandCharacterID)
-		});
-	});
-	if (settingIsEnabled('lexicographicalsort')) {
-		warbandCharactersSortArray.sort(sortObjectArrayByObjectNameProperty);
-	}
-	var html = '';
-	warbandCharactersSortArray.forEach(function(warbandCharacter) {
-		html += '<li>';
-			html += '<div class="swipe-wrapper actions-2">';
-				html += '<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>';
-				html += '<a class="action-block action-2 delete" data-warband-character-id="'+warbandCharacter.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+warbands[selectedWarbandID].getCharacterID(warbandCharacter.id)+'-cards">';
-					html += '<span class="cell name">'+htmlEncode(warbandCharacter.name)+'</span>';
-					html += '<span class="cell rice warband-character"><span class="badge">'+warbands[selectedWarbandID].characterRiceDetail(warbandCharacter.id)+'</span></span>';
-					html += '<span class="cell icon"><span class="icon icon-right"></span></span>';
-				html += '</a>';
-			html += '</div>';
-		html += '</li>';
-	});
-	$('#warbandcharacters').find('.content-items-list').empty().append(html);
-	setupWarbandSwipeableListing('warbandcharacters');
-	$('#warbandcharacters').find('.delete').tap(function() {
-		deleteWarbandCharacter($(this).attr('data-warband-character-id'));
-	});
-}
-
-function populateWarbandCharacterSuggestions(search) {
-	var html = '';
-	Object.keys(staticData.factions[warbands[selectedWarbandID].faction].characters).forEach(function(factionCharacterID) {
-		if (search.length === 0 || (staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
-			html += '<li>';
-				html += '<a class="listing-block" data-character-id="'+factionCharacterID+'">';
-					html += '<span class="cell name">'+htmlEncode(staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+((staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice === 0) ? '-':staticData.factions[warbands[selectedWarbandID].faction].characters[factionCharacterID].rice)+'</span></span>';
-					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
-					html += '</a>';
-			html += '</li>';
-		}
-	});
-	$('#warbandcharacter').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
-		$('input').blur();
-		warbands[selectedWarbandID].addCharacter($(this).attr('data-character-id'));
-		warbands[selectedWarbandID].save(function() {
-			drawWarbands();
-			drawWarbandCharacters();
-			$('#add').addClass('shown');
-			swapContentView('warbandcharacter', 'warbandcharacters', 'left');
-		});
-	});
-}
-
-function deleteWarbandCharacterEnhancement(warbandCharacterEnhancementID) {
-	navigator.notification.confirm(
-		'Are you sure you want to delete the enhancement "'+warbands[selectedWarbandID].getCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID).name+'" from '+warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+' in your Warband "'+warbands[selectedWarbandID].name+'"?',
-		function(button) {
-			if (button !== 2) {
-				return;
-			}
-			warbands[selectedWarbandID].removeCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandCharacters();
-				drawEditWarbandCharacter();
+		break;
+		case 'faction_characters':
+			$('.content-items-list').find('a').tap(function() {
+				renderView('character_cards', $(this).attr('data-character-id'));
 			});
-		},
-		'Delete Warband character',
-		['Cancel','Delete']
-	);
-}
-
-function drawEditWarbandCharacter() {
-	$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+': enhancements'));
-	$('#add').attr('data-target-content-view-id', 'warbandcharacterenhancement').addClass('shown');
-	var warbandCharacterEnhancementsSortArray = [];
-	Object.keys(warbands[selectedWarbandID].characters[selectedWarbandCharacterID].enhancements).forEach(function(warbandCharacterEnhancementID) {
-		var warbandCharacterEnhancement = warbands[selectedWarbandID].getCharacterEnhancement(selectedWarbandCharacterID, warbandCharacterEnhancementID);
-		warbandCharacterEnhancementsSortArray.push({
-			id: warbandCharacterEnhancementID,
-			name: warbandCharacterEnhancement.name,
-			rice: warbandCharacterEnhancement.rice
-		});
-	});
-	if (settingIsEnabled('lexicographicalsort')) {
-		warbandCharacterEnhancementsSortArray.sort(sortObjectArrayByObjectNameProperty);
-	}
-	var html = '<ul class="content-items-list">';
-	warbandCharacterEnhancementsSortArray.forEach(function(warbandCharacterEnhancement) {
-		html += '<li>';
-			html += '<div class="swipe-wrapper actions-1">';
-				html += '<a class="action-block action-1 delete" data-warband-character-enhancement-id="'+warbandCharacterEnhancement.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<span class="listing-block">';
-					html += '<span class="cell name">'+htmlEncode(warbandCharacterEnhancement.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+warbandCharacterEnhancement.rice+'</span></span>';
-				html += '</span>';
-			html += '</div>';
-		html += '</li>';
-	});
-	html += '</ul>';
-	$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
-	setupWarbandSwipeableListing('warbandcharacter');
-	$('#warbandcharacter').find('.delete').tap(function() {
-		deleteWarbandCharacterEnhancement($(this).attr('data-warband-character-enhancement-id'));
-	});
-}
-
-function populateWarbandCharacterEnhancementSuggestions(search) {
-	var html = '';
-	warbandsCharacterEnhancements.forEach(function(warbandsCharacterEnhancement) {
-		if (search.length === 0 || (warbandsCharacterEnhancement.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
-			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandsCharacterEnhancement.rice+'">';
-					html += '<span class="cell name">'+htmlEncode(warbandsCharacterEnhancement.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+((warbandsCharacterEnhancement.rice === 0) ? '-':warbandsCharacterEnhancement.rice)+'</span></span>';
-					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
-					html += '</a>';
-			html += '</li>';
-		}
-	});
-	$('#warbandcharacterenhancement').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
-		$('input').blur();
-		$('#warbandcharacterenhancementname').val(htmlEncode($(this).find('.cell.name').text()));
-		$('#warbandcharacterenhancementrice').val($(this).attr('data-rice'));
-		$('#savewarbandcharacterenhancement').trigger('tap');
-	});
-}
-
-function deleteWarbandEvent(warbandEventID) {
-	navigator.notification.confirm(
-		'Are you sure you want to delete the event "'+warbands[selectedWarbandID].getEvent(warbandEventID).name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
-		function(button) {
-			if (button !== 2) {
-				return;
-			}
-			warbands[selectedWarbandID].removeEvent(warbandEventID);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandEvents();
-			});
-		},
-		'Delete Warband event',
-		['Cancel','Delete']
-	);
-}
-
-function drawWarbandEvents() {
-	setWarbandContentScreenTitleAndSubNavSelection('warbandevents');
-	$('#add').attr('data-target-content-view-id', 'warbandevent').addClass('shown');
-	var warbandEventsSortArray = [];
-	Object.keys(warbands[selectedWarbandID].events).forEach(function(warbandEventID) {
-		var warbandEvent = warbands[selectedWarbandID].getEvent(warbandEventID);
-		warbandEventsSortArray.push({
-			id: warbandEventID,
-			name: warbandEvent.name,
-			rice: warbandEvent.rice
-		});
-	});
-	if (settingIsEnabled('lexicographicalsort')) {
-		warbandEventsSortArray.sort(sortObjectArrayByObjectNameProperty);
-	}
-	var html = '';
-	warbandEventsSortArray.forEach(function(warbandEvent) {
-		html += '<li>';
-			html += '<div class="swipe-wrapper actions-1">';
-				html += '<a class="action-block action-1 delete" data-warband-event-id="'+warbandEvent.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block">';
-					html += '<span class="cell name">'+htmlEncode(warbandEvent.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+warbandEvent.rice+'</span></span>';
-				html += '</a>';
-			html += '</div>';
-		html += '</li>';
-	});
-	$('#warbandevents').find('.content-items-list').empty().append(html);
-	setupWarbandSwipeableListing('warbandevents');
-	$('#warbandevents').find('.delete').tap(function() {
-		deleteWarbandEvent($(this).attr('data-warband-event-id'));
-	});
-}
-
-function populateWarbandEventSuggestions(search) {
-	var html = '';
-	warbandsEvents.forEach(function(warbandEvent) {
-		if (search.length === 0 || (warbandEvent.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
-			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandEvent.rice+'">';
-					html += '<span class="cell name">'+htmlEncode(warbandEvent.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+((warbandEvent.rice === 0) ? '-':warbandEvent.rice)+'</span></span>';
-					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
-					html += '</a>';
-			html += '</li>';
-		}
-	});
-	$('#warbandevent').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
-		$('input').blur();
-		$('#warbandeventname').val(htmlEncode($(this).find('.cell.name').text()));
-		$('#warbandeventrice').val($(this).attr('data-rice'));
-		$('#savewarbandevent').trigger('tap');
-	});
-}
-
-function deleteWarbandTerrainItem(warbandTerrainItemID) {
-	navigator.notification.confirm(
-		'Are you sure you want to delete the terrain item "'+warbands[selectedWarbandID].getTerrainItem(warbandTerrainItemID).name+'" from your Warband "'+warbands[selectedWarbandID].name+'"?',
-		function(button) {
-			if (button !== 2) {
-				return;
-			}
-			warbands[selectedWarbandID].removeTerrainItem(warbandTerrainItemID);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandTerrain();
-			});
-		},
-		'Delete Warband terrain item',
-		['Cancel','Delete']
-	);
-}
-
-function drawWarbandTerrain() {
-	setWarbandContentScreenTitleAndSubNavSelection('warbandterrain');
-	$('#add').attr('data-target-content-view-id', 'warbandterrainitem').addClass('shown');
-	var warbandTerrainSortArray = [];
-	Object.keys(warbands[selectedWarbandID].terrain).forEach(function(warbandTerrainItemID) {
-		var warbandTerrainItem = warbands[selectedWarbandID].getTerrainItem(warbandTerrainItemID);
-		warbandTerrainSortArray.push({
-			id: warbandTerrainItemID,
-			name: warbandTerrainItem.name,
-			rice: warbandTerrainItem.rice
-		});
-	});
-	if (settingIsEnabled('lexicographicalsort')) {
-		warbandTerrainSortArray.sort(sortObjectArrayByObjectNameProperty);
-	}
-	var html = '';
-	warbandTerrainSortArray.forEach(function(warbandTerrainItem) {
-		html += '<li>';
-			html += '<div class="swipe-wrapper actions-1">';
-				html += '<a class="action-block action-1 delete" data-warband-terrain-item-id="'+warbandTerrainItem.id+'"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>';
-				html += '<a class="listing-block">';
-					html += '<span class="cell name">'+htmlEncode(warbandTerrainItem.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+warbandTerrainItem.rice+'</span></span>';
-				html += '</a>';
-			html += '</div>';
-		html += '</li>';
-	});
-	$('#warbandterrain').find('.content-items-list').empty().append(html);
-	setupWarbandSwipeableListing('warbandterrain');
-	$('#warbandterrain').find('.delete').tap(function() {
-		deleteWarbandTerrainItem($(this).attr('data-warband-terrain-item-id'));
-	});
-}
-
-function populateWarbandTerrainItemSuggestions(search) {
-	var html = '';
-	warbandsTerrain.forEach(function(warbandTerrainItem) {
-		if (search.length === 0 || (warbandTerrainItem.name.toLowerCase()).indexOf(search.toLowerCase()) >= 0) {
-			html += '<li>';
-				html += '<a class="listing-block" data-rice="'+warbandTerrainItem.rice+'">';
-					html += '<span class="cell name">'+htmlEncode(warbandTerrainItem.name)+'</span>';
-					html += '<span class="cell rice"><span class="badge">'+((warbandTerrainItem.rice === 0) ? '-':warbandTerrainItem.rice)+'</span></span>';
-					html += '<span class="cell icon large"><span class="icon icon-plus"></span></span>';
-					html += '</a>';
-			html += '</li>';
-		}
-	});
-	$('#warbandterrainitem').find('.content-items-list').empty().append(html).find('.listing-block').tap(function() {
-		$('input').blur();
-		$('#warbandterrainitemname').val(htmlEncode($(this).find('.cell.name').text()));
-		$('#warbandterrainitemrice').val($(this).attr('data-rice'));
-		$('#savewarbandterrainitem').trigger('tap');
-	});
-}
-
-function swapContentView(visibleContentViewID, newContentViewID, direction) {
-	var visibleContentView = $('#'+visibleContentViewID);
-	var newContentView = $('#'+newContentViewID);
-	var newContentViewScrollWapper = newContentView.find('.content-view-scroll-wrapper');
-	if (newContentView.hasClass('slider')) {
-		newContentView.find('.slide-group').css('-webkit-transform', 'translateX(0)');
-	}
-	if (newContentView.attr('data-back-content-view-id')) {
-		backContentViewID = newContentView.attr('data-back-content-view-id');
-		$('#back').addClass('shown');
-	} else {
-		backContentViewID = null;
-		$('#back').removeClass('shown');
-	}
-	$('#title').html(htmlEncode($('#'+newContentViewID).attr('data-title')));
-	if (direction === null) {
-		if (newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
-		newContentView.css('-webkit-transform', 'translateX(0)');
-		visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
-	} else {
-		if (direction === 'right') {
-			if (newContentViewScrollWapper.length) newContentViewScrollWapper[0].scrollTop = 0;
-			newContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)').addClass('animataes-on-transform').css('-webkit-transform', 'translateX(0)');
-			setTimeout(function() {
-				visibleContentView.css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
-				newContentView.removeClass('animataes-on-transform');
-			}, 300);
-		} else {
-			newContentView.css('-webkit-transform', 'translateX(0)');
-			visibleContentView.addClass('animataes-on-transform').css('-webkit-transform', 'translateX('+contentViewWidth+'px)');
-			setTimeout(function() {
-				visibleContentView.removeClass('animataes-on-transform');
-			}, 300);
-		}
-	}
-	currentContentViewID = newContentViewID;
-}
-
-function changeContentView(tappedElement) {
-	window.plugin.statusbarOverlay.isHidden(function(isHidden) {
-		if (!isHidden) {
-			window.plugin.statusbarOverlay.hide();
-		}
-	});
-	$('input,select').blur();
-	var targetContentViewID = $(tappedElement).attr('data-target-content-view-id');
-	if (targetContentViewID === currentContentViewID) {
-		return;
-	}
-	if ($(tappedElement).attr('data-warband-id')) {
-		selectedWarbandID = $(tappedElement).attr('data-warband-id');
-	}
-	if ($(tappedElement).attr('data-warband-character-id')) {
-		selectedWarbandCharacterID = $(tappedElement).attr('data-warband-character-id');
-	}
-	$('#add').removeClass('shown');
-	switch (targetContentViewID) {
+		break;
 		case 'warbands':
-			$('#add').attr('data-target-content-view-id', 'warband').addClass('shown');
+			setupSwipeableListing($('.content-items-list'));
+			$('.content-items-list').find('.action-block').tap(function() {
+				if ($(this).hasClass('share')) {
+					var warbandId = $(this).attr('data-warband-id');
+					var params = {
+						'subject': 'Bushido Warband: '+warbands[warbandId].name,
+						'onSuccess': function() {
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
+						},
+						'onError': function() {
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
+						}
+					};
+					var emailTemplateData = {
+						faction_name: staticData.factions[warbands[warbandId].faction].name,
+						warband_name: warbands[warbandId].name,
+						characters: [],
+						events: [],
+						terrain: [],
+						total_rice: 0
+					};
+					Object.keys(warbands[warbandId].characters).forEach(function(warbandCharacterId) {
+						var warbandCharacter = {
+							'name': warbands[warbandId].getCharacterName(warbandCharacterId),
+							'base_rice': staticData.factions[warbands[warbandId].faction].characters[warbands[warbandId].characters[warbandCharacterId].factionCharacterID].rice,
+							'rice': 0,
+							'enhancements': []
+						};
+						warbandCharacter.rice += warbandCharacter.base_rice;
+						for (var warbandCharacterEnhancementId in warbands[warbandId].characters[warbandCharacterId].enhancements) {
+							warbandCharacter.enhancements.push(warbands[warbandId].characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId]);
+							warbandCharacter.rice += warbands[warbandId].characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId].rice
+						}
+						warbandCharacter.has_enhancements = (warbandCharacter.enhancements.length > 0);
+						emailTemplateData.characters.push(staticData.factions[warbands[warbandId].faction].characters[warbands[warbandId].characters[warbandCharacterId].factionCharacterID]);
+						emailTemplateData.total_rice += warbandCharacter.rice;
+					});
+					for (var warbandEventId in warbands[warbandId].events) {
+						emailTemplateData.events.push(warbands[warbandId].events[warbandEventId]);
+						emailTemplateData.total_rice += warbands[warbandId].events[warbandEventId].rice;
+					}
+					for (var warbandTerrainItemId in warbands[warbandId].terrain) {
+						emailTemplateData.terrain.push(warbands[warbandId].terrain[warbandTerrainItemId]);
+						emailTemplateData.total_rice += warbands[warbandId].terrain[warbandTerrainItemId].rice;
+					}
+					emailTemplateData.has_events = (emailTemplateData.events.length > 0);
+					emailTemplateData.has_terrain = (emailTemplateData.terrain.length > 0);
+					loadSettings(function() {
+						if (settingIsEnabled('lexicographicalsort')) {
+							emailTemplateData.characters.sort(sortObjectArrayByNameProperty);
+							emailTemplateData.characters.forEach(function(character) {
+								character.enhancements.sort(sortObjectArrayByObjectNameProperty);
+							});
+							emailTemplateData.events.sort(sortObjectArrayByNameProperty);
+							emailTemplateData.terrain.sort(sortObjectArrayByNameProperty);
+						}
+						if (settingIsEnabled('htmlemailsetting')) {
+							params.body = Mustache.render(staticData.templates.warband_email_html, emailTemplateData);
+							params.isHtml = true;
+						} else {
+							params.body = Mustache.render(staticData.templates.warband_email_txt, emailTemplateData);
+						}
+						cordova.require('emailcomposer.EmailComposer').show(params);
+					});					
+				} else if ($(this).hasClass('edit')) {
+					selectedWarbandId = $(this).attr('data-warband-id');
+					renderView('warband', null);
+				} else if ($(this).hasClass('delete')) {
+					var warbandId = $(this).attr('data-warband-id');
+					navigator.notification.confirm(
+						'Are you sure you want to delete the warband '+warbands[warbandId].name+'?',
+						function(button) {
+							if (button !== 2) {
+								return;
+							}
+							warbands[warbandId].delete(function() {
+								delete warbands[warbandId];
+								renderView('warbands', null);
+							});
+						},
+						'Delete warband',
+						['Cancel','Delete']
+					);
+				}
+			});
+			$('.content-items-list').find('.listing-block').tap(function() {
+				selectedWarbandId = $(this).attr('data-warband-id');
+				renderView('warband_characters', null);
+			});
 		break;
 		case 'warband':
-			if ($(tappedElement).attr('id') === 'add') {
-				$('#'+targetContentViewID).attr('data-title', 'Add a Warband');
-				$('#savewarband').attr('data-mode', 'add');
-				$('#warbandfaction').val(Object.keys(staticData.factions)[0]);
-				$('#warbandname').val('');
-				$('#warbandrice').val('');
-				$('#warbandfaction').removeAttr('disabled');
-				break;
-			}
-			$('#'+targetContentViewID).attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
-			$('#savewarband').attr('data-mode', 'edit');
-			$('#warbandfaction').val(warbands[selectedWarbandID].faction);
-			$('#warbandname').val(htmlEncode(warbands[selectedWarbandID].name));
-			$('#warbandrice').val(warbands[selectedWarbandID].riceLimit);
-			$('#warbandfaction').attr('disabled', 'disabled');
-		break;
-		case 'warbandcharacters':
-			drawWarbandCharacters();
-			$('#add').attr('data-target-content-view-id', 'warbandcharacter').addClass('shown');
-		break;
-		case 'warbandcharacter':
-			if ($(tappedElement).attr('id') === 'add') {
-				$('#warbandcharacter').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
-				var html = '<div class="horizontally-padded-wrapper">';
-					html += '<span class="subtitle">Add a character to Warband</span>';
-					html += '<form onsubmit="return false;"><input id="warbandcharactersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>';
-				html += '</div>';
-				html += '<ul class="content-items-list"></ul>';
-				$('#warbandcharacter').find('.content-view-scroll-wrapper').empty().append(html);
-				populateWarbandCharacterSuggestions('');
-				$('#warbandcharactersearch').keyup(function() {
-					populateWarbandCharacterSuggestions($(this).val());
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
+			$('#savewarband').tap(function() {
+				var warbandFactionId = $('#warbandfaction').val();
+				var warbandName = $('#warbandname').val().trim();
+				var warbandRiceLimit = $('#warbandrice').val().trim();
+				if (selectedWarbandId === null
+					&& Object.keys(staticData.factions).indexOf(warbandFactionId) < 0) {
+					navigator.notification.alert(
+						'Please select a faction',
+						function() {
+							$('#warbandfaction').focus();
+						}
+					);
+					return;
+				}
+				if (!warbandName.length) {
+					navigator.notification.alert(
+						'Please enter a warband name',
+						function() {
+							$('#warbandname').focus();
+						}
+					);
+					return;
+				}
+				if (warbandName.length > 28) {
+					navigator.notification.alert(
+						'Warband names are limited to 28 characters',
+						function() {
+							$('#warbandname').focus();
+						}
+					);
+					return;
+				}
+				if (!warbandRiceLimit.match(/^[0-9]{1,2}$/)) {
+					navigator.notification.alert(
+						'Please enter a rice limit between 0 and 99',
+						function() {
+							$('#warbandrice').focus();
+						}
+					);
+					return;
+				}
+				$('input,select').blur();
+				warbandRiceLimit = parseInt(warbandRiceLimit, 10);
+				if (selectedWarbandId === null) {
+					var newWarbandId = generateUuid();
+					warbands[newWarbandId] = new Warband();
+					warbands[newWarbandId].id = newWarbandId;
+					warbands[newWarbandId].faction = warbandFactionId;
+					warbands[newWarbandId].name = warbandName;
+					warbands[newWarbandId].riceLimit = warbandRiceLimit;
+				} else {
+					warbands[selectedWarbandId].name = warbandName;
+					warbands[selectedWarbandId].riceLimit = warbandRiceLimit;
+				}
+				warbands[((selectedWarbandId === null) ? newWarbandId:selectedWarbandId)].save(function() {
+					renderView('warbands', null);
 				});
-				break;
-			}
-			drawEditWarbandCharacter();
+			});
 		break;
-		case 'warbandcharacterenhancement':
-			$('#warbandcharacterenhancement').attr('data-title', htmlEncode(warbands[selectedWarbandID].getCharacterName(selectedWarbandCharacterID)+': enhancements'));
-			$('#warbandcharacterenhancementname').val('');
-			$('#warbandcharacterenhancementrice').val('');
-			if (!warbandsCharacterEnhancements.length) {
-				$('#warbandcharacterenhancement').find('.list-preamble').removeClass('shown');
-			} else {
-				$('#warbandcharacterenhancement').find('.list-preamble').addClass('shown');
-			}
-			populateWarbandCharacterEnhancementSuggestions('');
+		case 'warband_characters':
+			
 		break;
-		case 'warbandevents':
-			drawWarbandEvents();
-			$('#add').attr('data-target-content-view-id', 'warbandevent').addClass('shown');
+		case 'warband_add_character':
+			populateCharacterSuggestions('');
+			$('#search').keyup(function() {
+				populateCharacterSuggestions($(this).val());
+			});
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
 		break;
-		case 'warbandevent':
-			$('#warbandevent').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
-			$('#warbandeventname').val('');
-			$('#warbandeventrice').val('');
-			if (!warbandsEvents.length) {
-				$('#warbandevent').find('.list-preamble').removeClass('shown');
-			} else {
-				$('#warbandevent').find('.list-preamble').addClass('shown');
-			}
-			populateWarbandEventSuggestions('');
+		case 'warband_character_enhancements':
+			
 		break;
-		case 'warbandterrain':
-			drawWarbandTerrain();
-			$('#add').attr('data-target-content-view-id', 'warbandterrainitem').addClass('shown');
+		case 'warband_add_character_enhancement':
+			populateCharacterEnhancementSuggestions('');
+			$('#search').keyup(function() {
+				populateCharacterEnhancementSuggestions($(this).val());
+			});
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
 		break;
-		case 'warbandterrainitem':
-			$('#warbandterrainitem').attr('data-title', htmlEncode(warbands[selectedWarbandID].name));
-			$('#warbandterrainitemname').val('');
-			$('#warbandterrainitemrice').val('');
-			if (!warbandsTerrain.length) {
-				$('#warbandterrainitem').find('.list-preamble').removeClass('shown');
-			} else {
-				$('#warbandterrainitem').find('.list-preamble').addClass('shown');
-			}
-			populateWarbandTerrainItemSuggestions('');
+		case 'warband_events':
+			
 		break;
-		default:
+		case 'warband_add_event':
+			populateEventSuggestions('');
+			$('#search').keyup(function() {
+				populateEventSuggestions($(this).val());
+			});
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
 		break;
-	}
-	$('#'+currentContentViewID).find('.swipe-wrapper.offset').removeClass('offset');
-	if ($('#'+targetContentViewID).hasClass('faction-cards')) {
-		$('#'+targetContentViewID).attr('data-back-content-view-id', ((currentContentViewID === 'warbandcharacters') ? 'warbandcharacters':'faction-'+$('#'+targetContentViewID).attr('data-faction')));
-	}
-	swapContentView(currentContentViewID, targetContentViewID, (($(tappedElement).hasClass('appear-from-right')) ? 'right':null));
-	if ($(tappedElement).hasClass('tab-item')) {
-		$('nav a').removeClass('active');
-		$(tappedElement).addClass('active');
+		case 'warband_terrain':
+			
+		break;
+		case 'warband_add_terrain':
+			populateTerrainSuggestions('');
+			$('#search').keyup(function() {
+				populateTerrainSuggestions($(this).val());
+			});
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
+		break;
+		case 'scenarios':
+			$('.content-items-list').find('a').tap(function() {
+				selectedScenarioId = $(this).attr('data-scenario-id');
+				renderView('scenario', selectedScenarioId);
+			});
+		break;
+		case 'scenario':
+			$('.content-view').find('.btn.backstory').tap(function() {
+				renderView('scenario_backstory', selectedScenarioId);
+			});
+			$('.content-view').find('.btn.plan').tap(function() {
+				renderView('scenario_plan', selectedScenarioId);
+			});
+		break;
+		case 'guides':
+			$('.content-items-list').find('a').tap(function() {
+				cordova.plugins.disusered.open(decodeURIComponent(cordova.file.applicationDirectory)+'www/'+$(this).attr('data-url'));
+			});
+		break;
+		case 'misc':
+			$('.content-items-list').find('a').tap(function() {
+				renderView($(this).attr('data-template-id'), null);
+			});
+		break;
+		case 'settings':
+			loadSettings(function() {
+				$('.content-items-list').find('.toggle').each(function() {
+					if (settingIsEnabled($(this).attr('data-setting-id'), $(this).attr('data-default'))) {
+						$(this).addClass('active');
+					}
+				});
+				$('.content-items-list').find('.toggle').on('toggle', function(toggleEvent) {
+					settings[$(this).attr('data-setting-id')].save(toggleEvent.detail.isActive, null);
+				});
+			});			
+		break;
+		case 'faqs':
+			$('.content-items-list').find('a').tap(function() {
+				renderView('faq', $(this).attr('data-faq-id'));
+			});
+		break;
+		case 'faq':
+			$('.content-view').find('a.external').tap(function() {
+				window.open(encodeURI($(this).attr('data-url')), '_system');
+			});
+			$('.content-view').find('a.email').tap(function() {
+				cordova.require('emailcomposer.EmailComposer').show({
+					to: $(this).attr('data-email'),
+					subject: $(this).attr('data-subject')
+				});
+			});
+			$('.content-view').find('a.twitter').tap(function() {
+				var username = $(this).attr('data-username');
+				appAvailability.check(
+					'tweetbot://',
+					function() { // success
+						window.open(encodeURI('tweetbot:///user_profile/'+username), '_system');
+					},
+					function() { // fail
+						appAvailability.check(
+							'twitterrific://',
+							function() { // success
+								window.open(encodeURI('twitterrific:///profile?screen_name='+username), '_system');
+							},
+							function() { // fail
+								appAvailability.check(
+									'twitter://',
+									function() { // success
+										window.open(encodeURI('twitter://user?screen_name='+username), '_system');
+									},
+									function() { // fail
+										window.open(encodeURI('https://twitter.com/'+username), '_system');
+									}
+								);
+							}
+						);
+					}
+				);
+			});
+		break;
 	}
 }
 
@@ -584,397 +680,93 @@ document.addEventListener('deviceready', function() {
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
 	
-	Object.keys(staticData.factions).forEach(function(factionID) {
-		$('#warbandfaction').append('<option value="'+factionID+'">'+htmlEncode(staticData.factions[factionID].name)+'</option>');
-		var factionContentItemsListHTML = '<li>';
-			factionContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-'+factionID+'">';
-				factionContentItemsListHTML += '<span class="cell image"><img src="images/factions/'+staticData.factions[factionID].image+'"></span>';
-				factionContentItemsListHTML += '<span class="cell name">'+htmlEncode(staticData.factions[factionID].name)+'</span>';
-				factionContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span>';
-			factionContentItemsListHTML += '</a>';
-		factionContentItemsListHTML += '</li>';
-		$('#factions').find('.content-items-list').append(factionContentItemsListHTML);
-		var contentHTMLAdditions = '';
-		contentHTMLAdditions += '<div class="content-view" id="faction-'+factionID+'" data-title="'+htmlEncode(staticData.factions[factionID].name)+'" data-back-content-view-id="factions">';
-			contentHTMLAdditions += '<div class="content-view-scroll-wrapper">';
-				contentHTMLAdditions += '<ul class="content-items-list">';
-				Object.keys(staticData.factions[factionID].characters).forEach(function(factionCharacterID) {
-					contentHTMLAdditions += '<li>';
-						contentHTMLAdditions += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-'+factionCharacterID+'-cards">';
-							contentHTMLAdditions += '<span class="cell name">'+htmlEncode(staticData.factions[factionID].characters[factionCharacterID].name)+'</span>';
-							contentHTMLAdditions += '<span class="cell rice"><span class="badge">'+((staticData.factions[factionID].characters[factionCharacterID].rice === 0) ? '-':staticData.factions[factionID].characters[factionCharacterID].rice)+'</span></span>';
-							contentHTMLAdditions += '<span class="cell icon"><span class="icon icon-right"></span></span>';
-						contentHTMLAdditions += '</a>';
-					contentHTMLAdditions += '</li>';
-				});
-				contentHTMLAdditions += '</ul>';
-			contentHTMLAdditions += '</div>';
-		contentHTMLAdditions += '</div>';
-		Object.keys(staticData.factions[factionID].characters).forEach(function(factionCharacterID) {
-			contentHTMLAdditions += '<div class="faction-cards slider content-view" id="faction-character-'+factionCharacterID+'-cards" data-title="'+htmlEncode(staticData.factions[factionID].characters[factionCharacterID].name)+'" data-faction="'+factionID+'">';
-				contentHTMLAdditions += '<div class="slide-group">';
-					staticData.factions[factionID].characters[factionCharacterID].cards.forEach(function(factionCharacterCard) {
-						contentHTMLAdditions += '<div class="slide" style="background-image: url(\'images/cards/'+factionCharacterCard+'\');"></div>';
-					});
-				contentHTMLAdditions += '</div>';
-			contentHTMLAdditions += '</div>';
-		});
-		$('.content').append(contentHTMLAdditions);
-	});
-	
-	Object.keys(staticData.scenarios).forEach(function(scenarioID) {
-		var scenariosContentItemsListHTML = '<li>';
-			scenariosContentItemsListHTML += '<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioID+'">';
-				scenariosContentItemsListHTML += '<span class="cell name">'+htmlEncode(staticData.scenarios[scenarioID].name)+'</span>';
-				scenariosContentItemsListHTML += '<span class="cell icon"><span class="icon icon-right"></span></span>';
-			scenariosContentItemsListHTML += '</a>';
-		scenariosContentItemsListHTML += '</li>';
-		$('#scenarios').find('.content-items-list').append(scenariosContentItemsListHTML);
-		var html = '';
-		html += '<div class="content-view content-padded scenario" id="scenario'+scenarioID+'" data-title="'+htmlEncode(staticData.scenarios[scenarioID].name)+'" data-back-content-view-id="scenarios">';
-			html += '<div class="content-view-scroll-wrapper">';
-				html += '<a class="btn change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioID+'backstory"><span class="icon icon-right"></span> View backstory</a>';
-				html += '<h5>Type</h5>';
-				html += '<p>'+htmlEncode(staticData.scenarios[scenarioID].type)+'</p>';
-				html += '<h5>Deployment</h5>';
-				html += '<a class="btn scenario-plan change-content-view appear-from-right" data-target-content-view-id="scenario'+scenarioID+'plan"><span class="icon icon-search"></span> View plan</a>';
-				staticData.scenarios[scenarioID].deployment.forEach(function(scenarioDeploymentItem) {
-					html += '<p>'+htmlEncode(scenarioDeploymentItem)+'</p>';
-				});
-				html += '<h5>Game Length</h5>';
-				html += '<p>'+htmlEncode(staticData.scenarios[scenarioID].game_length)+'</p>';
-				if (staticData.scenarios[scenarioID].hasOwnProperty('objective_interaction')) {
-					html += '<h5>Scenario Objective Interaction</h5>';
-					staticData.scenarios[scenarioID].objective_interaction.forEach(function(scenarioObjectiveInteraction) {
-						html += '<p>'+htmlEncode(scenarioObjectiveInteraction)+'</p>';
-					});
-				}
-				html += '<h5>Victory Conditions</h5>';
-				html += '<table class="victory-conditions">';
-				staticData.scenarios[scenarioID].victory_conditions.points.forEach(function(scenarioVictoryConditionsPoint) {
-					html += '<tr>';
-						html += '<td class="points"><p>1 VP</p></td>';
-						html += '<td class="condition"><p>'+htmlEncode(scenarioVictoryConditionsPoint)+'</p></td>';
-					html += '</tr>';
-				});
-				html += '</table>';
-				if (staticData.scenarios[scenarioID].victory_conditions.hasOwnProperty('additional_rules')) {
-					html += '<p>'+htmlEncode(staticData.scenarios[scenarioID].victory_conditions.additional_rules)+'</p>';
-				}
-			html += '</div>';
-		html += '</div>';
-		html += '<div class="content-view content-padded scenario-backstory" id="scenario'+scenarioID+'backstory" data-title="'+htmlEncode(staticData.scenarios[scenarioID].name)+': backstory" data-back-content-view-id="scenario'+scenarioID+'">';
-			html += '<div class="content-view-scroll-wrapper">';
-			staticData.scenarios[scenarioID].story.forEach(function(scenarioStoryParagraph) {
-				html += '<p>'+htmlEncode(scenarioStoryParagraph)+'</p>';
-			});
-			html += '</div>';
-		html += '</div>';
-		html += '<div class="content-view scenario-image-view content-padded" id="scenario'+scenarioID+'plan" data-title="'+htmlEncode(staticData.scenarios[scenarioID].name)+': plan" data-back-content-view-id="scenario'+scenarioID+'">';
-			html += '<div class="content-view-scroll-wrapper">';
-				html += '<img class="scenario-image" src="images/scenarios/'+staticData.scenarios[scenarioID].image+'">';
-			html += '</div>';
-		html += '</div>';
-		$('.content').append(html);
+	Object.keys(staticData.templates).forEach(function(templateId) {
+		Mustache.parse(staticData.templates[templateId]);
 	});
 	
 	contentViewWidth = $('.content').width();
-	$('.content-view .content-view-scroll-wrapper').css({width: contentViewWidth+'px', height: $('.content').height()+'px'});
-	$('.warband-tabs-rice-wrapper .segmented-control').css('width', (contentViewWidth - 70)+'px'); // 5px left margin, 60px badge, 5px right margin
-	
-	
-	$('#title').html(htmlEncode($('.content-view.default').attr('data-title')));
-	$('.content-view.default').css('-webkit-transform', 'translateX(0)');
-	currentContentViewID = $('.content-view.default').attr('id');
-	$('nav a').each(function() {
-		if ($(this).attr('data-target-content-view-id') === currentContentViewID) {
-			$(this).addClass('active');
-		}
-	});
-	
-	$('#title').tap(function() {
-		if ($('#'+currentContentViewID).find('.content-view-scroll-wrapper').length) {
-			$('#'+currentContentViewID).find('.content-view-scroll-wrapper')[0].scrollTop = 0;
-		}
-	});
-	
-	$('.change-content-view').tap(function() {
-		changeContentView(this);
-	});
-	
-	loadSettings(function() {
-		$('#settings').find('.toggle').each(function() {
-			if (settingIsEnabled($(this).attr('id'))) {
-				$(this).addClass('active');
-			}
-		});
-	});
-	
-	loadWarbands(function() {
-		drawWarbands();
-	});
-	
-	loadWarbandsCharacterEnhancements();
-	
-	loadWarbandsEvents();
-	
-	loadWarbandsTerrain();
 	
 	$('#back').tap(function() {
 		$('input,select').blur();
-		$('#add').removeClass('shown');
-		switch (backContentViewID) {
+		switch(currentTemplateId) {
+			case 'faction_characters':
+				renderView('factions', null);
+			break;
+			case 'character_cards':
+				if ($('nav').find('a.active').attr('data-template-id') === 'warbands') {
+					renderView('warband_characters', null);
+				} else {
+					renderView('faction_characters', selectedFactionId);
+				}
+			break;
+			case 'warband':
+			case 'warband_characters':
+			case 'warband_events':
+			case 'warband_terrain':
+				renderView('warbands', null);
+			break;
+			case 'warband_add_character':
+			case 'warband_character_enhancements':
+				renderView('warband_characters', selectedWarbandId);
+			break;
+			case 'warband_add_character_enhancement':
+				renderView('warband_character_enhancements', selectedWarbandId);
+			break;
+			case 'warband_add_event':
+				renderView('warband_events', selectedWarbandId);
+			break;
+			case 'warband_add_terrain':
+				renderView('warband_terrain', selectedWarbandId);
+			break;
+			case 'scenario':
+				renderView('scenarios', null);
+			break;
+			case 'scenario_backstory':
+			case 'scenario_plan':
+				renderView('scenario', selectedScenarioId);
+			break;
+			case 'settings':
+			case 'faqs':
+				renderView('misc', null);
+			break;
+			case 'faq':
+				renderView('faqs', null);
+			break;
+		}
+	});
+	
+	$('#add').tap(function() {
+		switch(currentTemplateId) {
 			case 'warbands':
-				$('#add').attr('data-target-content-view-id', 'warband').addClass('shown');
+				selectedWarbandId = null;
+				renderView('warband', null);
 			break;
-			case 'warbandcharacters':
-				$('#add').attr('data-target-content-view-id', 'warbandcharacter').addClass('shown');
+			case 'warband_characters':
+				selectedWarbandCharacterId = null;
+				renderView('warband_add_character', null);
 			break;
-			case 'warbandcharacter':
-				if (currentContentViewID === 'warbandcharacterenhancement') {
-					$('#add').attr('data-target-content-view-id', 'warbandcharacterenhancement').addClass('shown');
-				}
+			case 'warband_character_enhancements':
+				renderView('warband_add_character_enhancement', null);
 			break;
-			case 'warbandevents':
-				$('#add').attr('data-target-content-view-id', 'warbandevent').addClass('shown');
+			case 'warband_events':
+				renderView('warband_add_event', null);
 			break;
-			case 'warbandterrain':
-				$('#add').attr('data-target-content-view-id', 'warbandterrainitem').addClass('shown');
-			break;
-			default:
+			case 'warband_terrain':
+				renderView('warband_add_terrain', null);
 			break;
 		}
-		$('#'+currentContentViewID).find('.swipe-wrapper.offset').removeClass('offset');
-		swapContentView(currentContentViewID, backContentViewID, 'left');
 	});
 	
-	$('#savewarband').tap(function() {
-		var warbandFaction = $('#warbandfaction').val();
-		var warbandName = $('#warbandname').val().trim();
-		var warbandRice = $('#warbandrice').val().trim();
-		if ($(this).attr('data-mode') === 'add' && Object.keys(staticData.factions).indexOf(warbandFaction) < 0) {
-			navigator.notification.alert(
-				'Please select a faction',
-				function() {
-					$('#warbandfaction').focus();
-				}
-			);
-			return;
-		}
-		if (!warbandName.length) {
-			navigator.notification.alert(
-				'Please enter a Warband name',
-				function() {
-					$('#warbandname').focus();
-				}
-			);
-			return;
-		}
-		if (warbandName.length > 28) {
-			navigator.notification.alert(
-				'Warband names are limited to 28 characters',
-				function() {
-					$('#warbandname').focus();
-				}
-			);
-			return;
-		}
-		if (!warbandRice.match(/^[0-9]{1,2}$/)) {
-			navigator.notification.alert(
-				'Please enter a rice limit between 0 and 99',
-				function() {
-					$('#warbandrice').focus();
-				}
-			);
-			return;
-		}
-		$('input,select').blur();
-		warbandRice = parseInt(warbandRice, 10);
-		if ($(this).attr('data-mode') === 'edit') {
-			warbands[selectedWarbandID].name = warbandName;
-			warbands[selectedWarbandID].riceLimit = warbandRice;
-		} else {
-			var newWarbandID = generateUUID();
-			warbands[newWarbandID] = new Warband();
-			warbands[newWarbandID].id = newWarbandID;
-			warbands[newWarbandID].faction = warbandFaction;
-			warbands[newWarbandID].name = warbandName;
-			warbands[newWarbandID].riceLimit = warbandRice;
-			selectedWarbandID = newWarbandID;
-		}
-		warbands[selectedWarbandID].save(function() {
-			drawWarbands();
-			drawWarbandCharacters();
-			$('#add').attr('data-target-content-view-id', 'warbandcharacter').addClass('shown');
-			swapContentView('warband', 'warbandcharacters', null);
-		});
+	$('nav').find('a').tap(function() {
+		$('nav').find('a').removeClass('active');
+		renderView($(this).attr('data-template-id'), null);
+		$(this).addClass('active');
 	});
 	
-	$('#warbandcharacterenhancementname').keyup(function() {
-		populateWarbandCharacterEnhancementSuggestions($(this).val());
+	$.getJSON('static-data.json', function(json) {
+		staticData = JSON.parse(json);
+		renderView('factions', null);
+		$('nav').find('[data-template-id=factions]').addClass('active');
 	});
 	
-	$('#savewarbandcharacterenhancement').tap(function() {
-		var warbandsCharacterEnhancementName = $('#warbandcharacterenhancementname').val().trim();
-		var warbandsCharacterEnhancementRice = $('#warbandcharacterenhancementrice').val().trim();
-		if (!warbandsCharacterEnhancementName.length) {
-			navigator.notification.alert(
-				'Please enter an enhancement name',
-				function() {
-					$('#warbandcharacterenhancementname').focus();
-				}
-			);
-			return;
-		}
-		if (!warbandsCharacterEnhancementRice.match(/^[0-9]{1,2}$/)) {
-			navigator.notification.alert(
-				'Please enter a rice cost',
-				function() {
-					$('#warbandcharacterenhancementrice').focus();
-				}
-			);
-			return;
-		}
-		$('input').blur();
-		warbandsCharacterEnhancementRice = parseInt(warbandsCharacterEnhancementRice, 10);
-		saveWarbandsCharacterEnhancementIfNew(warbandsCharacterEnhancementName, warbandsCharacterEnhancementRice, function() {
-			warbands[selectedWarbandID].addCharacterEnhancement(selectedWarbandCharacterID, warbandsCharacterEnhancementName, warbandsCharacterEnhancementRice);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandCharacters();
-				drawEditWarbandCharacter();
-				swapContentView('warbandcharacterenhancement', 'warbandcharacter', null);
-			});
-		});
-	});
-	
-	$('#warbandeventname').keyup(function() {
-		populateWarbandEventSuggestions($(this).val());
-	});
-	
-	$('#savewarbandevent').tap(function() {
-		var warbandEventName = $('#warbandeventname').val().trim();
-		var warbandEventRice = $('#warbandeventrice').val().trim();
-		if (!warbandEventName.length) {
-			navigator.notification.alert(
-				'Please enter an event name',
-				function() {
-					$('#warbandeventname').focus();
-				}
-			);
-			return;
-		}
-		if (!warbandEventRice.match(/^[0-9]{1,2}$/)) {
-			navigator.notification.alert(
-				'Please enter a rice cost',
-				function() {
-					$('#warbandeventrice').focus();
-				}
-			);
-			return;
-		}
-		$('input').blur();
-		warbandEventRice = parseInt(warbandEventRice, 10);
-		saveWarbandsEventIfNew(warbandEventName, warbandEventRice, function() {
-			warbands[selectedWarbandID].addEvent(warbandEventName, warbandEventRice);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandEvents();
-				swapContentView('warbandevent', 'warbandevents', null);
-			});
-		});
-	});
-	
-	$('#warbandterrainitemname').keyup(function() {
-		populateWarbandTerrainItemSuggestions($(this).val());
-	});
-	
-	$('#savewarbandterrainitem').tap(function() {
-		var warbandTerrainItemName = $('#warbandterrainitemname').val().trim();
-		var warbandTerrainItemRice = $('#warbandterrainitemrice').val().trim();
-		if (!warbandTerrainItemName.length) {
-			navigator.notification.alert(
-				'Please enter a terrain item name',
-				function() {
-					$('#warbandterrainitemname').focus();
-				}
-			);
-			return;
-		}
-		if (!warbandTerrainItemRice.match(/^[0-9]{1,2}$/)) {
-			navigator.notification.alert(
-				'Please enter a rice cost',
-				function() {
-					$('#warbandterrainitemrice').focus();
-				}
-			);
-			return;
-		}
-		$('input').blur();
-		warbandTerrainItemRice = parseInt(warbandTerrainItemRice, 10);
-		saveWarbandsTerrainItemIfNew(warbandTerrainItemName, warbandTerrainItemRice, function() {
-			warbands[selectedWarbandID].addTerrainItem(warbandTerrainItemName, warbandTerrainItemRice);
-			warbands[selectedWarbandID].save(function() {
-				drawWarbands();
-				drawWarbandTerrain();
-				swapContentView('warbandterrainitem', 'warbandterrain', null);
-			});
-		});
-	});
-	
-	$('#randomscenario').tap(function() {
-		swapContentView('scenarios', 'scenario'+randomIntFromInterval(1, Object.keys(staticData.scenarios).length), 'right');
-	});
-	
-	$('#settings').find('.toggle').on('toggle', function(toggleEvent) {
-		settings[$(this).attr('id')].save(toggleEvent.detail.isActive, function(record) {
-			if (record.key === 'lexicographicalsort') {
-				drawWarbands();
-			}
-		});
-	});
-	
-	$('a.pdf').tap(function() {
-		cordova.plugins.disusered.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
-	});
-	
-	$('a.external').tap(function() {
-		window.open(encodeURI($(this).attr('data-url')), '_system');
-	});
-	
-	$('a.email').tap(function() {
-		cordova.require('emailcomposer.EmailComposer').show({
-			to: $(this).attr('data-email'),
-			subject: $(this).attr('data-subject')
-		});
-	});
-	
-	$('a.twitter').tap(function() {
-		var username = $(this).attr('data-username');
-		appAvailability.check(
-			'tweetbot://',
-			function() { // success
-				window.open(encodeURI('tweetbot:///user_profile/'+username), '_system');
-			},
-			function() { // fail
-				appAvailability.check(
-					'twitterrific://',
-					function() { // success
-						window.open(encodeURI('twitterrific:///profile?screen_name='+username), '_system');
-					},
-					function() { // fail
-						appAvailability.check(
-							'twitter://',
-							function() { // success
-								window.open(encodeURI('twitter://user?screen_name='+username), '_system');
-							},
-							function() { // fail
-								window.open(encodeURI('https://twitter.com/'+username), '_system');
-							}
-						);
-					}
-				);
-			}
-		);
-	});
 }, false);
