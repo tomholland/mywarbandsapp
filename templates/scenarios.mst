@@ -1,6 +1,6 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<a class="btn btn-block" id="random-scenario">Random scenario</a>
+		<a class="btn btn-block random-scenario">Random scenario</a>
 		<ul class="content-items-list">
 			{{#scenarios}}
 			<li>

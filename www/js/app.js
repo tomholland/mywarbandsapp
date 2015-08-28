@@ -20,6 +20,10 @@ function generateUuid() {
 	return uuid.toUpperCase();
 }
 
+function randomIntFromInterval(min, max) {
+	return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 function sortObjectArrayByNameProperty(objA, objB) {
 	return alphanumCase(objA.name, objB.name);
 }
@@ -376,6 +380,22 @@ function populatePlayerSuggestions(search) {
 		});
 	});
 }
+
+function populateCharacterSuggestions(search) {
+	
+}
+
+function populateCharacterEnhancementSuggestions(search) {
+	
+}
+
+function populateEventSuggestions(search) {
+	
+}
+
+function populateTerrainSuggestions(search) {
+	
+}
 */
 
 function addEventsToRenderedView() {
@@ -593,6 +613,10 @@ function addEventsToRenderedView() {
 			});
 		break;
 		case 'scenarios':
+			$('.content-view').find('.random-scenario').tap(function() {
+				var scenarioIds = Object.keys(staticData.scenarios);
+				renderView('scenario', scenarioIds[(randomIntFromInterval(1, scenarioIds.length) - 1)]);
+			});
 			$('.content-items-list').find('a').tap(function() {
 				selectedScenarioId = $(this).attr('data-scenario-id');
 				renderView('scenario', selectedScenarioId);

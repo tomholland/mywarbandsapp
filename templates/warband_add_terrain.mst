@@ -1,10 +1,13 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<div class="field-topping-content-view">
+		<div class="horizontally-padded-wrapper">
 			<form>
-				<input id="search" type="search" placeholder="Search" autocorrect="off" autocapitalize="off">
+				<input id="warbandterrainitemname" type="search" placeholder="Terrain item name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+				<input id="warbandterrainitemrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+				<a class="btn btn-block btn-positive" id="savewarbandterrainitem">Add terrain item</a>
 			</form>
 		</div>
+		<span class="list-preamble">Previously used terrain items:</span>
 		<ul class="content-items-list"></ul>
 	</div>
 </div>
