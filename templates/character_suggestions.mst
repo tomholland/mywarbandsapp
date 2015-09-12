@@ -1,7 +1,6 @@
 {{#characters}}
 <li>
 	<a class="listing-block" data-character-id="{{id}}">
-		<span class="cell image"><img src="images/factions/{{faction_image}}"></span>
 		<span class="cell name">{{name}}</span>
 		<span class="cell rice"><span class="badge">{{rice}}</span></span>
 		<span class="cell icon large"><span class="icon icon-plus"></span></span>

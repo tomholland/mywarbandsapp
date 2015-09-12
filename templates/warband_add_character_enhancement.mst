@@ -2,9 +2,9 @@
 	<div class="content-view-scroll-wrapper">
 		<div class="horizontally-padded-wrapper">
 			<form>
-				<input id="warbandcharacterenhancementname" type="search" placeholder="Enhancement name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
-				<input id="warbandcharacterenhancementrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
-				<a class="btn btn-block btn-positive" id="savewarbandcharacterenhancement">Add enhancement</a>
+				<input id="field-name" type="text" placeholder="Enhancement name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+				<input id="field-rice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+				<a class="btn btn-block btn-positive" id="button-save">Add enhancement</a>
 			</form>
 		</div>
 		<span class="list-preamble">Previously used enhancements:</span>

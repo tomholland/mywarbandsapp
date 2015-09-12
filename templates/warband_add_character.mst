@@ -2,7 +2,7 @@
 	<div class="content-view-scroll-wrapper">
 		<div class="field-topping-content-view">
 			<form>
-				<input id="search" type="search" placeholder="Search" autocorrect="off" autocapitalize="off">
+				<input id="field-search" type="search" placeholder="Search" autocorrect="off" autocapitalize="off">
 			</form>
 		</div>
 		<ul class="content-items-list"></ul>

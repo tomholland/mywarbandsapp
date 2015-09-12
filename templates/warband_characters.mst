@@ -11,9 +11,10 @@
 		<ul class="content-items-list">
 			{{#characters}}
 			<li>
-				<div class="swipe-wrapper actions-1">
-					<a class="action-block action-1 delete" data-warband-character-id="{{warband_character_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
-					<a class="listing-block" data-character-id="{{id}}">
+				<div class="swipe-wrapper actions-2">
+					<a class="action-block action-1 edit" data-warband-character-id="{{warband_character_id}}"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>
+					<a class="action-block action-2 delete" data-warband-character-id="{{warband_character_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block" data-warband-character-id="{{warband_character_id}}">
 						<span class="cell name">{{name}}</span>
 						<span class="cell rice warband-character"><span class="badge">{{rice_cost_detail}}</span></span>
 						<span class="cell icon"><span class="icon icon-right"></span></span>

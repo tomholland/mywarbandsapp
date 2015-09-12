@@ -2,9 +2,9 @@
 	<div class="content-view-scroll-wrapper">
 		<div class="horizontally-padded-wrapper">
 			<form>
-				<input id="warbandeventname" type="search" placeholder="Event name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
-				<input id="warbandeventrice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
-				<a class="btn btn-block btn-positive" id="savewarbandevent">Add event</a>
+				<input id="field-name" type="text" placeholder="Event name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
+				<input id="field-rice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
+				<a class="btn btn-block btn-positive" id="button-save">Add event</a>
 			</form>
 		</div>
 		<span class="list-preamble">Previously used events:</span>
