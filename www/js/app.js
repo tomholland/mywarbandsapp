@@ -30,8 +30,8 @@ function sortObjectArrayByNameProperty(objA, objB) {
 
 function addWarbandRiceStatsToTemplateData(templateData) {
 	templateData.total_rice_cost = warbands[selectedWarbandId].rice();
-	templateData.rice_limit = parseInt(warbands[selectedWarbandId].riceLimit, 10);
-	templateData.complete =(templateData.rice_limit === templateData.total_rice_cost);
+	templateData.rice_limit = warbands[selectedWarbandId].riceLimit;
+	templateData.complete = (parseInt(templateData.rice_limit, 10) === templateData.total_rice_cost);
 }
 
 function renderView(templateId, contentId) {
@@ -341,7 +341,7 @@ function populateCharacterSuggestions(search) {
 	$('.content-items-list').empty().html(Mustache.render(staticData.templates.character_suggestions, templateData));
 	setContentScrollViewWrapperDimensions();
 	$('.content-items-list').find('.listing-block').tap(function() {
-		$('#field-search').blur();
+		$('input').blur();
 		warbands[selectedWarbandId].addCharacter($(this).attr('data-character-id'));
 		warbands[selectedWarbandId].save(function() {
 			renderView('warband_characters', null);
@@ -482,7 +482,7 @@ function addEventsToRenderedView() {
 						if (settingIsEnabled('lexicographicalsort')) {
 							emailTemplateData.characters.sort(sortObjectArrayByNameProperty);
 							emailTemplateData.characters.forEach(function(character) {
-								character.enhancements.sort(sortObjectArrayByObjectNameProperty);
+								character.enhancements.sort(sortObjectArrayByNameProperty);
 							});
 							emailTemplateData.events.sort(sortObjectArrayByNameProperty);
 							emailTemplateData.terrain.sort(sortObjectArrayByNameProperty);
@@ -708,7 +708,7 @@ function addEventsToRenderedView() {
 				var warbandEventRice = $('#field-rice').val().trim();
 				if (!warbandEventName.length) {
 					navigator.notification.alert(
-						'Please enter an event name',
+						'Please enter the event name',
 						function() {
 							$('#field-name').focus();
 						}
@@ -717,7 +717,7 @@ function addEventsToRenderedView() {
 				}
 				if (!warbandEventRice.match(/^[0-9]{1,2}$/)) {
 					navigator.notification.alert(
-						'Please enter a rice cost',
+						'Please enter the event rice cost',
 						function() {
 							$('#field-rice').focus();
 						}
