@@ -3,7 +3,9 @@ var warbandsEventsLawnchair;
 
 function loadWarbandsEvents(callback) {
 	if (warbandsEvents !== null) {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 		return;
 	}
 	warbandsEvents = [];
@@ -13,28 +15,30 @@ function loadWarbandsEvents(callback) {
 				warbandsEvents.push({name: record.name, rice: record.rice});
 			});
 		});
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }
 
 function saveWarbandsEventIfNew(warbandsEventName, warbandsEventRice, callback) {
-	var found = false;
 	warbandsEvents.forEach(function(warbandsEvent) {
-		if (warbandsEvent.name.toLowerCase() === warbandsEventName.toLowerCase() && warbandsEvent.rice === warbandsEventRice) {
-			found = true;
+		if (warbandsEvent.name.toLowerCase() === warbandsEventName.toLowerCase() &&
+			warbandsEvent.rice === warbandsEventRice) {
+			if (callback !== null) {
+				callback();
+			}
+			return;
 		}
 	});
-	if (found) {
-		callback();
-		return;
-	}
 	var warbandsEvent = {name: warbandsEventName, rice: warbandsEventRice};
 	warbandsEventsLawnchair.save(
 		warbandsEvent,
 		function(record) {
 			warbandsEvents.push(warbandsEvent);
-			warbandsEvents.sort(sortObjectArrayByObjectNameProperty);
-			callback();
+			if (callback !== null) {
+				callback();
+			}
 		}
 	);
 }

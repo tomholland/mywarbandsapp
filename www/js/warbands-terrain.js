@@ -3,7 +3,9 @@ var warbandsTerrainLawnchair;
 
 function loadWarbandsTerrain(callback) {
 	if (warbandsTerrain !== null) {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 		return;
 	}
 	warbandsTerrain = [];
@@ -13,28 +15,30 @@ function loadWarbandsTerrain(callback) {
 				warbandsTerrain.push({name: record.name, rice: record.rice});
 			});
 		});
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }
 
 function saveWarbandsTerrainItemIfNew(warbandsTerrainItemName, warbandsTerrainItemRice, callback) {
-	var found = false;
 	warbandsTerrain.forEach(function(warbandsTerrainItem) {
-		if (warbandsTerrainItem.name.toLowerCase() === warbandsTerrainItemName.toLowerCase() && warbandsTerrainItem.rice === warbandsTerrainItemRice) {
-			found = true;
+		if (warbandsTerrainItem.name.toLowerCase() === warbandsTerrainItemName.toLowerCase() &&
+			warbandsTerrainItem.rice === warbandsTerrainItemRice) {
+			if (callback !== null) {
+				callback();
+			}
+			return;
 		}
 	});
-	if (found) {
-		callback();
-		return;
-	}
 	var warbandsTerrainItem = {name: warbandsTerrainItemName, rice: warbandsTerrainItemRice};
 	warbandsTerrainLawnchair.save(
 		warbandsTerrainItem,
 		function(record) {
 			warbandsTerrain.push(warbandsTerrainItem);
-			warbandsTerrain.sort(sortObjectArrayByObjectNameProperty);
-			callback();
+			if (callback !== null) {
+				callback();
+			}
 		}
 	);
 }

@@ -3,7 +3,9 @@ var warbandsLawnchair;
 
 function loadWarbands(callback) {
 	if (warbands !== null) {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 		return;
 	}
 	warbands = {};
@@ -17,7 +19,9 @@ function loadWarbands(callback) {
 				warbands[warband.id] = warband;
 			});
 		});
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }
 
@@ -66,8 +70,10 @@ Warband.prototype.characterRiceDetail = function(warbandCharacterId) {
 	for (var warbandCharacterEnhancementId in this.characters[warbandCharacterId].enhancements) {
 		enhancementsRiceTotal += this.characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId].rice;
 	}
-	if (enhancementsRiceTotal === 0) return ((staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice);
-	return (staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice + enhancementsRiceTotal)+' ('+((staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice)+'+'+enhancementsRiceTotal+'e)';
+	if (enhancementsRiceTotal === 0) {
+		return ((staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice === 0) ? '-':staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice);
+	}
+	return (staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice + enhancementsRiceTotal)+' ('+staticData.factions[this.faction].characters[this.characters[warbandCharacterId].factionCharacterID].rice+'+'+enhancementsRiceTotal+'e)';
 }
 
 Warband.prototype.removeCharacter = function(warbandCharacterId) {
@@ -119,7 +125,9 @@ Warband.prototype.save = function(callback) {
 	warbandsLawnchair.save(
 		{key: this.id, data: dataObj},
 		function(record) {
-			callback();
+			if (callback !== null) {
+				callback();
+			}
 		}
 	);
 }
@@ -127,6 +135,8 @@ Warband.prototype.save = function(callback) {
 Warband.prototype.delete = function(callback) {
 	if (this.id === null) return;
 	warbandsLawnchair.remove(this.id, function() {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }

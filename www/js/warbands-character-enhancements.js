@@ -3,7 +3,9 @@ var warbandsCharacterEnhancementsLawnchair;
 
 function loadWarbandsCharacterEnhancements(callback) {
 	if (warbandsCharacterEnhancements !== null) {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 		return;
 	}
 	warbandsCharacterEnhancements = [];
@@ -13,28 +15,30 @@ function loadWarbandsCharacterEnhancements(callback) {
 				warbandsCharacterEnhancements.push({name: record.name, rice: record.rice});
 			});
 		});
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }
 
 function saveWarbandsCharacterEnhancementIfNew(warbandsCharacterEnhancementName, warbandsCharacterEnhancementRice, callback) {
-	var found = false;
 	warbandsCharacterEnhancements.forEach(function(warbandsCharacterEnhancement) {
-		if (warbandsCharacterEnhancement.name.toLowerCase() === warbandsCharacterEnhancementName.toLowerCase() && warbandsCharacterEnhancement.rice === warbandsCharacterEnhancementRice) {
-			found = true;
+		if (warbandsCharacterEnhancement.name.toLowerCase() === warbandsCharacterEnhancementName.toLowerCase() &&
+			warbandsCharacterEnhancement.rice === warbandsCharacterEnhancementRice) {
+			if (callback !== null) {
+				callback();
+			}
+			return;
 		}
 	});
-	if (found) {
-		callback();
-		return;
-	}
 	var warbandsCharacterEnhancement = {name: warbandsCharacterEnhancementName, rice: warbandsCharacterEnhancementRice};
 	warbandsCharacterEnhancementsLawnchair.save(
 		warbandsCharacterEnhancement,
 		function(record) {
 			warbandsCharacterEnhancements.push(warbandsCharacterEnhancement);
-			warbandsCharacterEnhancements.sort(sortObjectArrayByObjectNameProperty);
-			callback();
+			if (callback !== null) {
+				callback();
+			}
 		}
 	);
 }

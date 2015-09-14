@@ -3,7 +3,9 @@ var settingsLawnchair;
 
 function loadSettings(callback) {
 	if (settings !== null) {
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 		return;
 	}
 	settings = {};
@@ -13,7 +15,9 @@ function loadSettings(callback) {
 				settings[record.key] = new Setting(record.key, record.value);
 			});
 		});
-		callback();
+		if (callback !== null) {
+			callback();
+		}
 	});
 }
 
@@ -33,7 +37,7 @@ Setting.prototype.save = function(enabled, callback) {
 	this.enabled = enabled;
 	settingsLawnchair.save({key: this.id, value: this.enabled}, function(record) {
 		if (callback !== null) {
-			callback(record);
+			callback();
 		}
 	});
 }
