@@ -3,10 +3,10 @@
 		<div class="warband-tabs-rice-wrapper">
 			<div class="segmented-control">
 				<a class="control-item characters">Characters</a>
-				<a class="control-item selected">Events</a>
+				<a class="control-item events selected">Events</a>
 				<a class="control-item terrain">Terrain</a>
 			</div>
-			<span class="rice"><span class="badge">{{rice}}</span></span>
+			<span class="rice"><span class="badge{{^complete}} error{{/complete}}{{#complete}} match{{/complete}}">{{total_rice_cost}}/{{rice_limit}}</span></span>
 		</div>
 		<ul class="content-items-list">
 			{{#events}}

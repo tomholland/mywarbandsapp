@@ -2,7 +2,7 @@
 	<div class="content-view-scroll-wrapper">
 		<div class="warband-tabs-rice-wrapper">
 			<div class="segmented-control">
-				<a class="control-item selected">Characters</a>
+				<a class="control-item characters selected">Characters</a>
 				<a class="control-item events">Events</a>
 				<a class="control-item terrain">Terrain</a>
 			</div>

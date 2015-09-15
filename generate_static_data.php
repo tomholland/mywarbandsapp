@@ -1377,6 +1377,7 @@ $data = array(
 				'3 Scenario Objectives (Small) all Neutral'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Influence (Simple)'
 			),
@@ -1386,6 +1387,7 @@ $data = array(
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 4',
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 6'
 				),
+				'has_additional_rules' => true,
 				'additional_rules' => array(
 					'Decreasing (Scorer)'
 				)
@@ -1406,6 +1408,7 @@ $data = array(
 				'2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Prayer (5) (Simple)'
 			),
@@ -1415,6 +1418,7 @@ $data = array(
 					'To the player with most Scenario Points at the end of Turn 4',
 					'To the player with most Scenario Points at the end of Turn 6'
 				),
+				'has_additional_rules' => true,
 				'additional_rules' => array(
 					'Reset (3,5)'
 				)
@@ -1434,12 +1438,14 @@ $data = array(
 				'Corner Deployment'
 			),
 			'game_length' => 'Variable (5)',
+			'has_objective_interaction' => false,
 			'victory_conditions' => array(
 				'points' => array(
 					'To the player whose VIM is still in play at the end of the game. If both VIMs are still in play neither player scores this VP',
 					'Killing your Opponent’s VIM in a Turn yours was still in play during the End Phase',
 					'If your VIM is in the Opponent’s Deployment Zone and you reveal it is the VIM, before your Opponent has done so'
 				),
+				'has_additional_rules' => true,
 				'additional_rules' => array(
 					'Special Rules: At the end of a model’s own action it may reveal itself'
 				)
@@ -1460,12 +1466,14 @@ $data = array(
 				'Three Zones 4” Diameter (one Friendly, one Neutral, one Enemy)'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => false,
 			'victory_conditions' => array(
 				'points' => array(
 					'To the Player who has the most Scenario Points during the End Phase of turn 2',
 					'To the Player who has the most Scenario Points during the End Phase of turn 4',
 					'To the Player who has the most Scenario Points during the End Phase of turn 6'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'ryodo.svg'
 		),
@@ -1481,12 +1489,14 @@ $data = array(
 				'Baseline Deployment'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => false,
 			'victory_conditions' => array(
 				'points' => array(
 					'To the player whose VIM is still in play at the end of the game. If both VIMs are still in play neither player scores this VP',
 					'For killing your Opponent’s VIM in a Turn yours is still in play during the End Phase',
 					'If your VIM is within 4” of the Opponent’s Baseline Deployment edge during the End Phase and your Opponent’s VIM is not within 4” of your Baseline Deployment edge'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'reikan.svg'
 		),
@@ -1503,6 +1513,7 @@ $data = array(
 				'3 Scenario Objectives (Small) all Neutral'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Influence (Simple)'
 			),
@@ -1511,7 +1522,8 @@ $data = array(
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 2',
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 4',
 					'To the player with the most Friendly Scenario Objectives at the end of Turn 6'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'idols-seigyo-omaju.svg'
 		),
@@ -1527,12 +1539,14 @@ $data = array(
 				'Two Zones 8” Diameter (one Friendly and one Enemy)'
 			),
 			'game_length' => 'Variable (5)',
+			'has_objective_interaction' => false,
 			'victory_conditions' => array(
 				'points' => array(
 					'To the Player with the most Scenario Points during the End Phase of Turn 3',
 					'To the Player with the most Scenario Points during the End Phase of Turn 5',
 					'To the Player whose VIM is closest to the Opponents Deployment Baseline in the End Phase of the last Turn of the game'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'ichi-no-riten.svg'
 		),
@@ -1550,6 +1564,7 @@ $data = array(
 				'2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Influence (Simple)',
 				'Prayer (5) (Simple)'
@@ -1559,7 +1574,8 @@ $data = array(
 					'To the player with most Scenario Points during the End Phase of turn 4',
 					'To the player with most Scenario Points during the End Phase of turn 6',
 					'To the player with most Friendly Scenario Objectives during the End Phase of turn 6'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'keii-ninki-depletion.svg'
 		),
@@ -1578,6 +1594,7 @@ $data = array(
 				'One Zone 4” Diameter (Neutral)'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Prayer (6) (Simple)'
 			),
@@ -1586,7 +1603,8 @@ $data = array(
 					'To the Player who has the most Scenario Points during the End Phase of Turn 4',
 					'To the Player who has the most Scenario Points during the End Phase of Turn 5',
 					'To the Player who has the most Scenario Points during the End Phase of Turn 6'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'botoku.svg'
 		),
@@ -1603,12 +1621,14 @@ $data = array(
 				'Corner Deployment'
 			),
 			'game_length' => 'Variable (5)',
+			'has_objective_interaction' => false,
 			'victory_conditions' => array(
 				'points' => array(
 					'To the player whose VIM received the fewest total wounds during the game. Any wounds recovered or healed still count towards the total wounds received. If both VIMs received an equal number of wounds neither player scores this VP',
 					'To the first player who inflicts any wounds through a Melee attack to their Opponent’s VIM',
 					'To the player whose VIM is closest to the Opponent’s Deployment Zone at the end of the game'
-				)
+				),
+				'has_additional_rules' => false
 			),
 			'image' => 'messenger-envoy.svg'
 		),
@@ -1627,6 +1647,7 @@ $data = array(
 				'3 Scenario Objectives (Small) all Neutral'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Influence (Simple)',
 				'Worship (Complex)'
@@ -1637,6 +1658,7 @@ $data = array(
 					'To the player with the most Friendly Scenario Objectives during the End Phase of Turn 4',
 					'To the player with the most Friendly Scenario Objectives during the End Phase of Turn 6'
 				),
+				'has_additional_rules' => true,
 				'additional_rules' => array(
 					'Reset Influence (3/5)'
 				)
@@ -1656,6 +1678,7 @@ $data = array(
 				'6 Scenario Objectives (Small) 2 Friendly, 2 Neutral and 2 Enemy'
 			),
 			'game_length' => 'Fixed (6)',
+			'has_objective_interaction' => true,
 			'objective_interaction' => array(
 				'Prayer (5) (Simple)'
 			),
@@ -1665,6 +1688,7 @@ $data = array(
 					'To the player with most Scenario Points at the end of Turn 4',
 					'To the player with most Scenario Points at the end of Turn 6'
 				),
+				'has_additional_rules' => true,
 				'additional_rules' => array(
 					'Decreasing (Popular)'
 				)

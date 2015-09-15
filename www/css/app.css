@@ -56,12 +56,6 @@
 	overflow: hidden;
 	position: absolute;
 	z-index: 1;
-	-webkit-transform: translateX(1536px);
-}
-
-.content-view.animataes-on-transform {
-	z-index: 2;
-	-webkit-transition: -webkit-transform .3s ease-in-out;
 }
 
 .content-view-scroll-wrapper {
@@ -165,13 +159,13 @@
 
 /* Factions */
 
-.faction-cards.slider,
-.faction-cards.slider .slide-group {
+.slider,
+.slider .slide-group {
 	height: 100%;
 	background: #000;
 }
 
-.faction-cards.slider .slide {
+.slider .slide {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center center;
@@ -274,8 +268,12 @@ input[type=search] {
 	text-align: left;
 }
 
-.horizontally-padded-wrapper {
-	margin: 0 10px;
+.padded-wrapper {
+	margin: 10px;
+}
+
+.padded-wrapper form input:last-child {
+	margin-bottom: 0;
 }
 
 .subtitle {
@@ -284,22 +282,20 @@ input[type=search] {
 	text-align: center;
 }
 
-.field-topping-content-view {
-	margin-top: 10px;
-}
-
 .list-preamble {
 	display: block;
 	margin-bottom: 10px;
 	border-top: 1px solid #c8c7cc;
 	padding-top: 6px;
 	text-align: center;
-	visibility: hidden;
+	/*visibility: hidden;*/
 }
 
+/*
 .list-preamble.shown {
 	visibility: visible;
 }
+*/
 
 .listing-block .cell.icon.large {
 	width: 40px;
@@ -314,13 +310,9 @@ input[type=search] {
 
 /* Scenarios */
 
-#scenarios {
-	padding-top: 6px;
-}
-
-#randomscenario {
+.random-scenario {
 	width: auto;
-	margin: 0 5px 6px 5px;
+	margin: 6px 5px 6px 5px;
 	padding: 12px 0;
 	font-size: 15px;
 }
@@ -331,6 +323,10 @@ input[type=search] {
 	font-weight: bold;
 }
 
+.scenario .btn.plan {
+	margin-bottom: 10px;
+}
+
 .scenario .victory-conditions .points {
 	width: 15%;
 	vertical-align: top;
@@ -338,10 +334,6 @@ input[type=search] {
 
 .scenario .victory-conditions .condition {
 	width: 85%;
-}
-
-.btn.scenario-plan {
-	margin-bottom: 10px;
 }
 
 .scenario-image {

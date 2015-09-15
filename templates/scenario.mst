@@ -5,9 +5,9 @@
 		<p>{{type}}</p>
 		<h5>Deployment</h5>
 		<a class="btn plan"><span class="icon icon-search"></span> View plan</a>
-		{{#deployment_items}}
+		{{#deployment}}
 		<p>{{.}}</p>
-		{{/deployment_items}}
+		{{/deployment}}
 		<h5>Game Length</h5>
 		<p>{{game_length}}</p>
 		{{#has_objective_interaction}}
@@ -18,15 +18,17 @@
 		{{/has_objective_interaction}}
 		<h5>Victory Conditions</h5>
 		<table class="victory-conditions">
-			{{#victory_conditions_point}}
+			{{#victory_conditions.points}}
 			<tr>
 				<td class="points"><p>1 VP</p></td>
 				<td class="condition"><p>{{.}}</p></td>
 			</tr>
-			{{/victory_conditions_point}}
+			{{/victory_conditions.points}}
 		</table>
-		{{#additional_rules}}
+		{{#victory_conditions.has_additional_rules}}
+		{{#victory_conditions.additional_rules}}
 		<p>{{.}}</p>
-		{{/additional_rules}}
+		{{/victory_conditions.additional_rules}}
+		{{/victory_conditions.has_additional_rules}}
 	</div>
 </div>

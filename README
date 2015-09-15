@@ -8,6 +8,6 @@ cordova platform add ios
 
 cp icons_backup/* platforms/ios/MyWarbands/Resources/icons/ && cp splash_backup/* platforms/ios/MyWarbands/Resources/splash/
 
-cordova plugins add cordova-plugin-file cordova-plugin-file-transfer com.ben2.cordova.keyboard https://github.com/ohh2ahh/AppAvailability.git de.appplant.cordova.plugin.hidden-statusbar-overlay cordova-plugin-dialogs https://github.com/steve-jansen/cordova-ios-emailcomposer com.disusered.open
+cordova plugins add cordova-plugin-inappbrowser cordova-plugin-file cordova-plugin-file-transfer com.ben2.cordova.keyboard https://github.com/ohh2ahh/AppAvailability.git de.appplant.cordova.plugin.hidden-statusbar-overlay cordova-plugin-dialogs https://github.com/steve-jansen/cordova-ios-emailcomposer com.disusered.open
 
 cordova build

@@ -1,6 +1,6 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<div class="horizontally-padded-wrapper">
+		<div class="padded-wrapper">
 			<form>
 				<input id="field-name" type="text" placeholder="Terrain item name" autocorrect="off" autocapitalize="off" class="field-topping-content-view">
 				<input id="field-rice" type="number" placeholder="Rice cost" autocorrect="off" autocapitalize="off">
