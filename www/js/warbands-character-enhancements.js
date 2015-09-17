@@ -22,15 +22,18 @@ function loadWarbandsCharacterEnhancements(callback) {
 }
 
 function saveWarbandsCharacterEnhancementIfNew(warbandsCharacterEnhancementName, warbandsCharacterEnhancementRice, callback) {
+	var found = false;
 	warbandsCharacterEnhancements.forEach(function(warbandsCharacterEnhancement) {
-		if (warbandsCharacterEnhancement.name.toLowerCase() === warbandsCharacterEnhancementName.toLowerCase() &&
-			warbandsCharacterEnhancement.rice === warbandsCharacterEnhancementRice) {
-			if (callback !== null) {
-				callback();
-			}
-			return;
+		if (warbandsCharacterEnhancement.name.toLowerCase() === warbandsCharacterEnhancementName.toLowerCase() && warbandsCharacterEnhancement.rice === warbandsCharacterEnhancementRice) {
+			found = true;
 		}
 	});
+	if (found) {
+		if (callback !== null) {
+			callback();
+		}
+		return;
+	}
 	var warbandsCharacterEnhancement = {name: warbandsCharacterEnhancementName, rice: warbandsCharacterEnhancementRice};
 	warbandsCharacterEnhancementsLawnchair.save(
 		warbandsCharacterEnhancement,

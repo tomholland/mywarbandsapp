@@ -22,15 +22,18 @@ function loadWarbandsTerrain(callback) {
 }
 
 function saveWarbandsTerrainItemIfNew(warbandsTerrainItemName, warbandsTerrainItemRice, callback) {
+	var found = false;
 	warbandsTerrain.forEach(function(warbandsTerrainItem) {
-		if (warbandsTerrainItem.name.toLowerCase() === warbandsTerrainItemName.toLowerCase() &&
-			warbandsTerrainItem.rice === warbandsTerrainItemRice) {
-			if (callback !== null) {
-				callback();
-			}
-			return;
+		if (warbandsTerrainItem.name.toLowerCase() === warbandsTerrainItemName.toLowerCase() && warbandsTerrainItem.rice === warbandsTerrainItemRice) {
+			found = true;
 		}
 	});
+	if (found) {
+		if (callback !== null) {
+			callback();
+		}
+		return;
+	}
 	var warbandsTerrainItem = {name: warbandsTerrainItemName, rice: warbandsTerrainItemRice};
 	warbandsTerrainLawnchair.save(
 		warbandsTerrainItem,

@@ -22,15 +22,18 @@ function loadWarbandsEvents(callback) {
 }
 
 function saveWarbandsEventIfNew(warbandsEventName, warbandsEventRice, callback) {
+	var found = false;
 	warbandsEvents.forEach(function(warbandsEvent) {
-		if (warbandsEvent.name.toLowerCase() === warbandsEventName.toLowerCase() &&
-			warbandsEvent.rice === warbandsEventRice) {
-			if (callback !== null) {
-				callback();
-			}
-			return;
+		if (warbandsEvent.name.toLowerCase() === warbandsEventName.toLowerCase() && warbandsEvent.rice === warbandsEventRice) {
+			found = true;
 		}
 	});
+	if (found) {
+		if (callback !== null) {
+			callback();
+		}
+		return;
+	}
 	var warbandsEvent = {name: warbandsEventName, rice: warbandsEventRice};
 	warbandsEventsLawnchair.save(
 		warbandsEvent,
