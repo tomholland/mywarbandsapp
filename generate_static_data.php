@@ -7,6 +7,14 @@ $data = array(
 			'name' => 'Silvermoon Trade Syndicate',
 			'image' => 'silvermoon.jpg',
 			'characters' => array(
+				'C6832D44-0E03-64FE-8935-6C28EF18008D' => array(
+					'name' => 'Rakki',
+					'rice' => 4,
+					'cards' => array(
+						'176-1.jpg',
+						'176-2.jpg'
+					)
+				),
 				'99C73B9F-C34A-0133-5343-72026EC0B016' => array(
 					'name' => 'Hakushi',
 					'rice' => 7,
@@ -215,6 +223,14 @@ $data = array(
 			'name' => 'The Ito Clan',
 			'image' => 'Itosymbol.jpg',
 			'characters' => array(
+				'001BAB11-BDDF-BDFF-BB8B-756DD92BA2E5' => array(
+					'name' => 'Tamotsu',
+					'rice' => 6,
+					'cards' => array(
+						'180-1.jpg',
+						'180-2.jpg'
+					)
+				),
 				'55FC471C-E183-E078-5E81-76CC62D3F405' => array(
 					'name' => 'Yuui Ito',
 					'rice' => 7,
@@ -407,6 +423,14 @@ $data = array(
 			'name' => 'Temple of Ro-Kan',
 			'image' => 'symbolmonk.jpg',
 			'characters' => array(
+				'171D3936-75F6-1B86-0B5F-5E65B05446F9' => array(
+					'name' => 'Oki Shisa',
+					'rice' => 11,
+					'cards' => array(
+						'175-1.jpg',
+						'175-2.jpg'
+					)
+				),
 				'7D636F38-9129-E421-98FE-B59C5A048AC4' => array(
 					'name' => 'Kyuubi',
 					'rice' => 10,
@@ -663,6 +687,14 @@ $data = array(
 			'name' => 'Prefecture of Ryu',
 			'image' => 'symbolsamurai.jpg',
 			'characters' => array(
+				'64A64DC8-0DF8-C0FD-9530-BC255D081F2C' => array(
+					'name' => 'Goshi',
+					'rice' => 3,
+					'cards' => array(
+						'168-1.jpg',
+						'168-2.jpg'
+					)
+				),
 				'734090B7-26AC-D762-2375-15D113FD9D8C' => array(
 					'name' => 'Takashi, Ancestor',
 					'rice' => 8,
@@ -895,6 +927,22 @@ $data = array(
 			'name' => 'The Cult of Yurei',
 			'image' => 'symbolyoma.jpg',
 			'characters' => array(
+				'82458D2A-2750-FAEE-22DE-0A36501B6E40' => array(
+					'name' => 'Kami of Choking Fog',
+					'rice' => 4,
+					'cards' => array(
+						'171-1.jpg',
+						'171-2.jpg'
+					)
+				),
+				'9390A124-DF29-A303-E114-3CB7AFED75EE' => array(
+					'name' => 'Kami of Blighted Earth',
+					'rice' => 4,
+					'cards' => array(
+						'170-1.jpg',
+						'170-2.jpg'
+					)
+				),
 				'F66D964E-49F7-7E48-83EB-8D68C9535565' => array(
 					'name' => 'Yama Uba',
 					'rice' => 9,
@@ -1135,6 +1183,14 @@ $data = array(
 			'name' => 'Savage Wave',
 			'image' => 'symboloni.jpg',
 			'characters' => array(
+				'CE275E09-754A-36A7-6BAB-D387FBED6DA5' => array(
+					'name' => 'Nightwing Swarm',
+					'rice' => 6,
+					'cards' => array(
+						'173-1.jpg',
+						'173-2.jpg'
+					)
+				),
 				'221251C9-8844-7957-83FF-DEA3BFBF1995' => array(
 					'name' => 'Rinsho',
 					'rice' => 8,
@@ -1359,6 +1415,92 @@ $data = array(
 						'95-2.jpg'
 					)
 				),
+			)
+		),
+		'60C7F1D9-7DE9-08D1-919A-6F2D31595227' => array(
+			'name' => 'Tengu Descension',
+			'image' => 'tengudescension.jpg',
+			'characters' => array(
+				'AFD5A8BA-7DE0-08AF-5777-30873D816C8E' => array(
+					'name' => 'Kotenbo',
+					'rice' => 9,
+					'cards' => array(
+						'172-1.jpg',
+						'172-2.jpg'
+					)
+				),
+				'6CEA6146-FD70-776C-ECD6-9E13C84C680E' => array(
+					'name' => 'Nuniq',
+					'rice' => 6,
+					'cards' => array(
+						'174-1.jpg',
+						'174-2.jpg'
+					)
+				),
+				'4833D301-C2B1-B659-1CC0-AACC0D369A32' => array(
+					'name' => 'Taliriktug',
+					'rice' => 7,
+					'cards' => array(
+						'179-1.jpg',
+						'179-2.jpg'
+					)
+				),
+				'80FD4FB7-5BE7-7552-FA25-2A609C231E1A' => array(
+					'name' => 'Tarobo',
+					'rice' => 7,
+					'cards' => array(
+						'181-1.jpg',
+						'181-2.jpg'
+					)
+				),
+				'9C220A9E-4A9A-FF26-C70D-3939A7B501C9' => array(
+					'name' => 'Zenkibo',
+					'rice' => 6,
+					'cards' => array(
+						'182-1.jpg',
+						'182-2.jpg'
+					)
+				),
+				'6F378D2D-F8BA-BBA8-EB86-997FAC86EFE3' => array(
+					'name' => 'Ryuhobo',
+					'rice' => 7,
+					'cards' => array(
+						'177-1.jpg',
+						'177-2.jpg'
+					)
+				),
+				'EB63CDE9-B954-987A-ECE1-19D0586FB7D7' => array(
+					'name' => 'Sanjakubo',
+					'rice' => 8,
+					'cards' => array(
+						'178-1.jpg',
+						'178-2.jpg'
+					)
+				),
+				'3BC2E16B-B0C9-BAD7-1CA2-C42186D05B9C' => array(
+					'name' => 'Buzenbo',
+					'rice' => 13,
+					'cards' => array(
+						'167-1.jpg',
+						'167-2.jpg'
+					)
+				),
+				'F7C87AF0-C32A-9196-8F6C-A7751ABBA113' => array(
+					'name' => 'Zephyr Guard',
+					'rice' => 5,
+					'cards' => array(
+						'183-1.jpg',
+						'183-2.jpg'
+					)
+				),
+				'18497DB1-03ED-7C2A-E3D6-56DB8DDFD0C2' => array(
+					'name' => 'Hilltribe Warrior',
+					'rice' => 5,
+					'cards' => array(
+						'169-1.jpg',
+						'169-2.jpg'
+					)
+				)
 			)
 		)
 	),
