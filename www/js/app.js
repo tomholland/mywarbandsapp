@@ -827,7 +827,7 @@ function addEventsToRenderedView() {
 						if (button !== 2) {
 							return;
 						}
-						warbands[selectedWarbandId].removeEvent(removeTerrainItem);
+						warbands[selectedWarbandId].removeTerrainItem(removeTerrainItem);
 						renderView('warband_terrain', null);
 					},
 					'Delete warband terrain item',
