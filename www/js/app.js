@@ -665,7 +665,7 @@ function addEventsToRenderedView() {
 					);
 				}
 			});
-			$('.content-items-list').find('a').tap(function() {
+			$('.content-items-list').find('.listing-block').tap(function() {
 				selectedWarbandCharacterId = $(this).attr('data-warband-character-id');
 				selectedFactionId = warbands[selectedWarbandId].faction;
 				renderView('character_cards', warbands[selectedWarbandId].getFactionCharacterId(selectedWarbandCharacterId));
