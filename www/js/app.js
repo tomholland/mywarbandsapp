@@ -652,13 +652,15 @@ function addEventsToRenderedView() {
 				} else if ($(this).hasClass('delete')) {
 					var warbandCharacterId = $(this).attr('data-warband-character-id');
 					navigator.notification.confirm(
-						'Are you sure you want to delete '+warbands[selectedWarbandId].characters[selectedWarbandCharacterId].name+' from '+warbands[selectedWarbandId].name+'?',
+						'Are you sure you want to delete '+warbands[selectedWarbandId].getCharacterName(warbandCharacterId)+' from '+warbands[selectedWarbandId].name+'?',
 						function(button) {
 							if (button !== 2) {
 								return;
 							}
 							warbands[selectedWarbandId].removeCharacter(warbandCharacterId);
-							renderView('warband_characters', null);
+							warbands[selectedWarbandId].save(function() {
+								renderView('warband_characters', null);
+							});
 						},
 						'Delete warband character',
 						['Cancel','Delete']
