@@ -675,7 +675,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_character':
 			populateCharacterSuggestions('');
-			$('#field-search').keyup(function() {
+			$('#field-search').keydown(function() {
 				populateCharacterSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -683,15 +683,6 @@ function addEventsToRenderedView() {
 			});
 			return;
 		case 'warband_character_enhancements':
-			$('.content-view').find('.control-item').tap(function() {
-				if ($(this).hasClass('characters')) {
-					renderView('warband_characters', null);
-				} else if ($(this).hasClass('events')) {
-					renderView('warband_events', null);
-				} else if ($(this).hasClass('terrain')) {
-					renderView('warband_terrain', null);
-				}
-			});
 			setupSwipeableListing($('.content-items-list'));
 			$('.content-items-list').find('.action-block.delete').tap(function() {
 				var warbandCharacterEnhancementId = $(this).attr('data-warband-character-enhancement-id');
@@ -713,7 +704,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_character_enhancement':
 			populateCharacterEnhancementSuggestions('');
-			$('#field-name').keyup(function() {
+			$('#field-name').keydown(function() {
 				populateCharacterEnhancementSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -779,7 +770,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_event':
 			populateEventSuggestions('');
-			$('#field-name').keyup(function() {
+			$('#field-name').keydown(function() {
 				populateEventSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -845,7 +836,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_terrain':
 			populateTerrainSuggestions('');
-			$('#field-name').keyup(function() {
+			$('#field-name').keydown(function() {
 				populateTerrainSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {

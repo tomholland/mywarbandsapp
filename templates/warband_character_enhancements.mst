@@ -1,13 +1,5 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<div class="warband-tabs-rice-wrapper">
-			<div class="segmented-control">
-				<a class="control-item characters selected">Characters</a>
-				<a class="control-item events">Events</a>
-				<a class="control-item terrain">Terrain</a>
-			</div>
-			<span class="rice"><span class="badge{{^complete}} error{{/complete}}{{#complete}} match{{/complete}}">{{total_rice_cost}}/{{rice_limit}}</span></span>
-		</div>
 		<ul class="content-items-list">
 			{{#character_enhancements}}
 			<li>
