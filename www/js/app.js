@@ -45,6 +45,7 @@ function renderTemplate(templateId, templateData) {
 		$('.warband-tabs-rice-wrapper .segmented-control').css('width', (contentViewWidth - 70)+'px'); // 5px left margin, 60px badge, 5px right margin
 	}
 	currentTemplateId = templateId;
+	window.plugin.statusbarOverlay.hide();
 	addEventsToRenderedView();
 }
 
