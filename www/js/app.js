@@ -675,7 +675,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_character':
 			populateCharacterSuggestions('');
-			$('#field-search').keydown(function() {
+			$('#field-search').on('input', function() {
 				populateCharacterSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -704,7 +704,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_character_enhancement':
 			populateCharacterEnhancementSuggestions('');
-			$('#field-name').keydown(function() {
+			$('#field-name').on('input', function() {
 				populateCharacterEnhancementSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -770,7 +770,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_event':
 			populateEventSuggestions('');
-			$('#field-name').keydown(function() {
+			$('#field-name').on('input', function() {
 				populateEventSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
@@ -836,7 +836,7 @@ function addEventsToRenderedView() {
 			return;
 		case 'warband_add_terrain':
 			populateTerrainSuggestions('');
-			$('#field-name').keydown(function() {
+			$('#field-name').on('input', function() {
 				populateTerrainSuggestions($(this).val());
 			});
 			$('.content-view').find('form').on('submit', function(e) {
