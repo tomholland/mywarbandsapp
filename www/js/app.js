@@ -5,6 +5,8 @@ var selectedFactionId = null;
 var selectedWarbandId = null;
 var selectedWarbandCharacterId = null;
 var selectedScenarioId = null;
+var scrollPositions = {};
+scrollToPosition = false;
 
 function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
@@ -39,12 +41,19 @@ function setContentScrollViewWrapperDimensions() {
 }
 
 function renderTemplate(templateId, templateData) {
+	if ($('.content-view .content-view-scroll-wrapper').length) {
+		scrollPositions[currentTemplateId] = $('.content-view .content-view-scroll-wrapper').scrollTop();
+	}
 	$('.content').empty().html(Mustache.render(staticData.templates[templateId], templateData));
 	setContentScrollViewWrapperDimensions();
-	if (['warband_characters','warband_character_enhancements','warband_events','warband_terrain'].indexOf(templateId) >= 0) {
+	currentTemplateId = templateId;
+	if (['warband_characters','warband_events','warband_terrain'].indexOf(currentTemplateId) >= 0) {
 		$('.warband-tabs-rice-wrapper .segmented-control').css('width', (contentViewWidth - 70)+'px'); // 5px left margin, 60px badge, 5px right margin
 	}
-	currentTemplateId = templateId;
+	if (scrollToPosition && scrollPositions.hasOwnProperty(currentTemplateId)) {
+		$('.content-view .content-view-scroll-wrapper').scrollTop(scrollPositions[currentTemplateId]);
+		scrollToPosition = false;
+	}
 	window.plugin.statusbarOverlay.hide();
 	addEventsToRenderedView();
 }
@@ -134,6 +143,7 @@ function renderView(templateId, contentId) {
 					hideBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
+					return;
 				});
 			});
 		break;
@@ -173,6 +183,7 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
+					return;
 				});
 			});
 		break;
@@ -182,6 +193,7 @@ function renderView(templateId, contentId) {
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
+				return;
 			});
 		break;
 		case 'warband_character_enhancements':
@@ -204,6 +216,7 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
+					return;
 				});
 			});
 		break;
@@ -213,6 +226,7 @@ function renderView(templateId, contentId) {
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
+				return;
 			});
 		break;
 		case 'warband_events':
@@ -235,6 +249,7 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
+					return;
 				});
 			});
 		break;
@@ -244,6 +259,7 @@ function renderView(templateId, contentId) {
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
+				return;
 			});
 		break;
 		case 'warband_terrain':
@@ -266,6 +282,7 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
+					return;
 				});
 			});
 		break;
@@ -275,6 +292,7 @@ function renderView(templateId, contentId) {
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
+				return;
 			});
 		break;
 		case 'scenarios':
@@ -971,6 +989,7 @@ document.addEventListener('deviceready', function() {
 	
 	$('#back').tap(function() {
 		blurFormElements();
+		scrollToPosition = true;
 		switch(currentTemplateId) {
 			case 'faction_characters':
 				renderView('factions', null);
@@ -978,10 +997,11 @@ document.addEventListener('deviceready', function() {
 			case 'character_cards':
 				if ($('nav').find('a.active').attr('data-template-id') === 'warbands') {
 					renderView('warband_characters', null);
+					return;
 				} else {
 					renderView('faction_characters', selectedFactionId);
+					return;
 				}
-				return;
 			case 'warband':
 			case 'warband_characters':
 			case 'warband_events':
