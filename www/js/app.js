@@ -458,7 +458,7 @@ function populateTerrainSuggestions(search) {
 	});
 	loadSettings(function() {
 		if (settingIsEnabled('lexicographicalsort')) {
-			templateData.events.sort(sortObjectArrayByNameProperty);
+			templateData.terrain.sort(sortObjectArrayByNameProperty);
 		}
 		$('.content-items-list').empty().html(Mustache.render(staticData.templates.terrain_suggestions, templateData));
 		setContentScrollViewWrapperDimensions();
