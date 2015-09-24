@@ -518,7 +518,7 @@ function addEventsToRenderedView() {
 							warbandCharacter.rice += warbands[warbandId].characters[warbandCharacterId].enhancements[warbandCharacterEnhancementId].rice
 						}
 						warbandCharacter.has_enhancements = (warbandCharacter.enhancements.length > 0);
-						emailTemplateData.characters.push(staticData.factions[warbands[warbandId].faction].characters[warbands[warbandId].characters[warbandCharacterId].factionCharacterID]);
+						emailTemplateData.characters.push(warbandCharacter);
 						emailTemplateData.total_rice += warbandCharacter.rice;
 					});
 					for (var warbandEventId in warbands[warbandId].events) {
@@ -529,6 +529,7 @@ function addEventsToRenderedView() {
 						emailTemplateData.terrain.push(warbands[warbandId].terrain[warbandTerrainItemId]);
 						emailTemplateData.total_rice += warbands[warbandId].terrain[warbandTerrainItemId].rice;
 					}
+					emailTemplateData.has_characters = (emailTemplateData.characters.length > 0);
 					emailTemplateData.has_events = (emailTemplateData.events.length > 0);
 					emailTemplateData.has_terrain = (emailTemplateData.terrain.length > 0);
 					loadSettings(function() {
@@ -544,7 +545,7 @@ function addEventsToRenderedView() {
 							params.body = Mustache.render(staticData.templates.warband_email_html, emailTemplateData);
 							params.isHtml = true;
 						} else {
-							params.body = Mustache.render(staticData.templates.warband_email_txt, emailTemplateData);
+							params.body = Mustache.render(staticData.templates.warband_email_text, emailTemplateData);
 						}
 						cordova.require('emailcomposer.EmailComposer').show(params);
 					});
