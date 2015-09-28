@@ -93,7 +93,7 @@ function renderView(templateId, contentId) {
 			});
 			hideBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'faction_characters':
 			selectedFactionId = contentId;
 			setTitle(staticData.factions[contentId].name);
@@ -107,13 +107,13 @@ function renderView(templateId, contentId) {
 			});
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'character_cards':
 			setTitle(staticData.factions[selectedFactionId].characters[contentId].name);
 			templateData.cards = staticData.factions[selectedFactionId].characters[contentId].cards;
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'warbands':
 			loadWarbands(function() {
 				setTitle('Warbands');
@@ -143,10 +143,9 @@ function renderView(templateId, contentId) {
 					hideBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
-					return;
 				});
 			});
-		break;
+			return;
 		case 'warband':
 			setTitle(((selectedWarbandId === null) ? 'Create':'Edit')+' warband');
 			templateData.edit = (selectedWarbandId !== null);
@@ -162,7 +161,7 @@ function renderView(templateId, contentId) {
 			templateData.rice = ((selectedWarbandId !== null) ? warbands[selectedWarbandId].riceLimit:'');
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'warband_characters':
 			loadWarbands(function() {
 				setTitle(warbands[selectedWarbandId].name);
@@ -183,19 +182,17 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
-					return;
 				});
 			});
-		break;
+			return;
 		case 'warband_add_character':
 			loadWarbands(function() {
 				setTitle('Add character to warband');
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
-				return;
 			});
-		break;
+			return;
 		case 'warband_character_enhancements':
 			loadWarbands(function() {
 				setTitle(warbands[selectedWarbandId].getCharacterName(selectedWarbandCharacterId)+' enhancements');
@@ -216,19 +213,17 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
-					return;
 				});
 			});
-		break;
+			return;
 		case 'warband_add_character_enhancement':
 			loadWarbandsCharacterEnhancements(function() {
 				setTitle('Add enhancement to '+htmlEncode(warbands[selectedWarbandId].getCharacterName(selectedWarbandCharacterId)));
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
-				return;
 			});
-		break;
+			return;
 		case 'warband_events':
 			loadWarbands(function() {
 				setTitle(warbands[selectedWarbandId].name);
@@ -249,19 +244,17 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
-					return;
 				});
 			});
-		break;
+			return;
 		case 'warband_add_event':
 			loadWarbandsEvents(function() {
 				setTitle('Add warband event');
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
-				return;
 			});
-		break;
+			return;
 		case 'warband_terrain':
 			loadWarbands(function() {
 				setTitle(warbands[selectedWarbandId].name);
@@ -282,19 +275,17 @@ function renderView(templateId, contentId) {
 					showBackButton();
 					showAddButton();
 					renderTemplate(templateId, templateData);
-					return;
 				});
 			});
-		break;
+			return;
 		case 'warband_add_terrain':
 			loadWarbandsTerrain(function() {
 				setTitle('Add warband terrain');
 				showBackButton();
 				hideAddButton();
 				renderTemplate(templateId, templateData);
-				return;
 			});
-		break;
+			return;
 		case 'scenarios':
 			setTitle('Scenarios');
 			templateData.scenarios = [];
@@ -303,25 +294,25 @@ function renderView(templateId, contentId) {
 			});
 			hideBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'scenario':
 			setTitle(staticData.scenarios[contentId].name);
 			templateData = staticData.scenarios[contentId];
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'scenario_backstory':
 			setTitle(staticData.scenarios[contentId].name);
 			templateData.content = staticData.scenarios[contentId].story;
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'scenario_plan':
 			setTitle(staticData.scenarios[contentId].name);
 			templateData.image = staticData.scenarios[contentId].image;
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'guides':
 			setTitle('Guides');
 			templateData.guides = [];
@@ -330,12 +321,12 @@ function renderView(templateId, contentId) {
 			});
 			hideBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'misc':
 			setTitle('Misc.');
 			hideBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'settings':
 			setTitle('Settings');
 			templateData.settings = [];
@@ -344,7 +335,7 @@ function renderView(templateId, contentId) {
 			});
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'faqs':
 			setTitle('FAQs');
 			templateData.faqs = [];
@@ -353,13 +344,13 @@ function renderView(templateId, contentId) {
 			});
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 		case 'faq':
 			setTitle(staticData.faqs[contentId].title);
 			templateData = staticData.faqs[contentId];
 			showBackButton();
 			hideAddButton();
-		break;
+			break;
 	}
 	renderTemplate(templateId, templateData);
 }
