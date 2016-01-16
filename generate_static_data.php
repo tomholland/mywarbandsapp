@@ -956,7 +956,9 @@ $data = array(
 					'rice' => 8,
 					'cards' => array(
 						'159-1.jpg',
-						'159-2.jpg'
+						'159-2.jpg',
+						'159-3.jpg',
+						'159-4.jpg'
 					)
 				),
 				'6907E42F-A096-8D97-176F-0CDE3C2BDCD8' => array(
