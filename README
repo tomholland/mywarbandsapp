@@ -6,8 +6,8 @@ mkdir {hooks,merges,platforms,plugins}
 
 cordova platform add ios
 
-cp icons_backup/* platforms/ios/MyWarbands/Resources/icons/ && cp splash_backup/* platforms/ios/MyWarbands/Resources/splash/
+cp icons_backup/* platforms/ios/MyWarbands/Images.xcassets/AppIcon.appiconset/ && cp splash_backup/* platforms/ios/MyWarbands/Images.xcassets/LaunchImage.launchimage/
 
-cordova plugins add cordova-plugin-inappbrowser cordova-plugin-file cordova-plugin-file-transfer com.ben2.cordova.keyboard https://github.com/ohh2ahh/AppAvailability.git de.appplant.cordova.plugin.hidden-statusbar-overlay cordova-plugin-dialogs https://github.com/steve-jansen/cordova-ios-emailcomposer com.disusered.open
+cordova plugins add cordova-plugin-inappbrowser cordova-plugin-file cordova-plugin-file-transfer cordova-plugin-keyboard-ams https://github.com/ohh2ahh/AppAvailability.git https://github.com/katzer/cordova-plugin-hidden-statusbar-overlay cordova-plugin-dialogs cordova-plugin-email cordova-open
 
 cordova build

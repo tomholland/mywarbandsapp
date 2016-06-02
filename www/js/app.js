@@ -489,13 +489,7 @@ function addEventsToRenderedView() {
 				if ($(this).hasClass('share')) {
 					var warbandId = $(this).attr('data-warband-id');
 					var params = {
-						'subject': 'Bushido Warband: '+warbands[warbandId].name,
-						'onSuccess': function() {
-							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
-						},
-						'onError': function() {
-							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
-						}
+						'subject': 'Bushido Warband: '+warbands[warbandId].name
 					};
 					var emailTemplateData = {
 						faction_name: staticData.factions[warbands[warbandId].faction].name,
@@ -543,11 +537,14 @@ function addEventsToRenderedView() {
 						}
 						if (settingIsEnabled('htmlemailsetting')) {
 							params.body = Mustache.render(staticData.templates.warband_email_html, emailTemplateData);
-							params.isHtml = true;
+							params.isHTML = true;
 						} else {
 							params.body = Mustache.render(staticData.templates.warband_email_text, emailTemplateData);
+							params.isHTML = false;
 						}
-						cordova.require('emailcomposer.EmailComposer').show(params);
+						cordova.plugins.email.open(params, function() {
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
+						});
 					});
 				} else if ($(this).hasClass('edit')) {
 					selectedWarbandId = $(this).attr('data-warband-id');
@@ -925,9 +922,10 @@ function addEventsToRenderedView() {
 				window.open(encodeURI($(this).attr('data-url')), '_system');
 			});
 			$('.content-view').find('a.email').tap(function() {
-				cordova.require('emailcomposer.EmailComposer').show({
+				cordova.plugins.email.open({
 					to: $(this).attr('data-email'),
-					subject: $(this).attr('data-subject')
+					subject: $(this).attr('data-subject'),
+					isHTML: false
 				});
 			});
 			$('.content-view').find('a.twitter').tap(function() {
